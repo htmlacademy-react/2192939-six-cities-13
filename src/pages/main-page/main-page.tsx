@@ -91,8 +91,9 @@ export default function MainPage({ offersCount }: MainPageProps): JSX.Element {
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
+                <span> </span>
                 <span className="places__sorting-type" tabIndex={0}>
-                  &nbsp;Popular
+                  Popular
                   <svg className="places__sorting-arrow" width={7} height={4}>
                     <use xlinkHref="#icon-arrow-select" />
                   </svg>
