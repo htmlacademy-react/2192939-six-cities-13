@@ -1,4 +1,4 @@
-import MainPage from '../../pages/main/main';
+import MainPage from '../../pages/main';
 import { Setting } from '../../settings';
 
 export default function App(): JSX.Element {
