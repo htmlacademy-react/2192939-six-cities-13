@@ -1,9 +1,12 @@
-import OfferCard from '../../components/offer-card/offer-card';
+import OfferCard from '../../components/offer-card';
+import { Setting } from '../../settings';
 
-type MainPageProps = {
-  offersCount: number;
-};
-export default function MainPage({ offersCount }: MainPageProps): JSX.Element {
+interface MainPageProps {
+  offersCount?: number;
+}
+export default function MainPage({
+  offersCount = Setting.OffersCount,
+}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
