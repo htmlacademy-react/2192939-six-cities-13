@@ -1,6 +1,6 @@
 import LogoLeft from '../../components/logo-left';
 
-export default function OfferPage() {
+export default function OfferPage(): JSX.Element {
   return (
     <div className="page">
       <header className="header">

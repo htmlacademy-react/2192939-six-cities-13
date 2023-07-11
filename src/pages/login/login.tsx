@@ -1,6 +1,6 @@
 import LogoLeft from '../../components/logo-left';
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <header className="header">

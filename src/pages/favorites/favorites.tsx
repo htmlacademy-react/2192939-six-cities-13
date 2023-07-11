@@ -1,6 +1,6 @@
 import LogoLeft from '../../components/logo-left';
 
-export default function FavoritesPage() {
+export default function FavoritesPage(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
