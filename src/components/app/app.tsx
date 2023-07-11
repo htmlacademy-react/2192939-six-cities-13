@@ -4,7 +4,7 @@ import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
 import NoPage from '../../pages/no-page';
-import { AppRoute, AuthorizationStatus } from '../../settings';
+import { AppRoute } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 
@@ -18,7 +18,7 @@ export default function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <PrivateRoute>
                 <FavoritesPage />
               </PrivateRoute>
             }
