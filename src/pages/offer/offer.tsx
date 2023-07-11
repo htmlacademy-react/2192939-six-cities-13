@@ -1,8 +1,12 @@
+import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
 
 export default function OfferPage(): JSX.Element {
   return (
     <div className="page">
+      <Helmet>
+        <title>6 cities. Offer&apos;s page</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

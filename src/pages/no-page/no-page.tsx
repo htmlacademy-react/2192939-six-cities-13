@@ -1,8 +1,12 @@
+import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
 
 export default function NoPage(): JSX.Element {
   return (
     <div className="page page--gray page--login">
+      <Helmet>
+        <title>6 cities. Page not found</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">

@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
 import OfferCard from '../../components/offer-card/offer-card';
 import { Setting } from '../../settings';
@@ -10,6 +11,9 @@ export default function MainPage({
 }: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
+      <Helmet>
+        <title>6 cities. Main page</title>
+      </Helmet>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
