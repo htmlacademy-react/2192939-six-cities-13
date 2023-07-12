@@ -5,7 +5,7 @@ export default function Page404(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <Helmet>
-        <title>6 cities. Page not found</title>
+        <title>6 cities: 404</title>
       </Helmet>
       <header className="header">
         <div className="container">

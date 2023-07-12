@@ -12,7 +12,7 @@ export default function MainPage({
   return (
     <div className="page page--gray page--main">
       <Helmet>
-        <title>6 cities. Main page</title>
+        <title>6 cities</title>
       </Helmet>
       <header className="header">
         <div className="container">

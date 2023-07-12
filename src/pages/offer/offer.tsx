@@ -5,7 +5,7 @@ export default function OfferPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>6 cities. Offer&apos;s page</title>
+        <title>6 cities: offer</title>
       </Helmet>
       <header className="header">
         <div className="container">

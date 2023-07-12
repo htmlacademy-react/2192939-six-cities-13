@@ -5,7 +5,7 @@ export default function FavoritesPage(): JSX.Element {
   return (
     <div className="page">
       <Helmet>
-        <title>6 cities. Favorites</title>
+        <title>6 cities: favorites</title>
       </Helmet>
       <header className="header">
         <div className="container">
