@@ -3,7 +3,7 @@ import MainPage from '../../pages/main';
 import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
-import NoPage from '../../pages/no-page';
+import Page404 from '../../pages/404';
 import { AppRoute } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
@@ -24,7 +24,7 @@ export default function App(): JSX.Element {
             }
           />
           <Route path={AppRoute.OfferId} element={<OfferPage />} />
-          <Route path="*" element={<NoPage />} />
+          <Route path="*" element={<Page404 />} />
         </Routes>
       </BrowserRouter>
     </HelmetProvider>

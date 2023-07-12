@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
 
-export default function NoPage(): JSX.Element {
+export default function Page404(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <Helmet>

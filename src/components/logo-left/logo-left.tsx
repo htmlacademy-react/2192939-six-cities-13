@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 export default function LogoLeft(): JSX.Element {
   return (
     <div className="header__left">
-      <Link to="/" title="/" className="header__logo-link">
+      <Link to="/" title="Link go home" className="header__logo-link">
         <img
           className="header__logo"
           src="img/logo.svg"
