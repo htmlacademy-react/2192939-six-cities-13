@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
-import OfferCard from '../../components/offer-card/offer-card';
 import { Setting } from '../../settings';
+import ListOffers from '../../components/list-offers';
 
 interface MainPageProps {
   offersCount?: number;
@@ -114,13 +114,7 @@ export default function MainPage({
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-              </div>
+              <ListOffers />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
