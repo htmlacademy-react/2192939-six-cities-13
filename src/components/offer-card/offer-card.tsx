@@ -1,11 +1,17 @@
-export default function OfferCard(): JSX.Element {
+import { RATING_IN_PERCENT } from '../../settings';
+import { TOffer } from '../../types/offers';
+
+type TOfferCardProps = {
+  offer: TOffer;
+};
+export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
             className="place-card__image"
-            src="img/room.jpg"
+            src={offer.previewImage}
             width={260}
             height={200}
             alt="Place image"
@@ -15,7 +21,7 @@ export default function OfferCard(): JSX.Element {
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">€80 </b>
+            <b className="place-card__price-value">€{offer.price} </b>
             <span className="place-card__price-text"> /&nbsp;night</span>
           </div>
           <button
@@ -30,14 +36,16 @@ export default function OfferCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span
+              style={{ width: Math.round(offer.rating) * RATING_IN_PERCENT }}
+            />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Wood and stone place</a>
+          <a href="#">{offer.title}</a>
         </h2>
-        <p className="place-card__type">Private room</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

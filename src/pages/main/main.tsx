@@ -2,13 +2,16 @@ import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
 import { Setting } from '../../settings';
 import ListOffers from '../../components/list-offers';
+import { TOffers } from '../../types/offers';
 
-interface MainPageProps {
+type TMainPageProps = {
   offersCount?: number;
-}
+  offers: TOffers;
+};
 export default function MainPage({
   offersCount = Setting.OffersCount,
-}: MainPageProps): JSX.Element {
+  offers,
+}: TMainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -114,7 +117,7 @@ export default function MainPage({
                   </li>
                 </ul>
               </form>
-              <ListOffers />
+              <ListOffers offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

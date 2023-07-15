@@ -14,3 +14,5 @@ export enum AuthStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const RATING_IN_PERCENT = 20;

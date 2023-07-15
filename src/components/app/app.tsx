@@ -8,14 +8,18 @@ import { AppRoute } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
+import { TOffers } from '../../types/offers';
 
-export default function App(): JSX.Element {
+type TAppProps = {
+  offers: TOffers;
+};
+export default function App({ offers }: TAppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path={AppRoute.Root} element={<MainPage />} />
+          <Route path={AppRoute.Root} element={<MainPage offers={offers} />} />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
