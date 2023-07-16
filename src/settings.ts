@@ -12,3 +12,5 @@ export enum AuthStatus {
 }
 
 export const RATING_IN_PERCENT = 20;
+
+export const MIN_LENGHT_REVIEW_TEXT = 50;

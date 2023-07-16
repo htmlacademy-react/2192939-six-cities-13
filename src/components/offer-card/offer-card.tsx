@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { RATING_IN_PERCENT } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { TOffer } from '../../types/offers';
+import { Link } from 'react-router-dom';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -54,7 +55,7 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+          <Link to={AppRoute.OfferId + offer.id}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
