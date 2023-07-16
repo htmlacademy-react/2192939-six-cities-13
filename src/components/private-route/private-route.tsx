@@ -7,7 +7,7 @@ type TPrivateRouteProps = {
 };
 
 export default function PrivateRoute({
-  authStatus = AuthStatus.Auth,
+  authStatus,
   children,
 }: TPrivateRouteProps): JSX.Element {
   return authStatus === AuthStatus.Auth ? (
