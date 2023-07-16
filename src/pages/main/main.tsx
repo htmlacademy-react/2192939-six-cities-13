@@ -1,17 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
-import { Setting } from '../../settings';
 import ListOffers from '../../components/list-offers';
 import { TOffers } from '../../types/offers';
 
 type TMainPageProps = {
-  offersCount?: number;
   offers: TOffers;
 };
-export default function MainPage({
-  offersCount = Setting.OffersCount,
-  offers,
-}: TMainPageProps): JSX.Element {
+export default function MainPage({ offers }: TMainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -88,7 +83,7 @@ export default function MainPage({
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offersCount} places to stay in Paris
+                {offers.length} places to stay in Paris
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>

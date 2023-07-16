@@ -1,39 +1,35 @@
-import { useState } from 'react';
-import { RATING_IN_PERCENT } from '../../settings';
 import { TOffer } from '../../types/offers';
+import { RATING_IN_PERCENT } from '../../settings';
 
-type TOfferCardProps = {
+type TFavoriteCardProps = {
   offer: TOffer;
 };
-export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState('');
-
-  function handleMouseEnter() {
-    setActiveCard(offer.id);
-  }
-
+export default function FavoriteCard({
+  offer,
+}: TFavoriteCardProps): JSX.Element {
   return (
-    <article
-      className="cities__card place-card"
-      onMouseEnter={handleMouseEnter}
-    >
-      {activeCard}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+    <article className="favorites__card place-card">
+      {offer.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={260}
-            height={200}
+            width={150}
+            height={110}
             alt="Place image"
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{offer.price} </b>
-            <span className="place-card__price-text"> /&nbsp;night</span>
+            <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
             className="place-card__bookmark-button place-card__bookmark-button--active button"

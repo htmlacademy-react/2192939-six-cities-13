@@ -1,7 +1,3 @@
-export const Setting = {
-  OffersCount: 5,
-} as const;
-
 export const AppRoute = {
   Root: '/',
   Login: '/login',
