@@ -1,5 +1,6 @@
 import { TOffer } from '../../types/offers';
-import { RATING_IN_PERCENT } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT } from '../../settings';
+import { Link } from 'react-router-dom';
 
 type TFavoriteCardProps = {
   offer: TOffer;
@@ -50,7 +51,7 @@ export default function FavoriteCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+          <Link to={AppRoute.OfferId}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

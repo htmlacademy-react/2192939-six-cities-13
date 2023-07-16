@@ -10,6 +10,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App offers={offers} authStatus={AuthStatus.NoAuth} />
+    <App offers={offers} authStatus={AuthStatus.Auth} />
   </React.StrictMode>
 );
