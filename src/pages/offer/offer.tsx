@@ -197,7 +197,7 @@ export default function OfferPage({
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">
-              Other places in the neighbourhood
+              Other places in the neighborhood
             </h2>
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">

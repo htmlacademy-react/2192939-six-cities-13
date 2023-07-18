@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useState } from 'react';
-import { MIN_LENGHT_REVIEW_TEXT } from '../../settings';
+import { MIN_LENGTH_REVIEW_TEXT } from '../../settings';
 
 export default function ReviewForm(): JSX.Element {
   type TFormChangeHandler = ChangeEventHandler<
@@ -14,7 +14,7 @@ export default function ReviewForm(): JSX.Element {
   };
 
   const isReview = !(
-    formData.rating && formData.review.length > MIN_LENGHT_REVIEW_TEXT
+    formData.rating && formData.review.length > MIN_LENGTH_REVIEW_TEXT
   );
 
   return (
