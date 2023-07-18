@@ -3,10 +3,12 @@ import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
 type HeaderProps = {
-  authStatus: AuthStatus;
+  authStatus?: AuthStatus;
 };
 
-export default function Header({ authStatus }: HeaderProps): JSX.Element {
+export default function Header({
+  authStatus = AuthStatus.Auth,
+}: HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">

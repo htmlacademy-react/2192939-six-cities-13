@@ -8,14 +8,18 @@ import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
-import { TOffers } from '../../types/offers';
+import { TFullOffers, TOffers, TReviews } from '../../types/offers';
+import { reviews } from '../../mocks/offers';
 
 type TAppProps = {
   offers: TOffers;
+  fullOffers: TFullOffers;
+  reviews: TReviews;
   authStatus: AuthStatus;
 };
 export default function App({
   offers,
+  fullOffers,
   authStatus = AuthStatus.Auth,
 }: TAppProps): JSX.Element {
   return (
@@ -38,7 +42,13 @@ export default function App({
           />
           <Route
             path={AppRoute.OfferId}
-            element={<OfferPage authStatus={authStatus} />}
+            element={
+              <OfferPage
+                fullOffers={fullOffers}
+                reviews={reviews}
+                authStatus={authStatus}
+              />
+            }
           />
           <Route path="*" element={<Page404 />} />
         </Routes>

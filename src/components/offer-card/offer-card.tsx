@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { TOffer } from '../../types/offers';
 import { Link } from 'react-router-dom';
@@ -9,16 +9,26 @@ type TOfferCardProps = {
 export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
   const [activeCard, setActiveCard] = useState('');
 
+  useEffect(() => {
+    if (activeCard) {
+      setActiveCard(offer.id);
+    }
+  }, [activeCard, offer.id]);
+
   function handleMouseEnter() {
     setActiveCard(offer.id);
+  }
+
+  function handleMouseLeave() {
+    setActiveCard('');
   }
 
   return (
     <article
       className="cities__card place-card"
       onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      {activeCard}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
@@ -37,7 +47,9 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
             <span className="place-card__price-text"> /&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            className={`place-card__bookmark-button${
+              offer.isFavorite ? '--active' : ''
+            } button`}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
@@ -55,7 +67,7 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={AppRoute.OfferId + offer.id}>{offer.title}</Link>
+          <Link to={AppRoute.Offer + offer.id}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

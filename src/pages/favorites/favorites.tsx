@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import { TOffers } from '../../types/offers';
 import FavoriteCard from '../../components/favorite-card';
 import Header from '../../components/header';
-import { AuthStatus } from '../../settings';
 
 type FavoritesPageProps = {
   offers: TOffers;
@@ -15,7 +14,7 @@ export default function FavoritesPage({
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <Header authStatus={AuthStatus.Auth} />
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -30,9 +29,12 @@ export default function FavoritesPage({
                   </div>
                 </div>
                 <div className="favorites__places">
-                  {offers.map((offer) => (
-                    <FavoriteCard key={offer.id} offer={offer} />
-                  ))}
+                  {offers.map(
+                    (offer) =>
+                      offer.isFavorite && (
+                        <FavoriteCard key={offer.id} offer={offer} />
+                      )
+                  )}
                 </div>
               </li>
               <li className="favorites__locations-items">

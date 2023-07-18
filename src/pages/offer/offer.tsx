@@ -2,11 +2,24 @@ import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AuthStatus } from '../../settings';
+import { useParams } from 'react-router-dom';
+import { TFullOffers, TReviews } from '../../types/offers';
+import { RATING_IN_PERCENT } from '../../settings';
 
 type OfferPageProps = {
+  fullOffers: TFullOffers;
   authStatus: AuthStatus;
+  reviews: TReviews;
 };
-export default function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
+export default function OfferPage({
+  fullOffers,
+  reviews,
+  authStatus,
+}: OfferPageProps): JSX.Element {
+  const offerId = useParams();
+  const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
+  const review = reviews.find((item) => item.id === offerId.id);
+
   return (
     <div className="page">
       <Helmet>
@@ -17,60 +30,36 @@ export default function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/room.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-02.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-03.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/studio-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
-              <div className="offer__image-wrapper">
-                <img
-                  className="offer__image"
-                  src="img/apartment-01.jpg"
-                  alt="Photo studio"
-                />
-              </div>
+              {fullOffer &&
+                fullOffer.images.map((item) => (
+                  <div
+                    className="offer__image-wrapper"
+                    key={crypto.randomUUID()}
+                  >
+                    <img
+                      className="offer__image"
+                      src={item}
+                      alt="Photo studio"
+                    />
+                  </div>
+                ))}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {fullOffer && fullOffer.isPremium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
-                </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <h1 className="offer__name">{fullOffer && fullOffer.title}</h1>
+                <button
+                  className={`offer__bookmark-button${
+                    fullOffer && fullOffer.isFavorite ? '--active' : ''
+                  } button`}
+                  type="button"
+                >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
                   </svg>
@@ -79,104 +68,125 @@ export default function OfferPage({ authStatus }: OfferPageProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: '80%' }} />
+                  <span
+                    style={{
+                      width: `${
+                        Math.round(fullOffer ? fullOffer.rating : 0) *
+                        RATING_IN_PERCENT
+                      }%`,
+                    }}
+                  />
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">
+                  {fullOffer && fullOffer.rating}
+                </span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {fullOffer && fullOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {fullOffer && fullOffer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  Max {fullOffer && fullOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">€120</b>
+                <b className="offer__price-value">
+                  €{fullOffer && fullOffer.price}
+                </b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  <li className="offer__inside-item">Wi-Fi</li>
-                  <li className="offer__inside-item">Washing machine</li>
-                  <li className="offer__inside-item">Towels</li>
-                  <li className="offer__inside-item">Heating</li>
-                  <li className="offer__inside-item">Coffee machine</li>
-                  <li className="offer__inside-item">Baby seat</li>
-                  <li className="offer__inside-item">Kitchen</li>
-                  <li className="offer__inside-item">Dishwasher</li>
-                  <li className="offer__inside-item">Cabel TV</li>
-                  <li className="offer__inside-item">Fridge</li>
+                  {fullOffer &&
+                    fullOffer.goods.map((item) => (
+                      <li
+                        className="offer__inside-item"
+                        key={crypto.randomUUID()}
+                      >
+                        {item}
+                      </li>
+                    ))}
                 </ul>
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
-                  <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
+                  <div
+                    className={`offer__avatar-wrapper offer__avatar-wrapper${
+                      fullOffer && fullOffer.host.isPro ? '--pro' : ''
+                    } user__avatar-wrapper`}
+                  >
                     <img
                       className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
+                      src={fullOffer && fullOffer.host.avatarUrl}
                       width={74}
                       height={74}
                       alt="Host avatar"
                     />
                   </div>
-                  <span className="offer__user-name">Angelina</span>
-                  <span className="offer__user-status">Pro</span>
+                  <span className="offer__user-name">
+                    {fullOffer && fullOffer.host.name}
+                  </span>
+                  <span className="offer__user-status">
+                    {fullOffer && fullOffer.host.isPro ? 'Pro' : ''}
+                  </span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by
-                    the unique lightness of Amsterdam. The building is green and
-                    from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand
-                    Square and National Opera, but where the bustle of the city
-                    comes to rest in this alley flowery and colorful.
+                    {fullOffer && fullOffer.description}
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">
-                  Reviews · <span className="reviews__amount">1</span>
+                  Reviews ·{' '}
+                  <span className="reviews__amount">
+                    {review && review.review.length}
+                  </span>
                 </h2>
                 <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img
-                          className="reviews__avatar user__avatar"
-                          src="img/avatar-max.jpg"
-                          width={54}
-                          height={54}
-                          alt="Reviews avatar"
-                        />
-                      </div>
-                      <span className="reviews__user-name">Max</span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }} />
-                          <span className="visually-hidden">Rating</span>
+                  {review &&
+                    review.review.map((item) => (
+                      <li className="reviews__item" key={item.id}>
+                        <div className="reviews__user user">
+                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                            <img
+                              className="reviews__avatar user__avatar"
+                              src={item.user.avatarUrl}
+                              width={54}
+                              height={54}
+                              alt="Reviews avatar"
+                            />
+                          </div>
+                          <span className="reviews__user-name">
+                            {item.user.name}
+                          </span>
                         </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river
-                        by the unique lightness of Amsterdam. The building is
-                        green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">
-                        April 2019
-                      </time>
-                    </div>
-                  </li>
+                        <div className="reviews__info">
+                          <div className="reviews__rating rating">
+                            <div className="reviews__stars rating__stars">
+                              <span
+                                style={{
+                                  width: `${
+                                    Math.round(item.rating) * RATING_IN_PERCENT
+                                  }%`,
+                                }}
+                              />
+                              <span className="visually-hidden">Rating</span>
+                            </div>
+                          </div>
+                          <p className="reviews__text">{item.comment}</p>
+                          <time className="reviews__time" dateTime="2019-04-24">
+                            {item.date}
+                          </time>
+                        </div>
+                      </li>
+                    ))}
                 </ul>
                 <ReviewForm />
               </section>

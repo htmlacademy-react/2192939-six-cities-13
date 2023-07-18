@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import ListOffers from '../../components/list-offers';
+import OfferList from '../../components/offer-list';
 import { TOffers } from '../../types/offers';
 import Header from '../../components/header';
 import { AuthStatus } from '../../settings';
@@ -90,7 +90,7 @@ export default function MainPage({
                   </li>
                 </ul>
               </form>
-              <ListOffers offers={offers} />
+              <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />
