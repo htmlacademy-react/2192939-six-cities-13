@@ -2,37 +2,20 @@ import { ChangeEventHandler, useState } from 'react';
 import { MIN_LENGHT_REVIEW_TEXT } from '../../settings';
 
 export default function ReviewForm(): JSX.Element {
-  // type TFormChangeHandler = ChangeEventHandler<
-  //   HTMLInputElement & HTMLTextAreaElement
-  // >;
-
-  /**Такой код выдает ошибку на строке 44 */
   type TFormChangeHandler = ChangeEventHandler<
-    HTMLInputElement | HTMLTextAreaElement
+    HTMLInputElement & HTMLTextAreaElement
   >;
 
   const [formData, setFormData] = useState({ rating: 0, review: '' });
-  const [isReview, setIsReview] = useState(true);
 
-  /**Переписал код но теперь логика не работает должным образом */
   const handleFieldChange: TFormChangeHandler = ({ target }): void => {
     const { name, value } = target;
     setFormData({ ...formData, [name]: value });
-    if (formData.rating && formData.review.length > MIN_LENGHT_REVIEW_TEXT) {
-      setIsReview(false);
-    }
   };
 
-  // const [formData, setFormData] = useState({ rating: 0, review: '' });
-
-  // const handleFieldChange: TFormChangeHandler = ({ target }): void => {
-  //   const { name, value } = target;
-  //   setFormData({ ...formData, [name]: value });
-  // };
-
-  // const isReview = !(
-  //   formData.rating && formData.review.length > MIN_LENGHT_REVIEW_TEXT
-  // );
+  const isReview = !(
+    formData.rating && formData.review.length > MIN_LENGHT_REVIEW_TEXT
+  );
 
   return (
     <form className="reviews__form form" action="#" method="post">
