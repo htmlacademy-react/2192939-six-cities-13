@@ -7,20 +7,19 @@ type TOfferCardProps = {
   offer: TOffer;
 };
 export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState('');
-
+  const [activeCard, setActiveCard] = useState({});
   useEffect(() => {
     if (activeCard) {
-      setActiveCard(offer.id);
+      setActiveCard(offer);
     }
-  }, [activeCard, offer.id]);
+  }, [activeCard, offer]);
 
   function handleMouseEnter() {
-    setActiveCard(offer.id);
+    setActiveCard(offer);
   }
 
   function handleMouseLeave() {
-    setActiveCard('');
+    setActiveCard({});
   }
 
   return (

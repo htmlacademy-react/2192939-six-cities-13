@@ -9,7 +9,6 @@ import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
 import { TFullOffers, TOffers, TReviews } from '../../types/offers';
-import { reviews } from '../../mocks/offers';
 
 type TAppProps = {
   offers: TOffers;
@@ -20,6 +19,7 @@ type TAppProps = {
 export default function App({
   offers,
   fullOffers,
+  reviews,
   authStatus = AuthStatus.Auth,
 }: TAppProps): JSX.Element {
   return (
