@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { TOffer } from '../../types/offers';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 type TOfferCardProps = {
   offer: TOffer;
@@ -46,9 +47,11 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
             <span className="place-card__price-text"> /&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button${
-              offer.isFavorite ? '--active' : ''
-            } button`}
+            className={classNames(
+              'place-card__bookmark-button',
+              { 'place-card__bookmark-button--active': offer.isFavorite },
+              'button'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>

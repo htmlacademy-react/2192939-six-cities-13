@@ -1,6 +1,7 @@
 import { TOffer } from '../../types/offers';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 type TFavoriteCardProps = {
   offer: TOffer;
@@ -33,7 +34,11 @@ export default function FavoriteCard({
             <span className="place-card__price-text">/&nbsp;night</span>
           </div>
           <button
-            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            className={classNames(
+              'place-card__bookmark-button',
+              { 'place-card__bookmark-button--active': offer.isFavorite },
+              'button'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>

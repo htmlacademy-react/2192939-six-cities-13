@@ -7,6 +7,7 @@ import { TFullOffers, TReviews } from '../../types/offers';
 import { RATING_IN_PERCENT } from '../../settings';
 import Page404 from '../404';
 import ReviewsList from '../../components/reviews-list';
+import classNames from 'classnames';
 
 type OfferPageProps = {
   fullOffers: TFullOffers;
@@ -53,9 +54,13 @@ export default function OfferPage({
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{fullOffer.title}</h1>
                 <button
-                  className={`offer__bookmark-button${
-                    fullOffer.isFavorite ? '--active' : ''
-                  } button`}
+                  className={classNames(
+                    'offer__bookmark-button',
+                    {
+                      'offer__bookmark-button--active': fullOffer.isFavorite,
+                    },
+                    'button'
+                  )}
                   type="button"
                 >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
