@@ -1,4 +1,3 @@
-import { TReview } from './offers';
 export type TOffer = {
   id: string;
   title: string;
@@ -76,3 +75,15 @@ export type TReview = {
 };
 
 export type TReviews = TReview[];
+
+export type TReviewCard = {
+  id: string;
+  comment: string;
+  date: string;
+  rating: number;
+  user: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+};

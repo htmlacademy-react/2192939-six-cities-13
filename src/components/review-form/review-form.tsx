@@ -14,7 +14,7 @@ export default function ReviewForm(): JSX.Element {
   };
 
   const isReview = !(
-    formData.rating && formData.review.length > MIN_LENGTH_REVIEW_TEXT
+    formData.rating && formData.review.length >= MIN_LENGTH_REVIEW_TEXT
   );
 
   return (

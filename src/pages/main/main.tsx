@@ -24,7 +24,7 @@ export default function MainPage({
           <section className="locations container">
             <ul className="locations__list tabs__list">
               <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
+                <a className="locations__item-link tabs__item">
                   <span>Paris</span>
                 </a>
               </li>
@@ -39,7 +39,10 @@ export default function MainPage({
                 </a>
               </li>
               <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
+                <a
+                  className="locations__item-link tabs__item tabs__item--active"
+                  href="#"
+                >
                   <span>Amsterdam</span>
                 </a>
               </li>
@@ -61,7 +64,7 @@ export default function MainPage({
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offers.length} places to stay in Paris
+                {offers.length} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
