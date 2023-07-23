@@ -2,13 +2,13 @@ import { AppRoute, AuthStatus } from '../../settings';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
-type HeaderProps = {
+type THeaderProps = {
   authStatus?: AuthStatus;
 };
 
 export default function Header({
   authStatus = AuthStatus.Auth,
-}: HeaderProps): JSX.Element {
+}: THeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">

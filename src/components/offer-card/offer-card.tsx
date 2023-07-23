@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { TOffer } from '../../types/offers';
 import { Link } from 'react-router-dom';
@@ -9,11 +9,6 @@ type TOfferCardProps = {
 };
 export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
   const [activeCard, setActiveCard] = useState({});
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(activeCard);
-  }, [activeCard]);
 
   function handleMouseEnter() {
     setActiveCard(offer);
@@ -28,6 +23,7 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
       className="cities__card place-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-name={activeCard}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">

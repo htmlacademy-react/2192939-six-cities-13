@@ -1,3 +1,4 @@
+import { TCities } from './offers';
 export type TOffer = {
   id: string;
   title: string;
@@ -87,3 +88,5 @@ export type TReviewCard = {
     isPro: boolean;
   };
 };
+
+export type TCities = string[];
