@@ -1,22 +1,31 @@
 import { ChangeEventHandler, useState, Fragment } from 'react';
-import { MIN_LENGTH_REVIEW_TEXT, ratingMap } from '../../settings';
+import {
+  EMPTY_RATING,
+  MAX_LENGTH_REVIEW_TEXT,
+  MIN_LENGTH_REVIEW_TEXT,
+  ratingMap,
+} from '../../settings';
 
 export default function ReviewForm(): JSX.Element {
-  type FormChangeHandler = ChangeEventHandler<
-    HTMLInputElement & HTMLTextAreaElement
-  >;
-
   const [rating, setRating] = useState('0');
   const [review, setReview] = useState('');
 
-  const handleInputChange: FormChangeHandler = ({ target }): void => {
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
+    target,
+  }): void => {
     setRating(target.value);
   };
-  const handleTexAreaChange: FormChangeHandler = ({ target }): void => {
+  const handleTexAreaChange: ChangeEventHandler<HTMLTextAreaElement> = ({
+    target,
+  }): void => {
     setReview(target.value);
   };
 
-  const isReview = !(rating && review.length >= MIN_LENGTH_REVIEW_TEXT);
+  const isReview = !(
+    rating !== EMPTY_RATING &&
+    review.length >= MIN_LENGTH_REVIEW_TEXT &&
+    review.length <= MAX_LENGTH_REVIEW_TEXT
+  );
 
   return (
     <form className="reviews__form form" action="#" method="post">
