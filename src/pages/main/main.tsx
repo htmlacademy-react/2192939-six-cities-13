@@ -4,6 +4,7 @@ import { TOffers } from '../../types/offers';
 import Header from '../../components/header';
 import { AuthStatus, CITIES } from '../../settings';
 import CitiesList from '../../components/cities-list';
+import Map from '../../components/map';
 
 type TMainPageProps = {
   offers: TOffers;
@@ -61,7 +62,9 @@ export default function MainPage({
               <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map city={offers[0].city} offers={offers} />
+              </section>
             </div>
           </div>
         </div>
