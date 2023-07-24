@@ -1,11 +1,11 @@
-import { TReviewCard } from '../../types/offers';
+import { ReviewCardType } from '../../types/offers';
 import { RATING_IN_PERCENT } from '../../settings';
 
-type TViewCardProps = {
-  item: TReviewCard;
+type ViewCardProps = {
+  item: ReviewCardType;
 };
 
-export default function ReviewCard({ item }: TViewCardProps) {
+export default function ReviewCard({ item }: ViewCardProps) {
   return (
     <li className="reviews__item" key={item.id}>
       <div className="reviews__user user">

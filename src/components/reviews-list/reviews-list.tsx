@@ -1,10 +1,10 @@
-import { TReview } from '../../types/offers';
+import { Review } from '../../types/offers';
 import ReviewCard from '../review-card';
 
-type TReviewListProps = {
-  review: TReview;
+type ReviewListProps = {
+  review: Review;
 };
-export default function ReviewsList({ review }: TReviewListProps) {
+export default function ReviewsList({ review }: ReviewListProps) {
   return (
     <>
       <h2 className="reviews__title">

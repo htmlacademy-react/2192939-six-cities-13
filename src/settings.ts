@@ -21,6 +21,14 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
+export const ratingMap = {
+  '5': 'perfect',
+  '4': 'good',
+  '3': 'not bad',
+  '2': 'badly',
+  '1': 'terribly',
+};
+
 export const RATING_IN_PERCENT = 20;
 
 export const MIN_LENGTH_REVIEW_TEXT = 50;

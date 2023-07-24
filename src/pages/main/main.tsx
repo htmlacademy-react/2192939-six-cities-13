@@ -1,19 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import OfferList from '../../components/offer-list';
-import { TOffers } from '../../types/offers';
+import { Offers } from '../../types/offers';
 import Header from '../../components/header';
 import { AuthStatus, CITIES } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 
-type TMainPageProps = {
-  offers: TOffers;
+type MainPageProps = {
+  offers: Offers;
   authStatus: AuthStatus;
 };
 export default function MainPage({
   offers,
   authStatus,
-}: TMainPageProps): JSX.Element {
+}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>

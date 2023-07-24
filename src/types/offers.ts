@@ -1,37 +1,37 @@
-export type TLocation = {
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
-export type TCity = {
+export type City = {
   name: string;
-  location: TLocation;
+  location: Location;
 };
 
-export type TOffer = {
+export type Offer = {
   id: string;
   title: string;
   type: string;
   price: number;
-  city: TCity;
-  location: TLocation;
+  city: City;
+  location: Location;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
   previewImage: string;
 };
 
-export type TOffers = TOffer[];
+export type Offers = Offer[];
 
-export type TFullOffer = {
+export type FullOffer = {
   id: string;
   title: string;
   description: string;
   type: string;
   price: number;
   images: string[];
-  city: TCity;
-  location: TLocation;
+  city: City;
+  location: Location;
   goods: string[];
   host: {
     isPro: boolean;
@@ -45,9 +45,9 @@ export type TFullOffer = {
   maxAdults: number;
 };
 
-export type TFullOffers = TFullOffer[];
+export type FullOffers = FullOffer[];
 
-export type TReview = {
+export type Review = {
   id: string;
   review: {
     id: string;
@@ -62,9 +62,9 @@ export type TReview = {
   }[];
 };
 
-export type TReviews = TReview[];
+export type Reviews = Review[];
 
-export type TReviewCard = {
+export type ReviewCardType = {
   id: string;
   comment: string;
   date: string;
@@ -76,4 +76,4 @@ export type TReviewCard = {
   };
 };
 
-export type TCities = string[];
+export type Cities = string[];

@@ -1,14 +1,14 @@
-import { TOffer } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-type TFavoriteCardProps = {
-  offer: TOffer;
+type FavoriteCardProps = {
+  offer: Offer;
 };
 export default function FavoriteCard({
   offer,
-}: TFavoriteCardProps): JSX.Element {
+}: FavoriteCardProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       {offer.isPremium && (

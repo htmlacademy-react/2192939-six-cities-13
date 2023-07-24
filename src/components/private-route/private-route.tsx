@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../settings';
 
-type TPrivateRouteProps = {
+type PrivateRouteProps = {
   authStatus?: AuthStatus;
   children: JSX.Element;
 };
@@ -9,7 +9,7 @@ type TPrivateRouteProps = {
 export default function PrivateRoute({
   authStatus,
   children,
-}: TPrivateRouteProps): JSX.Element {
+}: PrivateRouteProps): JSX.Element {
   return authStatus === AuthStatus.Auth ? (
     children
   ) : (

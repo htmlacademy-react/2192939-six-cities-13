@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
-import { TOffer } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 
-type TOfferCardProps = {
-  offer: TOffer;
+type OfferCardProps = {
+  offer: Offer;
 };
-export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
+export default function OfferCard({ offer }: OfferCardProps): JSX.Element {
   const [activeCard, setActiveCard] = useState({});
 
   function handleMouseEnter() {

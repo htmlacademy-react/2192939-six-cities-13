@@ -1,11 +1,11 @@
 import { CITY_DEFAULT } from '../../settings';
-import { TCities } from '../../types/offers';
+import { Cities } from '../../types/offers';
 import classNames from 'classnames';
 
-type TCitiesListProps = {
-  cities: TCities;
+type CitiesListProps = {
+  cities: Cities;
 };
-export default function CitiesList({ cities }: TCitiesListProps): JSX.Element {
+export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
   return (
     <section className="locations container">
       <ul className="locations__list tabs__list">

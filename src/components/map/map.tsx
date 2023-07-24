@@ -1,33 +1,33 @@
-import { TCity, TOffer, TOffers } from '../../types/offers';
+import { City, Offer, Offers } from '../../types/offers';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 
-type TMapProps = {
-  city: TCity;
-  offers: TOffers;
-  selectedPlace?: TOffer | undefined;
+type MapProps = {
+  city: City;
+  offers: Offers;
+  selectedPlace?: Offer;
 };
 
-const defaultCustomIcon = new Icon({
-  iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+function setIcon(urlMarker: string) {
+  return new Icon({
+    iconUrl: urlMarker,
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+}
 
-const currentCustomIcon = new Icon({
-  iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
-});
+const defaultCustomIcon = setIcon(URL_MARKER_DEFAULT);
+
+const currentCustomIcon = setIcon(URL_MARKER_CURRENT);
 
 export default function Map({
   city,
   offers,
-  selectedPlace = undefined,
-}: TMapProps): JSX.Element {
+  selectedPlace,
+}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -42,7 +42,7 @@ export default function Map({
 
         marker
           .setIcon(
-            selectedPlace !== undefined && selectedPlace.id === offer.id
+            selectedPlace && selectedPlace.id === offer.id
               ? currentCustomIcon
               : defaultCustomIcon
           )

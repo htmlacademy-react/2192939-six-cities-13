@@ -1,16 +1,16 @@
 import { useRef, useState, useEffect, MutableRefObject } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { TCity } from '../types/offers';
+import { City } from '../types/offers';
 
 export default function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  city: TCity
+  city: City
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mapRef.current !== null && !isRenderedRef.current) {
+    if (mapRef.current && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
           lat: city.location.latitude,
