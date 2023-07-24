@@ -3,16 +3,16 @@ import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AuthStatus } from '../../settings';
 import { useParams } from 'react-router-dom';
-import { TFullOffers, TReviews } from '../../types/offers';
+import { FullOffers, Reviews } from '../../types/offers';
 import { RATING_IN_PERCENT } from '../../settings';
 import Page404 from '../404';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
 
 type OfferPageProps = {
-  fullOffers: TFullOffers;
+  fullOffers: FullOffers;
   authStatus: AuthStatus;
-  reviews: TReviews;
+  reviews: Reviews;
 };
 export default function OfferPage({
   fullOffers,
