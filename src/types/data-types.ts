@@ -23,7 +23,7 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type FullOffer = Offer & {
+export type FullOffer = Omit<Offer, 'previewImage'> & {
   description: string;
   images: string[];
   goods: string[];
@@ -58,3 +58,14 @@ export type Review = {
 export type Reviews = Review[];
 
 export type Cities = string[];
+
+export type StylesForMap = {
+  width: string;
+  height: string;
+  margin?: string;
+};
+
+export type TypeCard = {
+  Cities: string;
+  NearPlaces: string;
+};

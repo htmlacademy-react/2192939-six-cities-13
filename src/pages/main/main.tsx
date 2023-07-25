@@ -1,10 +1,11 @@
 import { Helmet } from 'react-helmet-async';
-import OfferList from '../../components/offer-list';
-import { Offers } from '../../types/types';
+import { Offers, Offer } from '../../types/data-types';
 import Header from '../../components/header';
-import { AuthStatus, CITIES } from '../../settings';
+import { AuthStatus, CITIES, StylesForMapMainPage, TypeCard } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
+import PlaceCard from '../../components/place-card';
+import { useState } from 'react';
 
 type MainPageProps = {
   offers: Offers;
@@ -14,6 +15,16 @@ export default function MainPage({
   offers,
   authStatus,
 }: MainPageProps): JSX.Element {
+  const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
+
+  function handleMouseEnter(cardId: string) {
+    const currentPlace = offers.find((offer) => offer.id === cardId);
+    setActiveCard(currentPlace);
+  }
+
+  function handleMouseLeave() {
+    setActiveCard(undefined);
+  }
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -59,11 +70,20 @@ export default function MainPage({
                   </li>
                 </ul>
               </form>
-              <OfferList offers={offers} />
+              <div className="cities__places-list places__list tabs__content" >
+                {
+                  offers.map((offer) => (
+                    <PlaceCard key={offer.id} offer={offer} type={TypeCard.Cities}
+                      onCardEnter={handleMouseEnter}
+                      onCardLeave={handleMouseLeave}
+                    />
+                  ))
+                }
+              </div >
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={offers[0].city} offers={offers} />
+                <Map city={offers[0].city} offers={offers} styles={StylesForMapMainPage} selectedPlace={activeCard} />
               </section>
             </div>
           </div>

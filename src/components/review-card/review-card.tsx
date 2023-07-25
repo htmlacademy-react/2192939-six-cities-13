@@ -1,4 +1,4 @@
-import { ReviewCardType } from '../../types/types';
+import { ReviewCardType } from '../../types/data-types';
 import { RATING_IN_PERCENT } from '../../settings';
 
 type ViewCardProps = {

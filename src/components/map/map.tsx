@@ -1,4 +1,4 @@
-import { City, Offer, Offers } from '../../types/types';
+import { City, Offer, Offers, StylesForMap } from '../../types/data-types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
@@ -9,6 +9,7 @@ type MapProps = {
   city: City;
   offers: Offers;
   selectedPlace?: Offer;
+  styles: StylesForMap;
 };
 
 function setIcon(urlMarker: string) {
@@ -27,6 +28,7 @@ export default function Map({
   city,
   offers,
   selectedPlace,
+  styles
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -53,5 +55,5 @@ export default function Map({
     }
   }, [map, offers, selectedPlace]);
 
-  return <div style={{ width: '100%', height: '100%' }} ref={mapRef} />;
+  return <div style={styles} ref={mapRef} />;
 }

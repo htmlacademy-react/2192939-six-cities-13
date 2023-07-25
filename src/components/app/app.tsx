@@ -8,7 +8,7 @@ import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
-import { FullOffers, Offers, Reviews } from '../../types/types';
+import { FullOffers, Offers, Reviews } from '../../types/data-types';
 
 type AppProps = {
   offers: Offers;
@@ -44,6 +44,7 @@ export default function App({
             path={AppRoute.OfferId}
             element={
               <OfferPage
+                offers={offers}
                 fullOffers={fullOffers}
                 reviews={reviews}
                 authStatus={authStatus}

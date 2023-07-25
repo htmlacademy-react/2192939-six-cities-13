@@ -44,3 +44,24 @@ export const URL_MARKER_DEFAULT =
 
 export const URL_MARKER_CURRENT =
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+
+export const StylesForMapMainPage = {
+  width: '100%',
+  height: '100%',
+};
+
+export const StylesForMapOfferPage = {
+  width: '1144px',
+  height: '100%',
+  margin: '0 auto',
+};
+
+export const TypeCard = {
+  Cities: 'cities',
+  NearPlaces: 'near-places',
+  Favorites: 'favorites',
+};
+
+export function capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
