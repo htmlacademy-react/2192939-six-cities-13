@@ -7,19 +7,25 @@ import classNames from 'classnames';
 type PlaceCardProps = {
   offer: Offer;
   type: string;
-  onCardEnter: (cardId: string) => void;
-  onCardLeave: () => void;
+  onCardEnter?: (cardId: string) => void;
+  onCardLeave?: () => void;
 }
 
 
 export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: PlaceCardProps): JSX.Element {
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
+    if (!onCardEnter) {
+      return;
+    }
     onCardEnter(evt.currentTarget.id);
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
+    if (!onCardLeave) {
+      return;
+    }
     onCardLeave();
   };
 
