@@ -1,5 +1,5 @@
 import { CITY_DEFAULT } from '../../settings';
-import { Cities } from '../../types/offers';
+import { Cities } from '../../types/types';
 import classNames from 'classnames';
 
 type CitiesListProps = {

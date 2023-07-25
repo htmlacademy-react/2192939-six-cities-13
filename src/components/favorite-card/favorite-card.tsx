@@ -1,4 +1,4 @@
-import { Offer } from '../../types/offers';
+import { Offer } from '../../types/types';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';

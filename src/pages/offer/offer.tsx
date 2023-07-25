@@ -3,7 +3,7 @@ import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AuthStatus } from '../../settings';
 import { useParams } from 'react-router-dom';
-import { FullOffers, Reviews } from '../../types/offers';
+import { FullOffers, Reviews } from '../../types/types';
 import { RATING_IN_PERCENT } from '../../settings';
 import Page404 from '../404';
 import ReviewsList from '../../components/reviews-list';

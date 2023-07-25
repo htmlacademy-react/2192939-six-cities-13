@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import OfferList from '../../components/offer-list';
-import { Offers } from '../../types/offers';
+import { Offers } from '../../types/types';
 import Header from '../../components/header';
 import { AuthStatus, CITIES } from '../../settings';
 import CitiesList from '../../components/cities-list';

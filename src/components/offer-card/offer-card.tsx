@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
-import { Offer } from '../../types/offers';
+import { Offer } from '../../types/types';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 

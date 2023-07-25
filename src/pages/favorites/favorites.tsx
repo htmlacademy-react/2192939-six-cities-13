@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers } from '../../types/offers';
+import { Offers } from '../../types/types';
 import FavoriteCard from '../../components/favorite-card';
 import Header from '../../components/header';
 

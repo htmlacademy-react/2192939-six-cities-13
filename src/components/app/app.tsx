@@ -8,7 +8,7 @@ import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
-import { FullOffers, Offers, Reviews } from '../../types/offers';
+import { FullOffers, Offers, Reviews } from '../../types/types';
 
 type AppProps = {
   offers: Offers;

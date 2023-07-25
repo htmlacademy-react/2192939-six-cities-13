@@ -1,4 +1,4 @@
-import { City, Offer, Offers } from '../../types/offers';
+import { City, Offer, Offers } from '../../types/types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';

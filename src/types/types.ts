@@ -23,46 +23,20 @@ export type Offer = {
 
 export type Offers = Offer[];
 
-export type FullOffer = {
-  id: string;
-  title: string;
+export type FullOffer = Offer & {
   description: string;
-  type: string;
-  price: number;
   images: string[];
-  city: City;
-  location: Location;
   goods: string[];
   host: {
     isPro: boolean;
     name: string;
     avatarUrl: string;
   };
-  isPremium: boolean;
-  isFavorite: boolean;
-  rating: number;
   bedrooms: number;
   maxAdults: number;
 };
 
 export type FullOffers = FullOffer[];
-
-export type Review = {
-  id: string;
-  review: {
-    id: string;
-    comment: string;
-    date: string;
-    rating: number;
-    user: {
-      name: string;
-      avatarUrl: string;
-      isPro: boolean;
-    };
-  }[];
-};
-
-export type Reviews = Review[];
 
 export type ReviewCardType = {
   id: string;
@@ -75,5 +49,12 @@ export type ReviewCardType = {
     isPro: boolean;
   };
 };
+
+export type Review = {
+  id: string;
+  review: ReviewCardType[];
+};
+
+export type Reviews = Review[];
 
 export type Cities = string[];
