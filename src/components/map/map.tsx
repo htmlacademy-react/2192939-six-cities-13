@@ -40,13 +40,11 @@ export default function Map({
           lng: offer.location.longitude,
         });
 
-        marker
-          .setIcon(
-            selectedPlace && selectedPlace.id === offer.id
-              ? currentCustomIcon
-              : defaultCustomIcon
-          )
-          .addTo(markerLayer);
+        marker.setIcon(
+          selectedPlace && selectedPlace.id === offer.id
+            ? currentCustomIcon
+            : defaultCustomIcon
+        ).addTo(markerLayer);
       });
 
       return () => {

@@ -21,12 +21,9 @@ export default function ReviewForm(): JSX.Element {
     setReview(target.value);
   };
 
-  const isReview = !(
-    rating !== EMPTY_RATING &&
-    review.length >= MIN_LENGTH_REVIEW_TEXT &&
-    review.length <= MAX_LENGTH_REVIEW_TEXT
-  );
-
+  const isReview = rating !== EMPTY_RATING
+    && review.length >= MIN_LENGTH_REVIEW_TEXT
+    && review.length <= MAX_LENGTH_REVIEW_TEXT;
   return (
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">
@@ -75,7 +72,7 @@ export default function ReviewForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isReview}
+          disabled={!isReview}
         >
           Submit
         </button>

@@ -24,9 +24,7 @@ export default function ReviewCard({ item }: ViewCardProps) {
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
             <span
-              style={{
-                width: `${Math.round(item.rating) * RATING_IN_PERCENT}%`,
-              }}
+              style={{ width: `${Math.round(item.rating) * RATING_IN_PERCENT}%`, }}
             />
             <span className="visually-hidden">Rating</span>
           </div>
