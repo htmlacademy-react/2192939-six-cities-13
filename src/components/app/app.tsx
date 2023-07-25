@@ -8,12 +8,12 @@ import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
-import { TFullOffers, TOffers, TReviews } from '../../types/offers';
+import { FullOffers, Offers, Reviews } from '../../types/types';
 
-type TAppProps = {
-  offers: TOffers;
-  fullOffers: TFullOffers;
-  reviews: TReviews;
+type AppProps = {
+  offers: Offers;
+  fullOffers: FullOffers;
+  reviews: Reviews;
   authStatus: AuthStatus;
 };
 export default function App({
@@ -21,7 +21,7 @@ export default function App({
   fullOffers,
   reviews,
   authStatus = AuthStatus.Auth,
-}: TAppProps): JSX.Element {
+}: AppProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>

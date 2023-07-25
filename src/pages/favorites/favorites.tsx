@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { TOffers } from '../../types/offers';
+import { Offers } from '../../types/types';
 import FavoriteCard from '../../components/favorite-card';
 import Header from '../../components/header';
 
 type FavoritesPageProps = {
-  offers: TOffers;
+  offers: Offers;
 };
 export default function FavoritesPage({
   offers,

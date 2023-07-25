@@ -1,17 +1,19 @@
 import { Helmet } from 'react-helmet-async';
 import OfferList from '../../components/offer-list';
-import { TOffers } from '../../types/offers';
+import { Offers } from '../../types/types';
 import Header from '../../components/header';
-import { AuthStatus } from '../../settings';
+import { AuthStatus, CITIES } from '../../settings';
+import CitiesList from '../../components/cities-list';
+import Map from '../../components/map';
 
-type TMainPageProps = {
-  offers: TOffers;
+type MainPageProps = {
+  offers: Offers;
   authStatus: AuthStatus;
 };
 export default function MainPage({
   offers,
   authStatus,
-}: TMainPageProps): JSX.Element {
+}: MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -21,47 +23,14 @@ export default function MainPage({
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
+          <CitiesList cities={CITIES} />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {offers.length} places to stay in Paris
+                {offers.length} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -93,7 +62,9 @@ export default function MainPage({
               <OfferList offers={offers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map">
+                <Map city={offers[0].city} offers={offers} />
+              </section>
             </div>
           </div>
         </div>

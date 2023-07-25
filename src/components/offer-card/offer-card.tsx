@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AppRoute, RATING_IN_PERCENT } from '../../settings';
-import { TOffer } from '../../types/offers';
+import { Offer } from '../../types/types';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
-type TOfferCardProps = {
-  offer: TOffer;
+type OfferCardProps = {
+  offer: Offer;
 };
-export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
+export default function OfferCard({ offer }: OfferCardProps): JSX.Element {
   const [activeCard, setActiveCard] = useState({});
-
-  useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log(activeCard);
-  }, [activeCard]);
 
   function handleMouseEnter() {
     setActiveCard(offer);
@@ -27,6 +23,7 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
       className="cities__card place-card"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      data-name={activeCard}
     >
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
@@ -46,9 +43,11 @@ export default function OfferCard({ offer }: TOfferCardProps): JSX.Element {
             <span className="place-card__price-text"> /&nbsp;night</span>
           </div>
           <button
-            className={`place-card__bookmark-button${
-              offer.isFavorite ? '--active' : ''
-            } button`}
+            className={classNames(
+              'place-card__bookmark-button',
+              { 'place-card__bookmark-button--active': offer.isFavorite },
+              'button'
+            )}
             type="button"
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>

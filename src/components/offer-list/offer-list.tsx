@@ -1,10 +1,10 @@
-import { TOffers } from '../../types/offers';
+import { Offers } from '../../types/types';
 import OfferCard from '../offer-card';
 
-type TOfferList = {
-  offers: TOffers;
+type OfferListProps = {
+  offers: Offers;
 };
-export default function OfferList({ offers }: TOfferList): JSX.Element {
+export default function OfferList({ offers }: OfferListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (

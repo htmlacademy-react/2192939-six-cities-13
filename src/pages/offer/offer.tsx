@@ -3,13 +3,16 @@ import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AuthStatus } from '../../settings';
 import { useParams } from 'react-router-dom';
-import { TFullOffers, TReviews } from '../../types/offers';
+import { FullOffers, Reviews } from '../../types/types';
 import { RATING_IN_PERCENT } from '../../settings';
+import Page404 from '../404';
+import ReviewsList from '../../components/reviews-list';
+import classNames from 'classnames';
 
 type OfferPageProps = {
-  fullOffers: TFullOffers;
+  fullOffers: FullOffers;
   authStatus: AuthStatus;
-  reviews: TReviews;
+  reviews: Reviews;
 };
 export default function OfferPage({
   fullOffers,
@@ -19,6 +22,10 @@ export default function OfferPage({
   const offerId = useParams();
   const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
   const review = reviews.find((item) => item.id === offerId.id);
+
+  if (fullOffer === undefined || review === undefined) {
+    return <Page404 />;
+  }
 
   return (
     <div className="page">
@@ -30,34 +37,30 @@ export default function OfferPage({
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {fullOffer &&
-                fullOffer.images.map((item) => (
-                  <div
-                    className="offer__image-wrapper"
-                    key={crypto.randomUUID()}
-                  >
-                    <img
-                      className="offer__image"
-                      src={item}
-                      alt="Photo studio"
-                    />
-                  </div>
-                ))}
+              {fullOffer.images.map((item) => (
+                <div className="offer__image-wrapper" key={crypto.randomUUID()}>
+                  <img className="offer__image" src={item} alt="Photo studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {fullOffer && fullOffer.isPremium && (
+              {fullOffer.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{fullOffer && fullOffer.title}</h1>
+                <h1 className="offer__name">{fullOffer.title}</h1>
                 <button
-                  className={`offer__bookmark-button${
-                    fullOffer && fullOffer.isFavorite ? '--active' : ''
-                  } button`}
+                  className={classNames(
+                    'offer__bookmark-button',
+                    {
+                      'offer__bookmark-button--active': fullOffer.isFavorite,
+                    },
+                    'button'
+                  )}
                   type="button"
                 >
                   <svg className="offer__bookmark-icon" width={31} height={33}>
@@ -79,38 +82,35 @@ export default function OfferPage({
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">
-                  {fullOffer && fullOffer.rating}
+                  {fullOffer.rating}
                 </span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {fullOffer && fullOffer.type}
+                  {fullOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {fullOffer && fullOffer.bedrooms} Bedrooms
+                  {fullOffer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {fullOffer && fullOffer.maxAdults} adults
+                  Max {fullOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">
-                  €{fullOffer && fullOffer.price}
-                </b>
+                <b className="offer__price-value">€{fullOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {fullOffer &&
-                    fullOffer.goods.map((item) => (
-                      <li
-                        className="offer__inside-item"
-                        key={crypto.randomUUID()}
-                      >
-                        {item}
-                      </li>
-                    ))}
+                  {fullOffer.goods.map((item) => (
+                    <li
+                      className="offer__inside-item"
+                      key={crypto.randomUUID()}
+                    >
+                      {item}
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="offer__host">
@@ -118,76 +118,30 @@ export default function OfferPage({
                 <div className="offer__host-user user">
                   <div
                     className={`offer__avatar-wrapper offer__avatar-wrapper${
-                      fullOffer && fullOffer.host.isPro ? '--pro' : ''
+                      fullOffer.host.isPro ? '--pro' : ''
                     } user__avatar-wrapper`}
                   >
                     <img
                       className="offer__avatar user__avatar"
-                      src={fullOffer && fullOffer.host.avatarUrl}
+                      src={fullOffer.host.avatarUrl}
                       width={74}
                       height={74}
                       alt="Host avatar"
                     />
                   </div>
                   <span className="offer__user-name">
-                    {fullOffer && fullOffer.host.name}
+                    {fullOffer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {fullOffer && fullOffer.host.isPro ? 'Pro' : ''}
+                    {fullOffer.host.isPro ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    {fullOffer && fullOffer.description}
-                  </p>
+                  <p className="offer__text">{fullOffer.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews ·{' '}
-                  <span className="reviews__amount">
-                    {review && review.review.length}
-                  </span>
-                </h2>
-                <ul className="reviews__list">
-                  {review &&
-                    review.review.map((item) => (
-                      <li className="reviews__item" key={item.id}>
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img
-                              className="reviews__avatar user__avatar"
-                              src={item.user.avatarUrl}
-                              width={54}
-                              height={54}
-                              alt="Reviews avatar"
-                            />
-                          </div>
-                          <span className="reviews__user-name">
-                            {item.user.name}
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span
-                                style={{
-                                  width: `${
-                                    Math.round(item.rating) * RATING_IN_PERCENT
-                                  }%`,
-                                }}
-                              />
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
-                          <p className="reviews__text">{item.comment}</p>
-                          <time className="reviews__time" dateTime="2019-04-24">
-                            {item.date}
-                          </time>
-                        </div>
-                      </li>
-                    ))}
-                </ul>
+                <ReviewsList review={review} />
                 <ReviewForm />
               </section>
             </div>
