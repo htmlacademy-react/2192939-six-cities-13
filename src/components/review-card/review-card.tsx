@@ -7,7 +7,7 @@ type ViewCardProps = {
 
 export default function ReviewCard({ item }: ViewCardProps) {
   return (
-    <li className="reviews__item" key={item.id}>
+    <>
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img
@@ -36,6 +36,6 @@ export default function ReviewCard({ item }: ViewCardProps) {
           {item.date}
         </time>
       </div>
-    </li>
+    </>
   );
 }

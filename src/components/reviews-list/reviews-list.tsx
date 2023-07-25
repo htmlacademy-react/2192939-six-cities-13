@@ -13,7 +13,9 @@ export default function ReviewsList({ review }: ReviewListProps) {
       </h2>
       <ul className="reviews__list">
         {review.review.map((item) => (
-          <ReviewCard key={item.id} item={item} />
+          <li className="reviews__item" key={item.id}>
+            <ReviewCard item={item} />
+          </li>
         ))}
       </ul>
     </>
