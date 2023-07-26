@@ -41,7 +41,7 @@ export default function App({
             }
           />
           <Route
-            path={AppRoute.OfferId}
+            path={`${AppRoute.Offer}/:id`}
             element={
               <OfferPage
                 offers={offers}

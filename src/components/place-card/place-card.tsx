@@ -83,7 +83,7 @@ export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: Pla
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={AppRoute.Offer + offer.id}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <h2 className="place-card__name">{offer.title}</h2>
         </Link>
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>

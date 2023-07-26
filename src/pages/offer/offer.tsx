@@ -1,7 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage, TypeCard, capitalizeFirstLetter } from '../../settings';
+import { AuthStatus, StylesForMapOfferPage, TypeCard } from '../../settings';
+import { capitalizeFirstLetter } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
 import { FullOffers, Offers, Reviews } from '../../types/data-types';
 import { RATING_IN_PERCENT } from '../../settings';

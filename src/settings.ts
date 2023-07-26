@@ -2,8 +2,7 @@ export const AppRoute = {
   Root: '/',
   Login: '/login',
   Favorites: '/favorites',
-  Offer: '/offer/',
-  OfferId: '/offer/:id',
+  Offer: '/offer',
 } as const;
 
 export enum AuthStatus {
@@ -39,9 +38,9 @@ export const CITY_DEFAULT = 0;
 
 export const EMPTY_RATING = '0';
 
-export const URL_MARKER_DEFAULT = '../public/img/pin.svg';
+export const URL_MARKER_DEFAULT = '../img/pin.svg';
 
-export const URL_MARKER_CURRENT = '../public/img/pin-active.svg';
+export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
 export const StylesForMapMainPage = {
   width: '100%',
@@ -59,7 +58,3 @@ export const TypeCard = {
   NearPlaces: 'near-places',
   Favorites: 'favorites',
 };
-
-export function capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
