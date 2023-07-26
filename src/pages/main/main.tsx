@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers, Offer } from '../../types/data-types';
 import Header from '../../components/header';
-import { AuthStatus, CITIES, StylesForMapMainPage, TypeCard } from '../../settings';
+import { AuthStatus, CITIES, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceCard from '../../components/place-card';
@@ -73,7 +73,7 @@ export default function MainPage({
               <div className="cities__places-list places__list tabs__content" >
                 {
                   offers.map((offer) => (
-                    <PlaceCard key={offer.id} offer={offer} type={TypeCard.Cities}
+                    <PlaceCard key={offer.id} offer={offer} type={'cities'}
                       onCardEnter={handleMouseEnter}
                       onCardLeave={handleMouseLeave}
                     />

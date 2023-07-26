@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/data-types';
 import Header from '../../components/header';
 import PlaceCard from '../../components/place-card';
-import { TypeCard } from '../../settings';
 import { Link } from 'react-router-dom';
 
 type FavoritesPageProps = {
@@ -34,7 +33,7 @@ export default function FavoritesPage({
                   {offers.map(
                     (offer) =>
                       offer.isFavorite && (
-                        <PlaceCard key={offer.id} offer={offer} type={TypeCard.Favorites} />
+                        <PlaceCard key={offer.id} offer={offer} type={'favorites'} />
                       )
                   )}
                 </div>

@@ -1,5 +1,5 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, TypeCard } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 
 type PlaceCardProps = {
   offer: Offer;
-  type: string;
+  type: 'cities' | 'near-places' | 'favorites';
   onCardEnter?: (cardId: string) => void;
   onCardLeave?: () => void;
 }
@@ -46,14 +46,14 @@ export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: Pla
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={type === TypeCard.Favorites ? 150 : 260}
-            height={type === TypeCard.Favorites ? 110 : 200}
+            width={type === PageCard.Favorites ? 150 : 260}
+            height={type === PageCard.Favorites ? 110 : 200}
             alt="Place image"
           />
         </a>
       </div>
       <div className={classNames(
-        { 'favorites__card-info': type === TypeCard.Favorites },
+        { 'favorites__card-info': type === PageCard.Favorites },
         'place-card__info'
       )}
       >

@@ -13,13 +13,13 @@ import { FullOffers, Offers, Reviews } from '../../types/data-types';
 type AppProps = {
   offers: Offers;
   fullOffers: FullOffers;
-  reviews: Reviews;
+  reviewsList: Reviews;
   authStatus: AuthStatus;
 };
 export default function App({
   offers,
   fullOffers,
-  reviews,
+  reviewsList,
   authStatus = AuthStatus.Auth,
 }: AppProps): JSX.Element {
   return (
@@ -46,7 +46,7 @@ export default function App({
               <OfferPage
                 offers={offers}
                 fullOffers={fullOffers}
-                reviews={reviews}
+                reviewsList={reviewsList}
                 authStatus={authStatus}
               />
             }

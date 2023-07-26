@@ -9,10 +9,10 @@ export default function ReviewsList({ reviews }: ReviewListProps) {
     <>
       <h2 className="reviews__title">
         Reviews ·{' '}
-        <span className="reviews__amount">{reviews.review.length}</span>
+        <span className="reviews__amount">{reviews.reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {reviews.review.map((item) => (
+        {reviews.reviews.map((item) => (
           <li className="reviews__item" key={item.id}>
             <ReviewCard item={item} />
           </li>

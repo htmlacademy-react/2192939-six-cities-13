@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage, TypeCard } from '../../settings';
+import { AuthStatus, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
 import { FullOffers, Offers, Reviews } from '../../types/data-types';
@@ -161,7 +161,7 @@ export default function OfferPage({
             <div className="near-places__list places__list" >
               {
                 neighborPlaces.map((offer) => (
-                  <PlaceCard key={offer.id} offer={offer} type={TypeCard.Cities} />
+                  <PlaceCard key={offer.id} offer={offer} type={'near-places'} />
                 ))
               }
             </div >

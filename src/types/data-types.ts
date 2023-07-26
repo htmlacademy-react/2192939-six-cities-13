@@ -41,7 +41,7 @@ export type FullOffers = FullOffer[];
 export type ReviewCardType = {
   id: string;
   comment: string;
-  date: Date;
+  date: string;
   rating: number;
   user: {
     name: string;
@@ -52,7 +52,7 @@ export type ReviewCardType = {
 
 export type Review = {
   id: string;
-  review: ReviewCardType[];
+  reviews: ReviewCardType[];
 };
 
 export type Reviews = Review[];
@@ -66,6 +66,7 @@ export type StylesForMap = {
 };
 
 export type TypeCard = {
-  Cities: string;
-  NearPlaces: string;
+  Cities: 'cities';
+  NearPlaces: 'near-places';
+  Favorites: 'favorites';
 };

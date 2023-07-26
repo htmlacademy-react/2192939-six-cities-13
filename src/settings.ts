@@ -53,7 +53,7 @@ export const StylesForMapOfferPage = {
   margin: '0 auto',
 };
 
-export const TypeCard = {
+export const PageCard = {
   Cities: 'cities',
   NearPlaces: 'near-places',
   Favorites: 'favorites',
