@@ -16,21 +16,21 @@ type OfferPageProps = {
   offers: Offers;
   fullOffers: FullOffers;
   authStatus: AuthStatus;
-  reviews: Reviews;
+  reviewsList: Reviews;
 };
 export default function OfferPage({
   offers,
   fullOffers,
-  reviews,
+  reviewsList,
   authStatus,
 }: OfferPageProps): JSX.Element {
   const offerId = useParams();
   const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
-  const review = reviews.find((item) => item.id === offerId.id);
+  const reviews = reviewsList.find((item) => item.id === offerId.id);
 
   const neighborPlaces = offers.filter((offer) => offerId.id !== offer.id);
 
-  if (!fullOffer || !review) {
+  if (!fullOffer || !reviews) {
     return <Page404 />;
   }
 
@@ -144,7 +144,7 @@ export default function OfferPage({
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <ReviewsList review={review} />
+                <ReviewsList reviews={reviews} />
                 <ReviewForm />
               </section>
             </div>

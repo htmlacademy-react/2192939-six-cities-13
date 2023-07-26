@@ -295,10 +295,10 @@ export const fullOffers = [
   },
 ];
 
-export const reviews = [
+export const reviewsList = [
   {
     id: '0323099b-fe5f-4892-bd43-756f6953d473',
-    review: [
+    reviews: [
       {
         id: 'b8b71507-3201-4e8f-95ad-bf77b56ae2ca',
         comment:
@@ -315,7 +315,7 @@ export const reviews = [
   },
   {
     id: '0a723f12-2536-430d-83da-65eec5d670ab',
-    review: [
+    reviews: [
       {
         id: 'aa2c01f8-38e4-4dfe-93a8-705591e6906f',
         comment:
@@ -356,7 +356,7 @@ export const reviews = [
   },
   {
     id: '9b04faea-f0aa-4eb2-99c7-7a2bd1087dd9',
-    review: [
+    reviews: [
       {
         id: 'a890fc6d-e855-405a-92dd-f86fc888d2dc',
         comment:
@@ -396,6 +396,6 @@ export const reviews = [
   },
   {
     id: 'ddc38e28-dadc-4abd-892c-a738017c0572',
-    review: [],
+    reviews: [],
   },
 ];
