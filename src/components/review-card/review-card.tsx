@@ -6,6 +6,11 @@ type ViewCardProps = {
 };
 
 export default function ReviewCard({ item }: ViewCardProps) {
+  const date = new Date(item.date);
+  const formatter = new Intl.DateTimeFormat('us', {
+    month: 'long',
+    year: 'numeric',
+  });
   return (
     <>
       <div className="reviews__user user">
@@ -31,7 +36,7 @@ export default function ReviewCard({ item }: ViewCardProps) {
         </div>
         <p className="reviews__text">{item.comment}</p>
         <time className="reviews__time" dateTime="2019-04-24">
-          {item.date}
+          {formatter.format(date)}
         </time>
       </div>
     </>

@@ -41,7 +41,7 @@ export type FullOffers = FullOffer[];
 export type ReviewCardType = {
   id: string;
   comment: string;
-  date: string;
+  date: Date;
   rating: number;
   user: {
     name: string;
