@@ -29,7 +29,7 @@ export default function OfferPage({
 
   const neighborPlaces = offers.filter((offer) => offerId.id !== offer.id);
 
-  if (fullOffer === undefined || review === undefined) {
+  if (!fullOffer || !review) {
     return <Page404 />;
   }
 
