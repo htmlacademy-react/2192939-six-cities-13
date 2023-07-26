@@ -1,42 +1,62 @@
-import { useState } from 'react';
-import { AppRoute, RATING_IN_PERCENT } from '../../settings';
-import { Offer } from '../../types/types';
+import { Offer } from '../../types/data-types';
+import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
+import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
+import { MouseEvent } from 'react';
 import classNames from 'classnames';
 
-type OfferCardProps = {
+type PlaceCardProps = {
   offer: Offer;
-};
-export default function OfferCard({ offer }: OfferCardProps): JSX.Element {
-  const [activeCard, setActiveCard] = useState({});
+  type: 'cities' | 'near-places' | 'favorites';
+  onCardEnter?: (cardId: string) => void;
+  onCardLeave?: () => void;
+}
 
-  function handleMouseEnter() {
-    setActiveCard(offer);
-  }
 
-  function handleMouseLeave() {
-    setActiveCard({});
-  }
+export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: PlaceCardProps): JSX.Element {
+  const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    if (!onCardEnter) {
+      return;
+    }
+    onCardEnter(evt.currentTarget.id);
+  };
+
+  const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+    if (!onCardLeave) {
+      return;
+    }
+    onCardLeave();
+  };
 
   return (
-    <article
-      className="cities__card place-card"
+    <article className={`${type}__card place-card`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      data-name={activeCard}
+      id={offer.id}
     >
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      {offer.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
+      <div className={`${type}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={260}
-            height={200}
+            width={type === PageCard.Favorites ? 150 : 260}
+            height={type === PageCard.Favorites ? 110 : 200}
             alt="Place image"
           />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className={classNames(
+        { 'favorites__card-info': type === PageCard.Favorites },
+        'place-card__info'
+      )}
+      >
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{offer.price} </b>
@@ -64,11 +84,12 @@ export default function OfferCard({ offer }: OfferCardProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={AppRoute.Offer + offer.id}>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <h2 className="place-card__name">{offer.title}</h2>
         </Link>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
+
   );
 }

@@ -2,8 +2,7 @@ export const AppRoute = {
   Root: '/',
   Login: '/login',
   Favorites: '/favorites',
-  Offer: '/offer/',
-  OfferId: '/offer/:id',
+  Offer: '/offer',
 } as const;
 
 export enum AuthStatus {
@@ -39,8 +38,23 @@ export const CITY_DEFAULT = 0;
 
 export const EMPTY_RATING = '0';
 
-export const URL_MARKER_DEFAULT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
+export const URL_MARKER_DEFAULT = '../img/pin.svg';
 
-export const URL_MARKER_CURRENT =
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+export const URL_MARKER_CURRENT = '../img/pin-active.svg';
+
+export const StylesForMapMainPage = {
+  width: '100%',
+  height: '100%',
+};
+
+export const StylesForMapOfferPage = {
+  width: '1144px',
+  height: '100%',
+  margin: '0 auto',
+};
+
+export const PageCard = {
+  Cities: 'cities',
+  NearPlaces: 'near-places',
+  Favorites: 'favorites',
+};
