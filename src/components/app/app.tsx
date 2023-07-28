@@ -9,6 +9,8 @@ import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
 import { FullOffers, Offers, Reviews } from '../../types/data-types';
+import { useDispatch } from 'react-redux';
+import { loadOffersAction } from '../../store/action';
 
 type AppProps = {
   offers: Offers;
@@ -22,6 +24,11 @@ export default function App({
   reviewsList,
   authStatus = AuthStatus.Auth,
 }: AppProps): JSX.Element {
+
+  const dispatch = useDispatch();
+
+  dispatch(loadOffersAction(offers));
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -29,7 +36,7 @@ export default function App({
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage offers={offers} authStatus={authStatus} />}
+            element={<MainPage authStatus={authStatus} />}
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
