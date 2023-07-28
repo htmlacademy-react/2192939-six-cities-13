@@ -33,19 +33,16 @@ export default function Map({
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  if (map) {
-    map.setView(
-      {
-        lat: city.location.latitude,
-        lng: city.location.longitude,
-      },
-      city.location.zoom,
-    );
-  }
-
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude,
+        },
+        city.location.zoom,
+      );
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -63,7 +60,7 @@ export default function Map({
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedPlace]);
+  }, [map, offers, selectedPlace, city]);
 
   return <div style={styles} ref={mapRef} />;
 }
