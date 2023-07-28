@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { Offers } from '../types/data-types';
 
 export const selectCityAction = createAction(
   'main/selectCityAction',
@@ -10,9 +9,4 @@ export const selectCityAction = createAction(
       };
     }
   }
-);
-
-export const fillOffersListAction = createAction(
-  'main/fillCityListAction',
-  (value: Offers) => ({ payload: value })
 );
