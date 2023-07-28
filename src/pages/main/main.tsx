@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers, Offer } from '../../types/data-types';
+import { Offer } from '../../types/data-types';
 import Header from '../../components/header';
 import { AuthStatus, CITIES, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
