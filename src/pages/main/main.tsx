@@ -13,18 +13,13 @@ import Sorting from '../../components/sorting';
 import PlaceList from '../../components/place-list';
 
 type MainPageProps = {
-  offers: Offers;
   authStatus: AuthStatus;
 };
-export default function MainPage({
-  offers,
-  authStatus,
-}: MainPageProps): JSX.Element {
+export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
+
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
-
-
+  const offers = useAppSelector((store) => store.offers);
   const cityName = useAppSelector((store) => store.cityName);
-
   const cityOffers = getCityOffers(offers, cityName);
 
   function handleMouseEnter(cardId: string) {
