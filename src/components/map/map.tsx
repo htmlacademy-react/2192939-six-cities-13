@@ -33,6 +33,16 @@ export default function Map({
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
+  if (map) {
+    map.setView(
+      {
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      },
+      city.location.zoom,
+    );
+  }
+
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
