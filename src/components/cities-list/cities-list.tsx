@@ -18,7 +18,7 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
     dispatch(selectCityAction(evt.currentTarget.textContent));
   };
   return (
-    <section className="locations container">
+    <div className="locations container">
       <ul className="locations__list tabs__list">
         {cities.map((city) => (
           <li className="locations__item" key={city} onClick={handleElementClick}>
@@ -32,6 +32,6 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
           </li>
         ))}
       </ul>
-    </section>
+    </div>
   );
 }
