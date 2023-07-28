@@ -575,7 +575,7 @@ img {
   (min-resolution: 144dpi),
   (min-resolution: 1.5dppx) {
   .page__main--index-empty .cities__right-section {
-    background-image: url(./img/no-places@2x.png);
+    background-image: url(../img/no-places@2x.png);
   }
 }
 @media (max-height: 780px) {
