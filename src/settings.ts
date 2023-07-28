@@ -34,13 +34,13 @@ export const MIN_LENGTH_REVIEW_TEXT = 50;
 
 export const MAX_LENGTH_REVIEW_TEXT = 300;
 
-export const CITY_DEFAULT = 0;
-
 export const EMPTY_RATING = '0';
 
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 
 export const URL_MARKER_CURRENT = '../img/pin-active.svg';
+
+export const DEFAULT_CITY = 'Paris';
 
 export const StylesForMapMainPage = {
   width: '100%',

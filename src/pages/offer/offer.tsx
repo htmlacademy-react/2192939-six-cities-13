@@ -10,7 +10,8 @@ import Page404 from '../404';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
 import Map from '../../components/map';
-import PlaceCard from '../../components/place-card';
+import PlaceList from '../../components/place-list';
+import { useAppSelector } from '../../hooks';
 
 type OfferPageProps = {
   offers: Offers;
@@ -27,8 +28,9 @@ export default function OfferPage({
   const offerId = useParams();
   const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
   const reviews = reviewsList.find((item) => item.id === offerId.id);
+  const cityName = useAppSelector((store) => store.cityName);
 
-  const neighborPlaces = offers.filter((offer) => offerId.id !== offer.id);
+  const neighborPlaces = offers.filter((offer) => offerId.id !== offer.id && cityName === offer.city.name);
 
   if (!fullOffer || !reviews) {
     return <Page404 />;
@@ -158,13 +160,7 @@ export default function OfferPage({
             <h2 className="near-places__title">
               Other places in the neighborhood
             </h2>
-            <div className="near-places__list places__list" >
-              {
-                neighborPlaces.map((offer) => (
-                  <PlaceCard key={offer.id} offer={offer} type={'near-places'} />
-                ))
-              }
-            </div >
+            <PlaceList offers={neighborPlaces} type={'near-places'} />
           </section>
         </div>
       </main>

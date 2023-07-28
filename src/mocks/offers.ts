@@ -1,5 +1,51 @@
 export const offers = [
   {
+    id: 'd4c7ef6d-15d0-483e-832e-68b410fbe981',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'room',
+    price: 265,
+    previewImage: 'https://13.design.pages.academy/static/hotel/19.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13,
+      },
+    },
+    location: {
+      latitude: 48.868610000000004,
+      longitude: 2.342499,
+      zoom: 16,
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 2.8,
+  },
+  {
+    id: 'eb7bff03-70c4-4393-b525-148b92e001ff',
+    title: 'Beautiful & luxurious apartment at great location',
+    type: 'hotel',
+    price: 136,
+    previewImage: 'https://13.design.pages.academy/static/hotel/1.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13,
+      },
+    },
+    location: {
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
+      zoom: 16,
+    },
+    isFavorite: true,
+    isPremium: false,
+    rating: 3.7,
+  },
+  {
     id: '0323099b-fe5f-4892-bd43-756f6953d473',
     title: 'Perfectly located Castro',
     type: 'apartment',
