@@ -3,10 +3,12 @@ import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCityAction } from '../../store/action';
+import { sortingMap } from '../../settings';
 type CitiesListProps = {
   cities: Cities;
+  setTypeSorting: (value: string) => void;
 };
-export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
+export default function CitiesList({ cities, setTypeSorting }: CitiesListProps): JSX.Element {
   const selectedCity = useAppSelector((state) => state.cityName);
   const dispatch = useAppDispatch();
 
@@ -16,7 +18,9 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
       return;
     }
     dispatch(selectCityAction(evt.currentTarget.textContent));
+    setTypeSorting(Object.keys(sortingMap)[0]);
   };
+
   return (
     <div className="locations container">
       <ul className="locations__list tabs__list">

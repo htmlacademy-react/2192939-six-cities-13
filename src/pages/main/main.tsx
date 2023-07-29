@@ -1,12 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../../types/data-types';
 import Header from '../../components/header';
-import { AuthStatus, CITIES, StylesForMapMainPage } from '../../settings';
+import { AuthStatus, CITIES, StylesForMapMainPage, sortingMap } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import { useState } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getCityOffers } from '../../utils/offers';
+import { getCityOffers, getSortedOffersBy } from '../../utils/offers';
 import classNames from 'classnames';
 import PlaceListEmpty from '../../components/place-list-empty';
 import Sorting from '../../components/sorting';
@@ -18,6 +18,8 @@ type MainPageProps = {
 export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
 
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
+  const [typeSorting, setTypeSorting] = useState(Object.keys(sortingMap)[0]);
+
   const offers = useAppSelector((store) => store.offers);
   const cityName = useAppSelector((store) => store.cityName);
   const cityOffers = getCityOffers(offers, cityName);
@@ -31,6 +33,10 @@ export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
     setActiveCard(undefined);
   }
 
+  function handleChangeSorting(sortType: string) {
+    setTypeSorting(sortType);
+  }
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -42,7 +48,7 @@ export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
       >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesList cities={CITIES} />
+          <CitiesList cities={CITIES} setTypeSorting={setTypeSorting} />
         </div>
         <div className="cities">
           {!cityOffers.length &&
@@ -54,8 +60,8 @@ export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
                 <b className="places__found">
                   {cityOffers.length} places to stay in {cityName}
                 </b>
-                <Sorting />
-                <PlaceList offers={cityOffers} type={'cities'}
+                <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
+                <PlaceList offers={getSortedOffersBy(cityOffers, typeSorting)} type={'cities'}
                   onCardEnter={handleMouseEnter}
                   onCardLeave={handleMouseLeave}
                 />

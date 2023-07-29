@@ -28,6 +28,13 @@ export const ratingMap = {
   '1': 'terribly',
 };
 
+export const sortingMap: Record<string, string> = {
+  ['popular']: 'Popular',
+  ['priceToHigh']: 'Price: low to high',
+  ['priceToLow']: 'Price: high to low',
+  ['raitedFirst']: 'Top rated first',
+};
+
 export const RATING_IN_PERCENT = 20;
 
 export const MIN_LENGTH_REVIEW_TEXT = 50;
