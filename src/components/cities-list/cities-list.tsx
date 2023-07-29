@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCityAction } from '../../store/action';
-import { sortingMap } from '../../settings';
+import { DEFAULT_SORTING } from '../../consts/settings';
 type CitiesListProps = {
   cities: Cities;
   setTypeSorting: (value: string) => void;
@@ -18,7 +18,7 @@ export default function CitiesList({ cities, setTypeSorting }: CitiesListProps):
       return;
     }
     dispatch(selectCityAction(evt.currentTarget.textContent));
-    setTypeSorting(Object.keys(sortingMap)[0]);
+    setTypeSorting(DEFAULT_SORTING);
   };
 
   return (

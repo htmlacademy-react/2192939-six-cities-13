@@ -1,4 +1,4 @@
-import { AppRoute, AuthStatus } from '../../settings';
+import { AppRoute, AuthStatus } from '../../consts/settings';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 

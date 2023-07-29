@@ -4,7 +4,7 @@ import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
-import { AppRoute, AuthStatus } from '../../settings';
+import { AppRoute, AuthStatus } from '../../consts/settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';

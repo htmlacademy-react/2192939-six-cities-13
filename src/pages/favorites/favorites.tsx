@@ -3,7 +3,7 @@ import { Offers } from '../../types/data-types';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES } from '../../settings';
+import { CITIES } from '../../consts/settings';
 
 type FavoritesPageProps = {
   offers: Offers;
