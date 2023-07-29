@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCityAction } from '../../store/action';
-import { DEFAULT_SORTING } from '../../consts/settings';
+import { DEFAULT_SORTING } from '../../constants/settings';
 type CitiesListProps = {
   cities: Cities;
   setTypeSorting: (value: string) => void;

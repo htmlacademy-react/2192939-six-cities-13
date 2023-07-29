@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
 import { fullOffers, offers, reviewsList } from './mocks/offers';
-import { AuthStatus } from './consts/settings';
+import { AuthStatus } from './constants/settings';
 import { Provider } from 'react-redux';
 import { store } from '../src/store/index';
 
