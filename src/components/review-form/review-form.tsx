@@ -3,7 +3,7 @@ import {
   EMPTY_RATING,
   MAX_LENGTH_REVIEW_TEXT,
   MIN_LENGTH_REVIEW_TEXT,
-  ratingMap,
+  RatingMap,
 } from '../../constants/settings';
 
 export default function ReviewForm(): JSX.Element {
@@ -30,7 +30,7 @@ export default function ReviewForm(): JSX.Element {
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
-        {Object.entries(ratingMap)
+        {Object.entries(RatingMap)
           .reverse()
           .map(([score, title]) => (
             <Fragment key={score}>

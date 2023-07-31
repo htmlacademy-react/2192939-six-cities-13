@@ -20,7 +20,7 @@ export const CITIES = [
   'Dusseldorf',
 ];
 
-export const ratingMap = {
+export const RatingMap = {
   '5': 'perfect',
   '4': 'good',
   '3': 'not bad',
@@ -28,12 +28,21 @@ export const ratingMap = {
   '1': 'terribly',
 };
 
-export const sortingMap: Record<string, string> = {
-  ['popular']: 'Popular',
-  ['priceToHigh']: 'Price: low to high',
-  ['priceToLow']: 'Price: high to low',
-  ['raitedFirst']: 'Top rated first',
-};
+export const SORTING_MAPS = [
+  { type: 'popular', title: 'Popular' },
+  {
+    type: 'priceToHigh',
+    title: 'Price: low to high',
+  },
+  {
+    type: 'priceToLow',
+    title: 'Price: high to low',
+  },
+  {
+    type: 'raitedFirst',
+    title: 'Top rated first',
+  },
+];
 
 export const RATING_IN_PERCENT = 20;
 
