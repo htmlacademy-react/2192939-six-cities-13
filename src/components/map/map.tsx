@@ -1,7 +1,7 @@
 import { City, Offer, Offers, StylesForMap } from '../../types/data-types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
+import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../constants/settings';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 

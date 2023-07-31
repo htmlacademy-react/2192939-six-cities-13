@@ -1,5 +1,5 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../constants/settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
@@ -79,7 +79,7 @@ export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: Pla
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span
-              style={{ width: Math.round(offer.rating) * RATING_IN_PERCENT }}
+              style={{ width: `${Math.round(offer.rating) * RATING_IN_PERCENT}%` }}
             />
             <span className="visually-hidden">Rating</span>
           </div>

@@ -1,7 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import LogoLeft from '../../components/logo-left';
+import { useAppSelector } from '../../hooks';
 
 export default function Page404(): JSX.Element {
+  const cityName = useAppSelector((state) => state.cityName);
   return (
     <div className="page page--gray page--login">
       <Helmet>
@@ -22,7 +24,7 @@ export default function Page404(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
+                <span>{cityName}</span>
               </a>
             </div>
           </section>
