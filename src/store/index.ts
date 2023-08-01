@@ -1,4 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
+import { createAPI } from '../axios-api/api';
 
-export const store = configureStore({ reducer });
+const api = createAPI();
+
+export const store = configureStore({
+  reducer,
+  middleware: (curryGetDefaultMiddleware) =>
+    curryGetDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }),
+});
