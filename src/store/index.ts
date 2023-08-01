@@ -1,6 +1,6 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import { reducer } from './reducer';
-import { createAPI } from '../axios-api/api';
+import { createAPI } from '../services/api';
 
 const api = createAPI();
 
