@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { SORTING_MAPS } from '../../constants/settings';
+import { SORTING_MAPS } from '../../settings';
 import { UIEvent } from 'react';
 
 type SortingProps = {

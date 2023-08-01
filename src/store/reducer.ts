@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '../constants/settings';
+import { DEFAULT_CITY } from '../settings';
 import {
   loadOffersAction,
   selectCityAction,

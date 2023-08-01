@@ -4,7 +4,7 @@ import MainPage from '../../pages/main';
 // import FavoritesPage from '../../pages/favorites';
 // import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
-import { AppRoute, AuthStatus } from '../../constants/settings';
+import { AppRoute, AuthStatus } from '../../settings';
 // import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
@@ -15,8 +15,6 @@ import Loader from '../loader';
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
-
-  console.log(isOffersDataLoading);
 
   if (isOffersDataLoading) {
     return (

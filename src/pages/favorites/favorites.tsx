@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES } from '../../constants/settings';
+import { CITIES } from '../../settings';
 
 export default function FavoritesPage(): JSX.Element {
 

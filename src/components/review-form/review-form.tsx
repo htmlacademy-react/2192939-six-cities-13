@@ -4,7 +4,7 @@ import {
   MAX_LENGTH_REVIEW_TEXT,
   MIN_LENGTH_REVIEW_TEXT,
   RatingMap,
-} from '../../constants/settings';
+} from '../../settings';
 
 export default function ReviewForm(): JSX.Element {
   const [rating, setRating] = useState('0');

@@ -2,7 +2,7 @@ import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from './state';
 import { Offers } from '../types/data-types';
-import { APIRoute } from '../constants/settings';
+import { APIRoute } from '../settings';
 import { loadOffersAction, setOffersDataLoadingStatus } from './action';
 
 export const fetchOffersAction = createAsyncThunk<
