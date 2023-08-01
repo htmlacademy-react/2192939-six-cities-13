@@ -13,18 +13,7 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppSelector } from '../../hooks';
 
-type OfferPageProps = {
-  offers: Offers;
-  fullOffers: FullOffers;
-  authStatus: AuthStatus;
-  reviewsList: Reviews;
-};
-export default function OfferPage({
-  offers,
-  fullOffers,
-  reviewsList,
-  authStatus,
-}: OfferPageProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
   const offerId = useParams();
   const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
   const reviews = reviewsList.find((item) => item.id === offerId.id);

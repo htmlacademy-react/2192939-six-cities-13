@@ -1,17 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers } from '../../types/data-types';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
 import { CITIES } from '../../constants/settings';
 
-type FavoritesPageProps = {
-  offers: Offers;
-};
-export default function FavoritesPage({
-  offers,
-}: FavoritesPageProps): JSX.Element {
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+export default function FavoritesPage(): JSX.Element {
 
   return (
     <div className="page">

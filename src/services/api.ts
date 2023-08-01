@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getToken } from './token';
+import { APIRoute } from '../constants/settings';
 
 const BASE_URL = 'https://13.design.pages.academy/six-cities';
 const TIMEOUT = 5000;
@@ -16,7 +17,6 @@ export const createAPI = (): AxiosInstance => {
     if (token && config.headers) {
       config.headers['x-token'] = token;
     }
-
     return config;
   });
 

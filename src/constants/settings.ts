@@ -5,6 +5,10 @@ export const AppRoute = {
   Offer: '/offer',
 } as const;
 
+export enum APIRoute {
+  Offers = '/offers',
+}
+
 export enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
