@@ -13,9 +13,11 @@ import PlaceList from '../../components/place-list';
 import { useAppSelector } from '../../hooks';
 import { fullOffers, reviewsList } from '../../mocks/offers';
 
-const authStatus = AuthStatus.Auth;
+type OfferProps = {
+  authStatus: AuthStatus;
+}
 
-export default function OfferPage(): JSX.Element {
+export default function OfferPage({ authStatus }: OfferProps): JSX.Element {
 
   const offers = useAppSelector((store) => store.offers);
   const offerId = useParams();

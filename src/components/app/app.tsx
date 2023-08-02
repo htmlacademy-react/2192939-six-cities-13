@@ -4,7 +4,7 @@ import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
-import { AppRoute, AuthStatus } from '../../settings';
+import { AppRoute } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
@@ -13,6 +13,7 @@ import Loader from '../loader';
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
+  const authStatus = useAppSelector((store) => store.authStatus);
 
   if (isOffersDataLoading) {
     return (
@@ -26,13 +27,13 @@ export default function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage authStatus={AuthStatus.Auth} />}
+            element={<MainPage authStatus={authStatus} />}
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={AuthStatus.Auth}>
+              <PrivateRoute authStatus={authStatus}>
                 <FavoritesPage />
               </PrivateRoute>
             }
@@ -40,7 +41,7 @@ export default function App(): JSX.Element {
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <OfferPage />
+              <OfferPage authStatus={authStatus} />
             }
           />
           <Route path="*" element={<Page404 />} />
