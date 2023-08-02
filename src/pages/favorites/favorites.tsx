@@ -3,9 +3,13 @@ import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
 import { CITIES } from '../../settings';
+import { useAppSelector } from '../../hooks';
 
 export default function FavoritesPage(): JSX.Element {
 
+  const offers = useAppSelector((store) => store.offers);
+
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
     <div className="page">
       <Helmet>

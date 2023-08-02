@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { getToken } from './token';
-import { APIRoute } from '../settings';
 
 const BASE_URL = 'https://13.design.pages.academy/six-cities';
 const TIMEOUT = 5000;
