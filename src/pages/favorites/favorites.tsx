@@ -1,18 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import { Offers } from '../../types/data-types';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES } from '../../constants/settings';
+import { CITIES } from '../../settings';
+import { useAppSelector } from '../../hooks';
 
-type FavoritesPageProps = {
-  offers: Offers;
-};
-export default function FavoritesPage({
-  offers,
-}: FavoritesPageProps): JSX.Element {
+export default function FavoritesPage(): JSX.Element {
+
+  const offers = useAppSelector((store) => store.offers);
+
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
-
   return (
     <div className="page">
       <Helmet>

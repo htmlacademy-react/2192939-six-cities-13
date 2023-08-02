@@ -1,5 +1,5 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../constants/settings';
+import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';

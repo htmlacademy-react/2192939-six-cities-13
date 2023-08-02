@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { useState } from 'react';
-import { sortingMap } from '../../constants/settings';
+import { SORTING_MAPS } from '../../settings';
 import { UIEvent } from 'react';
 
 type SortingProps = {
@@ -30,7 +30,7 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
       <span className="places__sorting-caption">Sort by</span>
       <span> </span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleChangeSorting}>
-        {sortingMap[typeSorting]}
+        {SORTING_MAPS.find((sortingMap) => sortingMap.type === typeSorting)?.title}
         <svg className="places__sorting-arrow" width={7} height={4}>
           <use xlinkHref="#icon-arrow-select" />
         </svg>
@@ -40,13 +40,13 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
         { 'places__options--opened': changeSorting }
       )}
       >
-        {Object.entries(sortingMap).map(([sortType, title]) => (
+        {SORTING_MAPS.map((sortingMap) => (
           <li className={classNames(
             'places__option',
-            { 'places__option--active': typeSorting === sortType }
-          )} tabIndex={0} key={sortType} data-sorttype={sortType} onClick={handleTypeSortingClick}
+            { 'places__option--active': typeSorting === sortingMap.type }
+          )} tabIndex={0} key={sortingMap.type} data-sorttype={sortingMap.type} onClick={handleTypeSortingClick}
           >
-            {title}
+            {sortingMap.title}
           </li>
         ))}
       </ul>

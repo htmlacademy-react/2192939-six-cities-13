@@ -1,30 +1,23 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage } from '../../constants/settings';
+import { AuthStatus, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
-import { FullOffers, Offers, Reviews } from '../../types/data-types';
-import { RATING_IN_PERCENT } from '../../constants/settings';
+import { RATING_IN_PERCENT } from '../../settings';
 import Page404 from '../404';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
 import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppSelector } from '../../hooks';
+import { fullOffers, reviewsList } from '../../mocks/offers';
 
-type OfferPageProps = {
-  offers: Offers;
-  fullOffers: FullOffers;
-  authStatus: AuthStatus;
-  reviewsList: Reviews;
-};
-export default function OfferPage({
-  offers,
-  fullOffers,
-  reviewsList,
-  authStatus,
-}: OfferPageProps): JSX.Element {
+const authStatus = AuthStatus.Auth;
+
+export default function OfferPage(): JSX.Element {
+
+  const offers = useAppSelector((store) => store.offers);
   const offerId = useParams();
   const fullOffer = fullOffers.find((offer) => offer.id === offerId.id);
   const reviews = reviewsList.find((item) => item.id === offerId.id);

@@ -4,31 +4,21 @@ import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
-import { AppRoute, AuthStatus } from '../../constants/settings';
+import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
-import { FullOffers, Offers, Reviews } from '../../types/data-types';
-import { useDispatch } from 'react-redux';
-import { loadOffersAction } from '../../store/action';
+import { useAppSelector } from '../../hooks';
+import Loader from '../loader';
 
-type AppProps = {
-  offers: Offers;
-  fullOffers: FullOffers;
-  reviewsList: Reviews;
-  authStatus: AuthStatus;
-};
-export default function App({
-  offers,
-  fullOffers,
-  reviewsList,
-  authStatus = AuthStatus.Auth,
-}: AppProps): JSX.Element {
+export default function App(): JSX.Element {
+  const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
 
-  const dispatch = useDispatch();
-
-  dispatch(loadOffersAction(offers));
-
+  if (isOffersDataLoading) {
+    return (
+      <Loader />
+    );
+  }
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -36,26 +26,21 @@ export default function App({
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage authStatus={authStatus} />}
+            element={<MainPage authStatus={AuthStatus.Auth} />}
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={authStatus}>
-                <FavoritesPage offers={offers} />
+              <PrivateRoute authStatus={AuthStatus.Auth}>
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <OfferPage
-                offers={offers}
-                fullOffers={fullOffers}
-                reviewsList={reviewsList}
-                authStatus={authStatus}
-              />
+              <OfferPage />
             }
           />
           <Route path="*" element={<Page404 />} />

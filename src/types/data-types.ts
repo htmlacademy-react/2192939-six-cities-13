@@ -70,3 +70,9 @@ export type TypeCard = {
   NearPlaces: 'near-places';
   Favorites: 'favorites';
 };
+
+export type SortingType =
+  | 'popular'
+  | 'priceToHigh'
+  | 'priceToLow'
+  | 'raitedFirst';

@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Offer } from '../../types/data-types';
 import Header from '../../components/header';
-import { AuthStatus, CITIES, DEFAULT_SORTING, StylesForMapMainPage } from '../../constants/settings';
+import { AuthStatus, CITIES, DEFAULT_SORTING, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import { useState } from 'react';
