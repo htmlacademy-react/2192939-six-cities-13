@@ -8,9 +8,16 @@ import {
 } from './action';
 import { Offers } from '../types/data-types';
 
-const initialState = {
+type InitialState = {
+  cityName: string;
+  offers: Offers;
+  isOffersDataLoading: boolean;
+  authStatus: AuthStatus;
+};
+
+const initialState: InitialState = {
   cityName: DEFAULT_CITY,
-  offers: [] as Offers,
+  offers: [],
   isOffersDataLoading: false,
   authStatus: AuthStatus.Unknown,
 };
