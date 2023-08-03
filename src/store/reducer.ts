@@ -6,6 +6,7 @@ import {
   setError,
   setOffersDataLoadingStatus,
   setUserAuthStatus,
+  setUserName,
 } from './action';
 import { Offers } from '../types/data-types';
 
@@ -15,6 +16,7 @@ type InitialState = {
   isOffersDataLoading: boolean;
   authStatus: AuthStatus;
   error: string | null;
+  userName: string;
 };
 
 const initialState: InitialState = {
@@ -23,6 +25,7 @@ const initialState: InitialState = {
   isOffersDataLoading: false,
   authStatus: AuthStatus.Unknown,
   error: null,
+  userName: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -41,5 +44,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setError, (state, action) => {
       state.error = action.payload;
+    })
+    .addCase(setUserName, (state, action) => {
+      state.userName = action.payload;
     });
 });

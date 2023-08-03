@@ -1,3 +1,4 @@
+import { useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
@@ -9,6 +10,7 @@ type HeaderProps = {
 export default function Header({
   authStatus = AuthStatus.Auth,
 }: HeaderProps): JSX.Element {
+  const userName = useAppSelector((state) => state.userName);
   return (
     <header className="header">
       <div className="container">
@@ -25,7 +27,7 @@ export default function Header({
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
+                        {userName}
                       </span>
                       <span className="header__favorite-count">3</span>
                     </Link>

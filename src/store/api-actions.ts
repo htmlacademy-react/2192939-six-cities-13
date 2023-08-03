@@ -8,6 +8,7 @@ import {
   setError,
   setOffersDataLoadingStatus,
   setUserAuthStatus,
+  setUserName,
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
@@ -58,6 +59,7 @@ export const loginAction = createAsyncThunk<V, AuthData, C>(
     saveToken(token);
 
     dispatch(setUserAuthStatus(AuthStatus.Auth));
+    dispatch(setUserName(email));
   }
 );
 

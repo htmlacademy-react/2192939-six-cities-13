@@ -6,6 +6,7 @@ import {
   SET_ERROR,
   SET_OFFERS_DATA_LOADING_STATUS,
   SET_USER_AUTH_STATUS,
+  SET_USER_NAME,
 } from './constants';
 import { AuthStatus } from '../settings';
 
@@ -20,3 +21,5 @@ export const setOffersDataLoadingStatus = createAction<boolean>(
 export const setUserAuthStatus = createAction<AuthStatus>(SET_USER_AUTH_STATUS);
 
 export const setError = createAction<string | null>(SET_ERROR);
+
+export const setUserName = createAction<string>(SET_USER_NAME);
