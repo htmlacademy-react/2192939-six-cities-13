@@ -8,6 +8,9 @@ import {
   setOffersDataLoadingStatus,
   setUserAuthStatus,
 } from './action';
+import { UserData } from '../types/user-data';
+import { dropToken, saveToken } from '../services/token';
+import { AuthData } from '../types/auth-data';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -24,19 +27,44 @@ export const fetchOffersAction = createAsyncThunk<
   dispatch(loadOffersAction(data));
 });
 
-export const checkAuthStatus = createAsyncThunk<
-  void,
-  undefined,
-  {
-    dispatch: AppDispatch;
-    state: State;
-    extra: AxiosInstance;
+type V = void;
+type U = undefined;
+type C = {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+};
+
+export const checkAuthStatus = createAsyncThunk<V, U, C>(
+  'user/checkAuthStatus',
+  async (_arg, { dispatch, extra: api }) => {
+    try {
+      await api.get(APIRoute.Login);
+      dispatch(setUserAuthStatus(AuthStatus.Auth));
+    } catch {
+      dispatch(setUserAuthStatus(AuthStatus.NoAuth));
+    }
   }
->('user/checkAuthStatus', async (_arg, { dispatch, extra: api }) => {
-  try {
-    await api.get(APIRoute.Login);
+);
+
+export const loginAction = createAsyncThunk<V, AuthData, C>(
+  'user/login',
+  async ({ login: email, password }, { dispatch, extra: api }) => {
+    const {
+      data: { token },
+    } = await api.post<UserData>(APIRoute.Login, { email, password });
+    saveToken(token);
+
     dispatch(setUserAuthStatus(AuthStatus.Auth));
-  } catch {
+  }
+);
+
+export const logoutAction = createAsyncThunk<V, U, C>(
+  'user/logout',
+  async (_arg, { dispatch, extra: api }) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+
     dispatch(setUserAuthStatus(AuthStatus.NoAuth));
   }
-});
+);
