@@ -8,7 +8,6 @@ import {
   SET_USER_AUTH_STATUS,
 } from './constants';
 import { AuthStatus } from '../settings';
-import { ErrorType } from '../types/error-type';
 
 export const selectCityAction = createAction<string>(SELECT_CITY_ACTION);
 
@@ -20,4 +19,4 @@ export const setOffersDataLoadingStatus = createAction<boolean>(
 
 export const setUserAuthStatus = createAction<AuthStatus>(SET_USER_AUTH_STATUS);
 
-export const setError = createAction<ErrorType>(SET_ERROR);
+export const setError = createAction<string | null>(SET_ERROR);

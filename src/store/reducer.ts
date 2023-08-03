@@ -8,14 +8,13 @@ import {
   setUserAuthStatus,
 } from './action';
 import { Offers } from '../types/data-types';
-import { ErrorType } from '../types/error-type';
 
 type InitialState = {
   cityName: string;
   offers: Offers;
   isOffersDataLoading: boolean;
   authStatus: AuthStatus;
-  error: ErrorType;
+  error: string | null;
 };
 
 const initialState: InitialState = {
