@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage } from '../../settings';
+import { StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
@@ -13,11 +13,8 @@ import PlaceList from '../../components/place-list';
 import { useAppSelector } from '../../hooks';
 import { fullOffers, reviewsList } from '../../mocks/offers';
 
-type OfferProps = {
-  authStatus: AuthStatus;
-}
-
-export default function OfferPage({ authStatus }: OfferProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
+  const authStatus = useAppSelector((state) => state.authStatus);
 
   const offers = useAppSelector((store) => store.offers);
   const offerId = useParams();

@@ -2,10 +2,11 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { SORTING_MAPS } from '../../settings';
 import { UIEvent } from 'react';
+import { SortingType } from '../../types/data-types';
 
 type SortingProps = {
-  onChangeSorting: (value: string) => void;
-  typeSorting: string;
+  onChangeSorting: (value: SortingType) => void;
+  typeSorting: SortingType;
 }
 
 export default function Sorting({ onChangeSorting, typeSorting }: SortingProps): JSX.Element {
@@ -21,7 +22,7 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
     if (!evt.currentTarget.dataset.sorttype) {
       return;
     }
-    onChangeSorting(evt.currentTarget.dataset.sorttype);
+    onChangeSorting(evt.currentTarget.dataset.sorttype as SortingType);
     setChangeSorting(!changeSorting);
   };
 

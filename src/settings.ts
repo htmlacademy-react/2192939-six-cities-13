@@ -1,3 +1,5 @@
+import { SortingType } from './types/data-types';
+
 export enum AppRoute {
   Root = '/',
   Login = '/login',
@@ -64,7 +66,7 @@ export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
 export const DEFAULT_CITY = 'Paris';
 
-export const DEFAULT_SORTING = 'popular';
+export const DEFAULT_SORTING: SortingType = 'popular';
 
 export const StylesForMapMainPage = {
   width: '100%',

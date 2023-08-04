@@ -15,7 +15,6 @@ import HistoryRouter from '../history-route';
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
-  const authStatus = useAppSelector((store) => store.authStatus);
 
   if (isOffersDataLoading) {
     return (
@@ -29,13 +28,13 @@ export default function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<MainPage authStatus={authStatus} />}
+            element={<MainPage />}
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={authStatus}>
+              <PrivateRoute>
                 <FavoritesPage />
               </PrivateRoute>
             }
@@ -43,7 +42,7 @@ export default function App(): JSX.Element {
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <OfferPage authStatus={authStatus} />
+              <OfferPage />
             }
           />
           <Route path="*" element={<Page404 />} />
