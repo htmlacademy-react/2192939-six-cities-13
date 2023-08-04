@@ -4,7 +4,7 @@ import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
 import Page404 from '../../pages/404';
-import { AppRoute } from '../../settings';
+import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
@@ -15,12 +15,13 @@ import HistoryRouter from '../history-route';
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
-
-  if (isOffersDataLoading) {
+  const authStatus = useAppSelector((store) => store.authStatus);
+  if (authStatus === AuthStatus.Unknown && isOffersDataLoading) {
     return (
       <Loader />
     );
   }
+
   return (
     <HelmetProvider>
       <HistoryRouter history={browserHistory}>

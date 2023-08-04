@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { ChangeEventHandler, FormEvent, useRef, useState, } from 'react';
+import { FormEvent, useEffect, useRef } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
@@ -7,6 +7,7 @@ import { AppRoute, CITIES } from '../../settings';
 import { Cities } from '../../types/data-types';
 import { selectCityAction } from '../../store/action';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function randomInteger(min: number, max: number): number {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
@@ -20,7 +21,6 @@ function getRandomCity(cities: Cities): string {
 }
 
 export default function LoginPage(): JSX.Element {
-  const [isCorrectPassword, setIsCorrectPassword] = useState<boolean>(false);
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
@@ -28,30 +28,33 @@ export default function LoginPage(): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  dispatch(selectCityAction(randomCity));
+  useEffect(() => {
+    let isLoginMounted = true;
+
+    if (isLoginMounted) {
+      dispatch(selectCityAction(randomCity));
+    }
+
+    return () => {
+      isLoginMounted = false;
+    };
+  });
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      if (!regex.test(passwordRef.current.value)) {
+        toast.warn('The password must have at least one letter and one symbol and no spaces');
+        return;
+      }
+
       dispatch(loginAction({
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
     }
   };
-
-
-  const handleInputPassword: ChangeEventHandler<HTMLInputElement> = ({
-    target,
-  }): void => {
-    if (regex.test(target.value)) {
-      setIsCorrectPassword(true);
-    } else {
-      setIsCorrectPassword(false);
-    }
-  };
-
 
   return (
     <div className="page page--gray page--login">
@@ -90,10 +93,7 @@ export default function LoginPage(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
-                  onChange={handleInputPassword}
                 />
-                {!isCorrectPassword &&
-                  <p style={{ 'color': 'red', 'marginTop': -24 }}>The password must have at least one letter and one symbol and no spaces</p>}
               </div>
               <button
                 className="login__submit form__submit button"
