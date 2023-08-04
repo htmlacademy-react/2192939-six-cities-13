@@ -1,9 +1,9 @@
-export const AppRoute = {
-  Root: '/',
-  Login: '/login',
-  Favorites: '/favorites',
-  Offer: '/offer',
-} as const;
+export enum AppRoute {
+  Root = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+}
 
 export enum APIRoute {
   Offers = '/offers',

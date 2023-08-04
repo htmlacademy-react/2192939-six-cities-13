@@ -1,10 +1,14 @@
-import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from './state';
 import { Offers } from '../types/data-types';
-import { APIRoute, AuthStatus, TIMEOUT_SHOW_ERROR } from '../settings';
+import {
+  APIRoute,
+  AppRoute,
+  AuthStatus,
+  TIMEOUT_SHOW_ERROR,
+} from '../settings';
 import {
   loadOffersAction,
+  redirectToRoute,
   setError,
   setOffersDataLoadingStatus,
   setUserAuthStatus,
@@ -12,31 +16,18 @@ import {
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { AuthData } from '../types/auth-data';
 import { store } from './';
+import { A, C, U, V } from '../types/api-types';
 
-export const fetchOffersAction = createAsyncThunk<
-  void,
-  undefined,
-  {
-    dispatch: AppDispatch;
-    state: State;
-    extra: AxiosInstance;
+export const fetchOffersAction = createAsyncThunk<V, U, C>(
+  'data/fetchOffers',
+  async (_arg, { dispatch, extra: api }) => {
+    dispatch(setOffersDataLoadingStatus(true));
+    const { data } = await api.get<Offers>(APIRoute.Offers);
+    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(loadOffersAction(data));
   }
->('data/fetchOffers', async (_arg, { dispatch, extra: api }) => {
-  dispatch(setOffersDataLoadingStatus(true));
-  const { data } = await api.get<Offers>(APIRoute.Offers);
-  dispatch(setOffersDataLoadingStatus(false));
-  dispatch(loadOffersAction(data));
-});
-
-type V = void;
-type U = undefined;
-type C = {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-};
+);
 
 export const checkAuthStatus = createAsyncThunk<V, U, C>(
   'user/checkAuthStatus',
@@ -50,7 +41,7 @@ export const checkAuthStatus = createAsyncThunk<V, U, C>(
   }
 );
 
-export const loginAction = createAsyncThunk<V, AuthData, C>(
+export const loginAction = createAsyncThunk<V, A, C>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
     const {
@@ -60,6 +51,7 @@ export const loginAction = createAsyncThunk<V, AuthData, C>(
 
     dispatch(setUserAuthStatus(AuthStatus.Auth));
     dispatch(setUserName(email));
+    dispatch(redirectToRoute(AppRoute.Root));
   }
 );
 

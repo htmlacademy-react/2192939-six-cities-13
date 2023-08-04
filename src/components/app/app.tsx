@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import MainPage from '../../pages/main';
 import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
@@ -10,6 +10,8 @@ import { HelmetProvider } from 'react-helmet-async';
 import ScrollToTop from '../scroll-to-top';
 import { useAppSelector } from '../../hooks';
 import Loader from '../loader';
+import browserHistory from '../../browser-history';
+import HistoryRouter from '../history-route';
 
 export default function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
@@ -22,7 +24,7 @@ export default function App(): JSX.Element {
   }
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollToTop />
         <Routes>
           <Route
@@ -46,7 +48,7 @@ export default function App(): JSX.Element {
           />
           <Route path="*" element={<Page404 />} />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

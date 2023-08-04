@@ -1,7 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { ChangeEventHandler, FormEvent, useRef, useState, } from 'react';
 import LogoLeft from '../../components/logo-left';
-import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, CITIES } from '../../settings';
@@ -28,7 +27,6 @@ export default function LoginPage(): JSX.Element {
   const randomCity = getRandomCity(CITIES);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   dispatch(selectCityAction(randomCity));
 
@@ -40,8 +38,6 @@ export default function LoginPage(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value
       }));
-
-      navigate(AppRoute.Root);
     }
   };
 
