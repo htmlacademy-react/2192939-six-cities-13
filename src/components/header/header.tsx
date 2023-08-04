@@ -1,4 +1,6 @@
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
+import { logoutAction } from '../../store/api-actions';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
@@ -9,6 +11,13 @@ type HeaderProps = {
 export default function Header({
   authStatus = AuthStatus.Auth,
 }: HeaderProps): JSX.Element {
+  const userName = useAppSelector((state) => state.userName);
+  const dispatch = useAppDispatch();
+
+  const logoutHandle = () => {
+    dispatch(logoutAction());
+  };
+
   return (
     <header className="header">
       <div className="container">
@@ -25,15 +34,15 @@ export default function Header({
                     >
                       <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                       <span className="header__user-name user__name">
-                        Oliver.conner@gmail.com
+                        {userName}
                       </span>
                       <span className="header__favorite-count">3</span>
                     </Link>
                   </li>
-                  <li className="header__nav-item">
-                    <a className="header__nav-link" href="#">
+                  <li className="header__nav-item" >
+                    <Link className="header__nav-link" to={AppRoute.Root} onClick={logoutHandle}>
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </>
               ) : (

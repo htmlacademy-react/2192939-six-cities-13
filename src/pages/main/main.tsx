@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/data-types';
+import { Offer, SortingType } from '../../types/data-types';
 import Header from '../../components/header';
-import { AuthStatus, CITIES, DEFAULT_SORTING, StylesForMapMainPage } from '../../settings';
+import { CITIES, DEFAULT_SORTING, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import { useState } from 'react';
@@ -12,11 +12,8 @@ import PlaceListEmpty from '../../components/place-list-empty';
 import Sorting from '../../components/sorting';
 import PlaceList from '../../components/place-list';
 
-type MainPageProps = {
-  authStatus: AuthStatus;
-};
-
-export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
+export default function MainPage(): JSX.Element {
+  const authStatus = useAppSelector((state) => state.authStatus);
 
   const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
   const [typeSorting, setTypeSorting] = useState(DEFAULT_SORTING);
@@ -34,7 +31,7 @@ export default function MainPage({ authStatus, }: MainPageProps): JSX.Element {
     setActiveCard(undefined);
   }
 
-  function handleChangeSorting(sortType: string) {
+  function handleChangeSorting(sortType: SortingType) {
     setTypeSorting(sortType);
   }
 

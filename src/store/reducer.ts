@@ -1,16 +1,28 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { DEFAULT_CITY } from '../settings';
+import { AuthStatus, DEFAULT_CITY } from '../settings';
 import {
   loadOffersAction,
   selectCityAction,
   setOffersDataLoadingStatus,
+  setUserAuthStatus,
+  setUserName,
 } from './action';
 import { Offers } from '../types/data-types';
 
-const initialState = {
+type InitialState = {
+  cityName: string;
+  offers: Offers;
+  isOffersDataLoading: boolean;
+  authStatus: AuthStatus;
+  userName: string;
+};
+
+const initialState: InitialState = {
   cityName: DEFAULT_CITY,
-  offers: [] as Offers,
-  isOffersDataLoading: true,
+  offers: [],
+  isOffersDataLoading: false,
+  authStatus: AuthStatus.Unknown,
+  userName: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -23,5 +35,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(setUserAuthStatus, (state, action) => {
+      state.authStatus = action.payload;
+    })
+    .addCase(setUserName, (state, action) => {
+      state.userName = action.payload;
     });
 });

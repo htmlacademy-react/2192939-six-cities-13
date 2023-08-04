@@ -1,12 +1,16 @@
-export const AppRoute = {
-  Root: '/',
-  Login: '/login',
-  Favorites: '/favorites',
-  Offer: '/offer',
-} as const;
+import { SortingType } from './types/data-types';
+
+export enum AppRoute {
+  Root = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+}
 
 export enum APIRoute {
   Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthStatus {
@@ -62,7 +66,7 @@ export const URL_MARKER_CURRENT = '../img/pin-active.svg';
 
 export const DEFAULT_CITY = 'Paris';
 
-export const DEFAULT_SORTING = 'popular';
+export const DEFAULT_SORTING: SortingType = 'popular';
 
 export const StylesForMapMainPage = {
   width: '100%',
