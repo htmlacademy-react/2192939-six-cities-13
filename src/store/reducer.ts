@@ -3,7 +3,6 @@ import { AuthStatus, DEFAULT_CITY } from '../settings';
 import {
   loadOffersAction,
   selectCityAction,
-  setError,
   setOffersDataLoadingStatus,
   setUserAuthStatus,
   setUserName,
@@ -15,7 +14,6 @@ type InitialState = {
   offers: Offers;
   isOffersDataLoading: boolean;
   authStatus: AuthStatus;
-  error: string | null;
   userName: string;
 };
 
@@ -24,7 +22,6 @@ const initialState: InitialState = {
   offers: [],
   isOffersDataLoading: false,
   authStatus: AuthStatus.Unknown,
-  error: null,
   userName: '',
 };
 
@@ -41,9 +38,6 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUserAuthStatus, (state, action) => {
       state.authStatus = action.payload;
-    })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
     })
     .addCase(setUserName, (state, action) => {
       state.userName = action.payload;

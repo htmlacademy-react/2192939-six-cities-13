@@ -1,22 +1,15 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Offers } from '../types/data-types';
-import {
-  APIRoute,
-  AppRoute,
-  AuthStatus,
-  TIMEOUT_SHOW_ERROR,
-} from '../settings';
+import { APIRoute, AppRoute, AuthStatus } from '../settings';
 import {
   loadOffersAction,
   redirectToRoute,
-  setError,
   setOffersDataLoadingStatus,
   setUserAuthStatus,
   setUserName,
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { store } from './';
 import { A, C, U, V } from '../types/api-types';
 
 export const fetchOffersAction = createAsyncThunk<V, U, C>(
@@ -64,7 +57,3 @@ export const logoutAction = createAsyncThunk<V, U, C>(
     dispatch(setUserAuthStatus(AuthStatus.NoAuth));
   }
 );
-
-export const clearErrorAction = createAsyncThunk('main/clearError', () => {
-  setTimeout(() => store.dispatch(setError(null)), TIMEOUT_SHOW_ERROR);
-});

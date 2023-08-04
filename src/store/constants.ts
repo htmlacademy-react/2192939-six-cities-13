@@ -6,8 +6,6 @@ export const SET_OFFERS_DATA_LOADING_STATUS = 'data/setOffersDataLoadingStatus';
 
 export const SET_USER_AUTH_STATUS = 'user/setAuthStatus';
 
-export const SET_ERROR = 'main/setError';
-
 export const SET_USER_NAME = 'user/setUserName';
 
 export const REDIRECT_TO_ROUTE = 'user/redirectToRoute';

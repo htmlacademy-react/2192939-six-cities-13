@@ -5,7 +5,6 @@ import {
   LOAD_OFFERS_ACTION,
   REDIRECT_TO_ROUTE,
   SELECT_CITY_ACTION,
-  SET_ERROR,
   SET_OFFERS_DATA_LOADING_STATUS,
   SET_USER_AUTH_STATUS,
   SET_USER_NAME,
@@ -21,8 +20,6 @@ export const setOffersDataLoadingStatus = createAction<boolean>(
 );
 
 export const setUserAuthStatus = createAction<AuthStatus>(SET_USER_AUTH_STATUS);
-
-export const setError = createAction<string | null>(SET_ERROR);
 
 export const setUserName = createAction<string>(SET_USER_NAME);
 
