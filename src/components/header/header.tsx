@@ -17,6 +17,7 @@ export default function Header({
   const logoutHandle = () => {
     dispatch(logoutAction());
   };
+
   return (
     <header className="header">
       <div className="container">
@@ -38,10 +39,10 @@ export default function Header({
                       <span className="header__favorite-count">3</span>
                     </Link>
                   </li>
-                  <li className="header__nav-item" onClick={logoutHandle}>
-                    <a className="header__nav-link" href="#">
+                  <li className="header__nav-item" >
+                    <Link className="header__nav-link" to={AppRoute.Root} onClick={logoutHandle}>
                       <span className="header__signout">Sign out</span>
-                    </a>
+                    </Link>
                   </li>
                 </>
               ) : (
