@@ -50,7 +50,7 @@ export function nearByCities(offers: Offers): Offers {
 function compare(a: Review, b: Review) {
   const dateA = new Date(a.date);
   const dateB = new Date(b.date);
-  return Number(dateA) - Number(dateB);
+  return Number(dateB) - Number(dateA);
 }
 
 export function sortReviewByDate(reviews: Reviews): Reviews {

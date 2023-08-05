@@ -69,8 +69,9 @@ export const checkAuthStatus = createAsyncThunk<V, U, C>(
   'user/checkAuthStatus',
   async (_arg, { dispatch, extra: api }) => {
     try {
-      await api.get(APIRoute.Login);
+      const { data } = await api.get<UserData>(APIRoute.Login);
       dispatch(setUserAuthStatus(AuthStatus.Auth));
+      dispatch(setUserName(data.email));
     } catch {
       dispatch(setUserAuthStatus(AuthStatus.NoAuth));
     }

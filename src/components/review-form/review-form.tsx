@@ -35,15 +35,14 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
     dispatch(reviewAction({
       offerId: offerId,
       comment: review,
       rating: rating,
     }));
 
-    setRating(0);
-    setReview('');
+    // setRating(0);
+    // setReview('');
   };
 
   return (
