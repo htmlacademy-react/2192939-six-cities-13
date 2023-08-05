@@ -23,7 +23,6 @@ export default function OfferPage(): JSX.Element {
   const authStatus = useAppSelector((store) => store.authStatus);
   const fullOffer = useAppSelector((store) => store.fullOffer);
   const neighborPlaces = useAppSelector((store) => store.neighborPlaces);
-  const nearPlaces = nearByCities(neighborPlaces);
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -162,7 +161,7 @@ export default function OfferPage(): JSX.Element {
               </div>
             </div>
             <section className="offer__map map">
-              <Map city={nearPlaces[0].city} offers={nearPlaces} styles={StylesForMapOfferPage} fullOffer={fullOffer} />
+              <Map city={nearByCities(neighborPlaces)[0].city} offers={nearByCities(neighborPlaces)} styles={StylesForMapOfferPage} fullOffer={fullOffer} />
             </section>
           </section>
           <div className="container">
@@ -170,7 +169,7 @@ export default function OfferPage(): JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighborhood
               </h2>
-              <PlaceList offers={nearPlaces} type={'near-places'} />
+              <PlaceList offers={nearByCities(neighborPlaces)} type={'near-places'} />
             </section>
           </div>
         </main>}
