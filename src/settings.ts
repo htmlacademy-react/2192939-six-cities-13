@@ -4,13 +4,16 @@ export enum AppRoute {
   Root = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer',
+  Offer = '/offers',
+  NoFound = '/not-found',
 }
 
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
   Logout = '/logout',
+  Comments = '/comments',
+  NearBy = '/nearby',
 }
 
 export enum AuthStatus {
@@ -58,7 +61,9 @@ export const MIN_LENGTH_REVIEW_TEXT = 50;
 
 export const MAX_LENGTH_REVIEW_TEXT = 300;
 
-export const EMPTY_RATING = '0';
+export const EMPTY_RATING = 0;
+
+export const MAX_QUANTITY_REVIEWS = 10;
 
 export const URL_MARKER_DEFAULT = '../img/pin.svg';
 

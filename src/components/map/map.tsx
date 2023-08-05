@@ -1,4 +1,4 @@
-import { City, Offer, Offers, StylesForMap } from '../../types/data-types';
+import { City, FullOffer, Offer, Offers, StylesForMap } from '../../types/data-types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
@@ -10,6 +10,7 @@ type MapProps = {
   offers: Offers;
   selectedPlace?: Offer;
   styles: StylesForMap;
+  fullOffer?: FullOffer | null;
 };
 
 function setIcon(urlMarker: string) {
@@ -28,7 +29,8 @@ export default function Map({
   city,
   offers,
   selectedPlace,
-  styles
+  styles,
+  fullOffer = null,
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -55,12 +57,19 @@ export default function Map({
             : defaultCustomIcon
         ).addTo(markerLayer);
       });
+      if (fullOffer) {
+        const marker = new Marker({
+          lat: fullOffer.location.latitude,
+          lng: fullOffer.location.longitude,
+        });
+        marker.setIcon(currentCustomIcon).addTo(markerLayer);
+      }
 
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedPlace, city]);
+  }, [map, offers, selectedPlace, city, fullOffer]);
 
   return <div style={styles} ref={mapRef} />;
 }
