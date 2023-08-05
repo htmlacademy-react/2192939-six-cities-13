@@ -1,7 +1,6 @@
 import { AppDispatch, State } from '../store/state';
 import { AxiosInstance } from 'axios';
 import { AuthData } from './auth-data';
-import { UserData } from './user-data';
 
 export type U = undefined;
 
