@@ -89,3 +89,11 @@ export const PageCard = {
   NearPlaces: 'near-places',
   Favorites: 'favorites',
 };
+
+export const StatusCode = {
+  401: 401
+};
+
+export const StatusMessage = {
+  401: 'You\'re not authorized'
+};

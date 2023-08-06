@@ -7,6 +7,7 @@ import axios, {
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
 import { toast } from 'react-toastify';
+import { StatusCode, StatusMessage } from '../settings';
 
 type DetailMessageType = {
   type: string;
@@ -16,7 +17,6 @@ type DetailMessageType = {
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
   [StatusCodes.UNAUTHORIZED]: true,
-  // [StatusCodes.NOT_FOUND]: true,
   [StatusCodes.CONFLICT]: true,
 };
 
@@ -46,8 +46,13 @@ export const createAPI = (): AxiosInstance => {
     (error: AxiosError<DetailMessageType>) => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = error.response.data;
+        const detailStatus = error.response.status;
 
-        toast.warn(detailMessage.message);
+        if (detailStatus === StatusCode[401]) {
+          toast.warn(StatusMessage[401]);
+        } else {
+          toast.warn(detailMessage.message);
+        }
       }
 
       throw error;

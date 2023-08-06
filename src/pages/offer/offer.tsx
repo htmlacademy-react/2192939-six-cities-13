@@ -161,7 +161,11 @@ export default function OfferPage(): JSX.Element {
               </div>
             </div>
             <section className="offer__map map">
-              <Map city={nearByCities(neighborPlaces)[0].city} offers={nearByCities(neighborPlaces)} styles={StylesForMapOfferPage} fullOffer={fullOffer} />
+              <Map
+                city={nearByCities(neighborPlaces)[0].city}
+                offers={nearByCities(neighborPlaces)}
+                styles={StylesForMapOfferPage} fullOffer={fullOffer}
+              />
             </section>
           </section>
           <div className="container">
