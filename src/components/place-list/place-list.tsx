@@ -5,12 +5,9 @@ import PlaceCard from '../place-card';
 type PlaceListProps = {
   offers: Offers;
   type: 'cities' | 'near-places' | 'favorites';
-  onCardEnter?: (cardId: string) => void;
-  onCardLeave?: () => void;
-
 }
 
-export default function PlaceList({ offers, type, onCardEnter, onCardLeave }: PlaceListProps): JSX.Element {
+export default function PlaceList({ offers, type }: PlaceListProps): JSX.Element {
   return (
     <div className={classNames(
       { 'cities__places-list places__list tabs__content': type === 'cities' },
@@ -19,10 +16,7 @@ export default function PlaceList({ offers, type, onCardEnter, onCardLeave }: Pl
     >
       {
         offers.map((offer) => (
-          <PlaceCard key={offer.id} offer={offer} type={type}
-            onCardEnter={onCardEnter}
-            onCardLeave={onCardLeave}
-          />
+          <PlaceCard key={offer.id} offer={offer} type={type} />
         ))
       }
     </div >

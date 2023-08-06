@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Offer, SortingType } from '../../types/data-types';
+import { SortingType } from '../../types/data-types';
 import Header from '../../components/header';
 import { CITIES, DEFAULT_SORTING, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
@@ -15,21 +15,11 @@ import PlaceList from '../../components/place-list';
 export default function MainPage(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authStatus);
 
-  const [activeCard, setActiveCard] = useState<Offer | undefined>(undefined);
   const [typeSorting, setTypeSorting] = useState(DEFAULT_SORTING);
 
   const offers = useAppSelector((store) => store.offers);
   const cityName = useAppSelector((store) => store.cityName);
   const cityOffers = getCityOffers(offers, cityName);
-
-  function handleMouseEnter(cardId: string) {
-    const currentPlace = offers.find((offer) => offer.id === cardId);
-    setActiveCard(currentPlace);
-  }
-
-  function handleMouseLeave() {
-    setActiveCard(undefined);
-  }
 
   function handleChangeSorting(sortType: SortingType) {
     setTypeSorting(sortType);
@@ -59,15 +49,12 @@ export default function MainPage(): JSX.Element {
                   {cityOffers.length} places to stay in {cityName}
                 </b>
                 <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
-                <PlaceList offers={getSortedOffersBy(cityOffers, typeSorting)} type={'cities'}
-                  onCardEnter={handleMouseEnter}
-                  onCardLeave={handleMouseLeave}
-                />
+                <PlaceList offers={getSortedOffersBy(cityOffers, typeSorting)} type={'cities'} />
               </section>
               <div className="cities__right-section">
                 <section className="cities__map map">
                   <Map city={cityOffers[0].city} offers={cityOffers}
-                    styles={StylesForMapMainPage} selectedPlace={activeCard}
+                    styles={StylesForMapMainPage}
                   />
                 </section>
               </div>

@@ -1,4 +1,4 @@
-import { FullOffer, Reviews } from './../types/data-types';
+import { FullOffer, Offer, Reviews } from './../types/data-types';
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthStatus, DEFAULT_CITY } from '../settings';
 import {
@@ -7,6 +7,7 @@ import {
   loadOffersAction,
   loadReviewsFullOfferAction,
   selectCityAction,
+  setActiveCardAction,
   setFullOfferDataLoadingStatus,
   setNeighborPlacesDataLoadingStatus,
   setOffersDataLoadingStatus,
@@ -29,6 +30,7 @@ type InitialState = {
   isNeighborPlacesDataLoading: boolean;
   authStatus: AuthStatus;
   userName: string;
+  activeCard: Offer | undefined;
 };
 
 const initialState: InitialState = {
@@ -41,9 +43,9 @@ const initialState: InitialState = {
   isFullOfferDataLoading: true,
   isReviewsDataLoading: true,
   isNeighborPlacesDataLoading: true,
-
   authStatus: AuthStatus.Unknown,
   userName: '',
+  activeCard: undefined
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -83,5 +85,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setReviewAction, (state, action) => {
       state.reviews.push(action.payload);
+    })
+    .addCase(setActiveCardAction, (state, action) => {
+      state.activeCard = action.payload;
     });
 });

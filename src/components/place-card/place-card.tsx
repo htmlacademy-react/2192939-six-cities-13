@@ -4,30 +4,26 @@ import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
+import { useAppDispatch } from '../../hooks';
+import { setActiveCardAction } from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
-  onCardEnter?: (cardId: string) => void;
-  onCardLeave?: () => void;
 }
 
 
-export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: PlaceCardProps): JSX.Element {
+export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    if (!onCardEnter) {
-      return;
-    }
-    onCardEnter(evt.currentTarget.id);
+    dispatch(setActiveCardAction(offer));
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    if (!onCardLeave) {
-      return;
-    }
-    onCardLeave();
+    dispatch(setActiveCardAction(undefined));
   };
 
   return (

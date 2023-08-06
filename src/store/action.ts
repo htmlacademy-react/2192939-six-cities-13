@@ -1,6 +1,6 @@
 import { AppRoute } from './../settings';
 import { createAction } from '@reduxjs/toolkit';
-import { FullOffer, Offers, Review, Reviews } from '../types/data-types';
+import { FullOffer, Offer, Offers, Review, Reviews } from '../types/data-types';
 import {
   LOAD_FULL_OFFER_ACTION,
   LOAD_NEIGHBOR_PLACES_ACTION,
@@ -15,6 +15,7 @@ import {
   SET_REVIEWS_DATA_LOADING_STATUS,
   SET_USER_AUTH_STATUS,
   SET_USER_NAME,
+  SET_ACTIVE_CARD_ACTION,
 } from './constants';
 import { AuthStatus } from '../settings';
 
@@ -57,3 +58,5 @@ export const setUserName = createAction<string>(SET_USER_NAME);
 export const redirectToRoute = createAction<AppRoute>(REDIRECT_TO_ROUTE);
 
 export const setReviewAction = createAction<Review>(SET_REVIEW_ACTION);
+
+export const setActiveCardAction = createAction<Offer | undefined>(SET_ACTIVE_CARD_ACTION);

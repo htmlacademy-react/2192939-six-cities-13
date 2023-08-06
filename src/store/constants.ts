@@ -26,3 +26,5 @@ export const SET_USER_NAME = 'user/setUserName';
 export const REDIRECT_TO_ROUTE = 'user/redirectToRoute';
 
 export const SET_REVIEW_ACTION = 'user/setReviewAction';
+
+export const SET_ACTIVE_CARD_ACTION = 'main/setActiveCardAction';
