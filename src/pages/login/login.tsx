@@ -3,22 +3,12 @@ import { FormEvent, useEffect, useRef } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
-import { AppRoute, CITIES } from '../../settings';
-import { Cities } from '../../types/data-types';
+import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
 import { selectCityAction } from '../../store/action';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { getRandomCity } from '../../utils/offers';
 
-function randomInteger(min: number, max: number): number {
-  const rand = min - 0.5 + Math.random() * (max - min + 1);
-  return Math.round(rand);
-}
-
-function getRandomCity(cities: Cities): string {
-  const index = randomInteger(0, cities.length - 1);
-
-  return cities[index];
-}
 
 export default function LoginPage(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -48,6 +38,8 @@ export default function LoginPage(): JSX.Element {
         toast.warn('The password must have at least one letter and one symbol and no spaces');
         return;
       }
+
+      dispatch(selectCityAction(DEFAULT_CITY));
 
       dispatch(loginAction({
         login: loginRef.current.value,

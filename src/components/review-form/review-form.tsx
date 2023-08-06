@@ -1,31 +1,52 @@
-import { ChangeEventHandler, useState, Fragment } from 'react';
+import { ChangeEventHandler, useState, Fragment, FormEvent } from 'react';
 import {
   EMPTY_RATING,
   MAX_LENGTH_REVIEW_TEXT,
   MIN_LENGTH_REVIEW_TEXT,
   RatingMap,
 } from '../../settings';
+import { useAppDispatch } from '../../hooks';
+import { reviewAction } from '../../store/api-actions';
 
-export default function ReviewForm(): JSX.Element {
-  const [rating, setRating] = useState('0');
+type ReviewFormProps = {
+  offerId: string;
+}
+
+export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+
+  const isReview = rating !== EMPTY_RATING
+    && review.length >= MIN_LENGTH_REVIEW_TEXT
+    && review.length <= MAX_LENGTH_REVIEW_TEXT;
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target,
   }): void => {
-    setRating(target.value);
+    setRating(Number(target.value));
   };
+
   const handleTexAreaChange: ChangeEventHandler<HTMLTextAreaElement> = ({
     target,
   }): void => {
     setReview(target.value);
   };
 
-  const isReview = rating !== EMPTY_RATING
-    && review.length >= MIN_LENGTH_REVIEW_TEXT
-    && review.length <= MAX_LENGTH_REVIEW_TEXT;
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(reviewAction({
+      offerId: offerId,
+      comment: review,
+      rating: rating,
+    }));
+
+    setRating(0);
+    setReview('');
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -40,7 +61,7 @@ export default function ReviewForm(): JSX.Element {
                 value={score}
                 id={`${score}-stars`}
                 type="radio"
-                checked={rating === score}
+                checked={Number(rating) === Number(score)}
                 onChange={handleInputChange}
               />
               <label

@@ -36,9 +36,7 @@ export type FullOffer = Omit<Offer, 'previewImage'> & {
   maxAdults: number;
 };
 
-export type FullOffers = FullOffer[];
-
-export type ReviewCardType = {
+export type Review = {
   id: string;
   comment: string;
   date: string;
@@ -48,11 +46,6 @@ export type ReviewCardType = {
     avatarUrl: string;
     isPro: boolean;
   };
-};
-
-export type Review = {
-  id: string;
-  reviews: ReviewCardType[];
 };
 
 export type Reviews = Review[];
