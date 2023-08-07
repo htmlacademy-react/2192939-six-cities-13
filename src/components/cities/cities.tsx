@@ -1,19 +1,28 @@
-import { getCityOffers } from '../../utils/offers';
 import classNames from 'classnames';
 import { CITIES, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
-import { useAppSelector } from '../../hooks';
+// import { useAppSelector } from '../../hooks';
 import PlaceWithSorting from '../place-with-sorting';
 import { useRef } from 'react';
+import { createSelector } from '@reduxjs/toolkit';
+import { State } from '../../store/state';
+import { useAppSelector } from '../../hooks';
 
 export default function Cities(): JSX.Element {
-  const offers = useAppSelector((store) => store.offers);
   const cityName = useAppSelector((store) => store.cityName);
-  const cityOffers = getCityOffers(offers, cityName);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  const cityOffersSelector = createSelector(
+    (store: State) => store.offers,
+    (offers) => offers.filter((offer) => offer.city.name === cityName)
+  );
+
+  const cityOffers = useAppSelector(cityOffersSelector);
+
   scrollRef.current?.scroll(0, 0);
+
   return (
     <main className={classNames('page__main', 'page__main--index',
       { 'page__main--index-empty': !cityOffers.length })}
