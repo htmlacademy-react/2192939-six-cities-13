@@ -13,12 +13,10 @@ import { useAppSelector } from '../../hooks';
 export default function Cities(): JSX.Element {
   const cityName = useAppSelector((store) => store.cityName);
   const scrollRef = useRef<HTMLDivElement>(null);
-
   const cityOffersSelector = createSelector(
     (store: State) => store.offers,
     (offers) => offers.filter((offer) => offer.city.name === cityName)
   );
-
   const cityOffers = useAppSelector(cityOffersSelector);
 
   scrollRef.current?.scroll(0, 0);
