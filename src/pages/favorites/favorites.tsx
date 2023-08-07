@@ -2,7 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES } from '../../settings';
+import { CITIES, PlacesCard } from '../../settings';
 import { useAppSelector } from '../../hooks';
 
 export default function FavoritesPage(): JSX.Element {
@@ -33,7 +33,7 @@ export default function FavoritesPage(): JSX.Element {
                           </a>
                         </div>
                       </div>
-                      <PlaceList offers={cityFavoriteOffers} type='favorites' />
+                      <PlaceList offers={cityFavoriteOffers} type={PlacesCard.Favorites} />
                     </li> : null
                 );
               })}

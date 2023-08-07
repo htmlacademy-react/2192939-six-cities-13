@@ -1,6 +1,6 @@
-import { FullOffer, Offer, Reviews } from './../types/data-types';
+import { FullOffer, Offer, Reviews, SortingType } from './../types/data-types';
 import { createReducer } from '@reduxjs/toolkit';
-import { AuthStatus, DEFAULT_CITY } from '../settings';
+import { AuthStatus, DEFAULT_CITY, DEFAULT_SORTING } from '../settings';
 import {
   loadFullOfferAction,
   loadNeighborPlacesAction,
@@ -13,6 +13,7 @@ import {
   setOffersDataLoadingStatus,
   setReviewAction,
   setReviewsDataLoadingStatus,
+  setSortingType,
   setUserAuthStatus,
   setUserName,
 } from './action';
@@ -31,6 +32,7 @@ type InitialState = {
   authStatus: AuthStatus;
   userName: string;
   activeCard: Offer | undefined;
+  sortingType: SortingType;
 };
 
 const initialState: InitialState = {
@@ -45,7 +47,8 @@ const initialState: InitialState = {
   isNeighborPlacesDataLoading: true,
   authStatus: AuthStatus.Unknown,
   userName: '',
-  activeCard: undefined
+  activeCard: undefined,
+  sortingType: DEFAULT_SORTING,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -88,5 +91,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setActiveCardAction, (state, action) => {
       state.activeCard = action.payload;
+    })
+    .addCase(setSortingType, (state, action) => {
+      state.sortingType = action.payload;
     });
 });

@@ -1,5 +1,5 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT, PlacesCard } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
@@ -42,14 +42,14 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={type === PageCard.Favorites ? 150 : 260}
-            height={type === PageCard.Favorites ? 110 : 200}
+            width={type === PlacesCard.Favorites ? 150 : 260}
+            height={type === PlacesCard.Favorites ? 110 : 200}
             alt="Place image"
           />
         </a>
       </div>
       <div className={classNames(
-        { 'favorites__card-info': type === PageCard.Favorites },
+        { 'favorites__card-info': type === PlacesCard.Favorites },
         'place-card__info'
       )}
       >

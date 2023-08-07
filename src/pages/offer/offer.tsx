@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage } from '../../settings';
+import { AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
@@ -173,7 +173,7 @@ export default function OfferPage(): JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighborhood
               </h2>
-              <PlaceList offers={nearByCities(neighborPlaces)} type={'near-places'} />
+              <PlaceList offers={nearByCities(neighborPlaces)} type={PlacesCard.NearPlaces} />
             </section>
           </div>
         </main>}

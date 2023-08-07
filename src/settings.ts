@@ -84,11 +84,11 @@ export const StylesForMapOfferPage = {
   margin: '0 auto',
 };
 
-export const PageCard = {
-  Cities: 'cities',
-  NearPlaces: 'near-places',
-  Favorites: 'favorites',
-};
+export enum PlacesCard {
+  Cities = 'cities',
+  NearPlaces = 'near-places',
+  Favorites = 'favorites',
+}
 
 export const StatusCode = {
   401: 401
