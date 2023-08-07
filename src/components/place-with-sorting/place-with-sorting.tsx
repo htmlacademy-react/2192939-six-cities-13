@@ -6,6 +6,7 @@ import { getSortedOffersBy } from '../../utils/offers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortingType } from '../../store/action';
 
+
 type PlaceWithSortingProps = {
   cityOffers: Offers;
 }
