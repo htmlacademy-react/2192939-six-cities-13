@@ -69,3 +69,5 @@ export type SortingType =
   | 'raitedFirst';
 
 export type PlaceCardType = 'cities' | 'near-places' | 'favorites';
+
+export type Cities = string[]
