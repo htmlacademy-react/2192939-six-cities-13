@@ -6,13 +6,14 @@ import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
 import { useAppSelector } from '../../hooks';
 import PlaceWithSorting from '../place-with-sorting';
+import { useRef } from 'react';
 
 export default function Cities(): JSX.Element {
   const offers = useAppSelector((store) => store.offers);
   const cityName = useAppSelector((store) => store.cityName);
   const cityOffers = getCityOffers(offers, cityName);
-
-
+  const scrollRef = useRef<HTMLDivElement>(null);
+  scrollRef.current?.scroll(0, 0);
   return (
     <main className={classNames('page__main', 'page__main--index',
       { 'page__main--index-empty': !cityOffers.length })}
@@ -26,7 +27,7 @@ export default function Cities(): JSX.Element {
           <PlaceListEmpty />}
         {cityOffers.length &&
           <div className="cities__places-container container">
-            <section className="cities__places places">
+            <section className="cities__places places" ref={scrollRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
                 {cityOffers.length} places to stay in {cityName}
