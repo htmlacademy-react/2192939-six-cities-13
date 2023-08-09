@@ -86,5 +86,6 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
+
   );
 }
