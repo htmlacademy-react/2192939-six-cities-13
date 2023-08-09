@@ -27,7 +27,7 @@ export default function App(): JSX.Element {
     );
   }
 
-  if (!hasError) {
+  if (hasError) {
     return (
       <ErrorScreen />
     );
