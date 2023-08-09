@@ -12,7 +12,7 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
   const [changeSorting, handleChangeSorting, handleTypeSortingClick] = useSorting({ onChangeSorting });
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <div className="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
       <span> </span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleChangeSorting}>
@@ -41,6 +41,6 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
           </li>
         ))}
       </ul>
-    </form>
+    </div>
   );
 }
