@@ -7,3 +7,5 @@ export const getCityName = (store: State): string => store[NameSpace.App].cityNa
 export const getSortingType = (store: State): SortingType => store[NameSpace.App].sortingType as SortingType;
 
 export const getActiveCard = (store: State): Offer | undefined => store[NameSpace.App].activeCard;
+
+export const getFavoritesCount = (store: State): number => store[NameSpace.App].favoritesCount;

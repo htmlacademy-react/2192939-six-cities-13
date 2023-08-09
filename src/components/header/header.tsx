@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import { logoutAction } from '../../store/api-actions';
+import { getFavoritesCount } from '../../store/app-process/selectors';
 import { getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
@@ -9,10 +10,9 @@ type HeaderProps = {
   authStatus?: AuthStatus;
 };
 
-export default function Header({
-  authStatus = AuthStatus.Auth,
-}: HeaderProps): JSX.Element {
+export default function Header({ authStatus = AuthStatus.Auth, }: HeaderProps): JSX.Element {
   const userName = useAppSelector(getUserName);
+  const favoritesCount = useAppSelector(getFavoritesCount);
   const dispatch = useAppDispatch();
 
   const logoutHandle = () => {
@@ -37,7 +37,7 @@ export default function Header({
                       <span className="header__user-name user__name">
                         {userName}
                       </span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoritesCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item" >

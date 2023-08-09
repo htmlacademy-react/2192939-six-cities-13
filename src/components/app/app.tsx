@@ -21,7 +21,7 @@ export default function App(): JSX.Element {
   const authStatus = useAppSelector(getAuthStatus);
   const hasError = useAppSelector(getErrorStatus);
 
-  if (authStatus === AuthStatus.Unknown && isOffersDataLoading) {
+  if (authStatus === AuthStatus.Unknown || isOffersDataLoading) {
     return (
       <Loader />
     );

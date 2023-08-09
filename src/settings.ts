@@ -14,6 +14,7 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
   NearBy = '/nearby',
+  Favorites = '/favorite'
 }
 
 export enum AuthStatus {

@@ -17,10 +17,12 @@ export type AppData = {
   fullOffer: FullOffer;
   reviews: Reviews;
   neighborPlaces: Offers;
+  favorites: Offers;
   isOffersDataLoading: boolean;
   isFullOfferDataLoading: boolean;
   isReviewsDataLoading: boolean;
   isNeighborPlacesDataLoading: boolean;
+  isFavoritesLoading: boolean;
   hasError: boolean;
 };
 
@@ -28,4 +30,5 @@ export type AppProcess = {
   cityName: string;
   activeCard: Offer | undefined;
   sortingType: string;
+  favoritesCount: number;
 }

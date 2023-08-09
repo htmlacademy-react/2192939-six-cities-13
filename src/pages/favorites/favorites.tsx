@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
 import { CITIES, PlacesCard } from '../../settings';
 import { useAppSelector } from '../../hooks';
-import { getOffers } from '../../store/app-data/selectors';
+import { getFavorites } from '../../store/app-data/selectors';
+import FavoritesEmpty from '../../components/favorites-empty';
+import { getFavoritesCount } from '../../store/app-process/selectors';
 
 export default function FavoritesPage(): JSX.Element {
+  const favoriteOffers = useAppSelector(getFavorites);
+  const favoritesCount = useAppSelector(getFavoritesCount);
 
-  const offers = useAppSelector(getOffers);
-
-  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+  if (!favoritesCount) {
+    return (
+      <FavoritesEmpty />
+    );
+  }
   return (
     <div className="page">
       <Helmet>

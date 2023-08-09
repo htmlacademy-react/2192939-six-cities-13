@@ -45,6 +45,19 @@ export const fetchNeighborPlacesAction = createAsyncThunk<Offers, I, C>(
   }
 );
 
+export const fetchFavoritesAction = createAsyncThunk<Offers, U, C>(
+  'data/fetchFavoritesAction',
+  async (_arg, { extra: api }) => {
+    const token = getToken();
+    const { data } = await api.get<Offers>(
+      `${APIRoute.Favorites}`,
+      { headers: { 'X-token': token } }
+    );
+    return data;
+  }
+);
+
+
 export const checkAuthStatus = createAsyncThunk<string, U, C>(
   'user/checkAuthStatus',
   async (_arg, { extra: api }) => {
@@ -56,9 +69,7 @@ export const checkAuthStatus = createAsyncThunk<string, U, C>(
 export const loginAction = createAsyncThunk<string, A, C>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const {
-      data: { token },
-    } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { data: { token }, } = await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Root));
     return email;
