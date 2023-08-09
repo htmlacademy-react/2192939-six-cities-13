@@ -1,37 +1,23 @@
 import classNames from 'classnames';
-import { Offers } from '../../types/data-types';
+import { Offers, PlaceCardType } from '../../types/data-types';
 import PlaceCard from '../place-card';
-import { useRef, useEffect } from 'react';
+import { PlacesCard } from '../../settings';
 
 type PlaceListProps = {
   offers: Offers;
-  type: 'cities' | 'near-places' | 'favorites';
-  onCardEnter?: (cardId: string) => void;
-  onCardLeave?: () => void;
-
+  type: PlaceCardType;
 }
 
-export default function PlaceList({ offers, type, onCardEnter, onCardLeave }: PlaceListProps): JSX.Element {
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(
-    () => {
-      elementRef.current?.scrollTo(0, 0);
-    }
-  );
-
+export default function PlaceList({ offers, type }: PlaceListProps): JSX.Element {
   return (
     <div className={classNames(
-      { 'cities__places-list places__list tabs__content': type === 'cities' },
-      { 'near-places__list places__list': type === 'near-places' },
-      { 'favorites__places': type === 'favorites' })} ref={elementRef}
+      { 'cities__places-list places__list tabs__content': type === PlacesCard.Cities },
+      { 'near-places__list places__list': type === PlacesCard.NearPlaces },
+      { 'favorites__places': type === PlacesCard.Favorites })}
     >
       {
         offers.map((offer) => (
-          <PlaceCard key={offer.id} offer={offer} type={type}
-            onCardEnter={onCardEnter}
-            onCardLeave={onCardLeave}
-          />
+          <PlaceCard key={offer.id} offer={offer} type={type} />
         ))
       }
     </div >

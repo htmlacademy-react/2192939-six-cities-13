@@ -1,8 +1,7 @@
 import classNames from 'classnames';
-import { useState } from 'react';
 import { SORTING_MAPS } from '../../settings';
-import { UIEvent } from 'react';
 import { SortingType } from '../../types/data-types';
+import useSorting from '../../hooks/use-sorting';
 
 type SortingProps = {
   onChangeSorting: (value: SortingType) => void;
@@ -10,24 +9,10 @@ type SortingProps = {
 }
 
 export default function Sorting({ onChangeSorting, typeSorting }: SortingProps): JSX.Element {
-  const [changeSorting, setChangeSorting] = useState(false);
-
-
-  const handleChangeSorting = () => {
-    setChangeSorting(!changeSorting);
-  };
-
-  const handleTypeSortingClick = (evt: UIEvent<HTMLElement>): void => {
-    evt.preventDefault();
-    if (!evt.currentTarget.dataset.sorttype) {
-      return;
-    }
-    onChangeSorting(evt.currentTarget.dataset.sorttype as SortingType);
-    setChangeSorting(!changeSorting);
-  };
+  const [changeSorting, handleChangeSorting, handleTypeSortingClick] = useSorting({ onChangeSorting });
 
   return (
-    <form className="places__sorting" action="#" method="get">
+    <div className="places__sorting">
       <span className="places__sorting-caption">Sort by</span>
       <span> </span>
       <span className="places__sorting-type" tabIndex={0} onClick={handleChangeSorting}>
@@ -42,15 +27,20 @@ export default function Sorting({ onChangeSorting, typeSorting }: SortingProps):
       )}
       >
         {SORTING_MAPS.map((sortingMap) => (
-          <li className={classNames(
-            'places__option',
-            { 'places__option--active': typeSorting === sortingMap.type }
-          )} tabIndex={0} key={sortingMap.type} data-sorttype={sortingMap.type} onClick={handleTypeSortingClick}
+          <li
+            className={classNames(
+              'places__option',
+              { 'places__option--active': typeSorting === sortingMap.type }
+            )}
+            tabIndex={0}
+            key={sortingMap.type}
+            data-sorttype={sortingMap.type}
+            onClick={handleTypeSortingClick}
           >
             {sortingMap.title}
           </li>
         ))}
       </ul>
-    </form>
+    </div>
   );
 }

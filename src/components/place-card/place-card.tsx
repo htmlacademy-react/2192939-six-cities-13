@@ -1,33 +1,29 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PageCard } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT, PlacesCard } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
+import { useAppDispatch } from '../../hooks';
+import { setActiveCardAction } from '../../store/app-process/app-process';
 
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
-  onCardEnter?: (cardId: string) => void;
-  onCardLeave?: () => void;
 }
 
 
-export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: PlaceCardProps): JSX.Element {
+export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    if (!onCardEnter) {
-      return;
-    }
-    onCardEnter(evt.currentTarget.id);
+    dispatch(setActiveCardAction(offer));
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
-    if (!onCardLeave) {
-      return;
-    }
-    onCardLeave();
+    dispatch(setActiveCardAction(undefined));
   };
 
   return (
@@ -46,14 +42,14 @@ export default function PlaceCard({ offer, type, onCardEnter, onCardLeave }: Pla
           <img
             className="place-card__image"
             src={offer.previewImage}
-            width={type === PageCard.Favorites ? 150 : 260}
-            height={type === PageCard.Favorites ? 110 : 200}
+            width={type === PlacesCard.Favorites ? 150 : 260}
+            height={type === PlacesCard.Favorites ? 110 : 200}
             alt="Place image"
           />
         </a>
       </div>
       <div className={classNames(
-        { 'favorites__card-info': type === PageCard.Favorites },
+        { 'favorites__card-info': type === PlacesCard.Favorites },
         'place-card__info'
       )}
       >

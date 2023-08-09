@@ -1,14 +1,15 @@
-import { City, FullOffer, Offer, Offers, StylesForMap } from '../../types/data-types';
+import { City, FullOffer, Offers, StylesForMap } from '../../types/data-types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
+import { useAppSelector } from '../../hooks';
+import { getActiveCard } from '../../store/app-process/selectors';
 
 type MapProps = {
   city: City;
   offers: Offers;
-  selectedPlace?: Offer;
   styles: StylesForMap;
   fullOffer?: FullOffer | null;
 };
@@ -28,12 +29,13 @@ const currentCustomIcon = setIcon(URL_MARKER_CURRENT);
 export default function Map({
   city,
   offers,
-  selectedPlace,
   styles,
   fullOffer = null,
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+
+  const selectedPlace = useAppSelector(getActiveCard);
 
   useEffect(() => {
     if (map) {

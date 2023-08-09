@@ -1,0 +1,14 @@
+.cities__status--error {
+  color: red;
+  margin-bottom: 20px;
+}
+
+.button__error {
+  border: none;
+  text-decoration: underline;
+}
+
+.button__error:hover {
+  color: blue;
+  cursor: pointer;
+}

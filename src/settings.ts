@@ -84,11 +84,11 @@ export const StylesForMapOfferPage = {
   margin: '0 auto',
 };
 
-export const PageCard = {
-  Cities: 'cities',
-  NearPlaces: 'near-places',
-  Favorites: 'favorites',
-};
+export enum PlacesCard {
+  Cities = 'cities',
+  NearPlaces = 'near-places',
+  Favorites = 'favorites',
+}
 
 export const StatusCode = {
   401: 401
@@ -97,3 +97,9 @@ export const StatusCode = {
 export const StatusMessage = {
   401: 'You\'re not authorized'
 };
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  App = 'APP'
+}

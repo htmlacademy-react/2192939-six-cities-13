@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import { logoutAction } from '../../store/api-actions';
+import { getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
@@ -11,7 +12,7 @@ type HeaderProps = {
 export default function Header({
   authStatus = AuthStatus.Auth,
 }: HeaderProps): JSX.Element {
-  const userName = useAppSelector((state) => state.userName);
+  const userName = useAppSelector(getUserName);
   const dispatch = useAppDispatch();
 
   const logoutHandle = () => {

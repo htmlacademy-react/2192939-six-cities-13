@@ -1,15 +1,16 @@
-import { Cities, SortingType } from '../../types/data-types';
 import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectCityAction } from '../../store/action';
+import { selectCityAction, setSortingType } from '../../store/app-process/app-process';
 import { DEFAULT_SORTING } from '../../settings';
+import { getCityName } from '../../store/app-process/selectors';
+
 type CitiesListProps = {
-  cities: Cities;
-  setTypeSorting: (value: SortingType) => void;
+  cities: string[];
 };
-export default function CitiesList({ cities, setTypeSorting }: CitiesListProps): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.cityName);
+
+export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
+  const selectedCity = useAppSelector(getCityName);
   const dispatch = useAppDispatch();
 
   const handleElementClick = (evt: MouseEvent<HTMLElement>) => {
@@ -18,7 +19,7 @@ export default function CitiesList({ cities, setTypeSorting }: CitiesListProps):
       return;
     }
     dispatch(selectCityAction(evt.currentTarget.textContent));
-    setTypeSorting(DEFAULT_SORTING);
+    dispatch(setSortingType(DEFAULT_SORTING));
   };
 
   return (

@@ -2,12 +2,13 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES } from '../../settings';
+import { CITIES, PlacesCard } from '../../settings';
 import { useAppSelector } from '../../hooks';
+import { getOffers } from '../../store/app-data/selectors';
 
 export default function FavoritesPage(): JSX.Element {
 
-  const offers = useAppSelector((store) => store.offers);
+  const offers = useAppSelector(getOffers);
 
   const favoriteOffers = offers.filter((offer) => offer.isFavorite);
   return (
@@ -33,7 +34,7 @@ export default function FavoritesPage(): JSX.Element {
                           </a>
                         </div>
                       </div>
-                      <PlaceList offers={cityFavoriteOffers} type='favorites' />
+                      <PlaceList offers={cityFavoriteOffers} type={PlacesCard.Favorites} />
                     </li> : null
                 );
               })}

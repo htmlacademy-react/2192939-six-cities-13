@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, StylesForMapOfferPage } from '../../settings';
+import { AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
 import { useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
@@ -13,16 +13,18 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
 import { fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
-  const isFullOfferLoaded = useAppSelector((store) => store.isFullOfferDataLoading);
-  const isReviewsLoaded = useAppSelector((store) => store.isReviewsDataLoading);
-  const isNearByLoaded = useAppSelector((store) => store.isNeighborPlacesDataLoading);
-  const authStatus = useAppSelector((store) => store.authStatus);
-  const fullOffer = useAppSelector((store) => store.fullOffer);
-  const neighborPlaces = useAppSelector((store) => store.neighborPlaces);
+  const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
+  const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
+  const isNearByLoaded = useAppSelector(getIsNearByLoaded);
+  const authStatus = useAppSelector(getAuthStatus);
+  const fullOffer = useAppSelector(getFullOffer);
+  const neighborPlaces = useAppSelector(getNeighborPlaces);
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -173,7 +175,7 @@ export default function OfferPage(): JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighborhood
               </h2>
-              <PlaceList offers={nearByCities(neighborPlaces)} type={'near-places'} />
+              <PlaceList offers={nearByCities(neighborPlaces)} type={PlacesCard.NearPlaces} />
             </section>
           </div>
         </main>}
