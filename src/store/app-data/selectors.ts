@@ -15,3 +15,5 @@ export const getIsFullOfferLoaded = (state: State): boolean => state[NameSpace.D
 export const getIsReviewsLoaded = (state: State): boolean => state[NameSpace.Data].isReviewsDataLoading;
 
 export const getIsNearByLoaded = (state: State): boolean => state[NameSpace.Data].isNeighborPlacesDataLoading;
+
+export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;

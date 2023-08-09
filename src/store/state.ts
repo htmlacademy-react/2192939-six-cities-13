@@ -21,6 +21,7 @@ export type AppData = {
   isFullOfferDataLoading: boolean;
   isReviewsDataLoading: boolean;
   isNeighborPlacesDataLoading: boolean;
+  hasError: boolean;
 };
 
 export type AppProcess = {
