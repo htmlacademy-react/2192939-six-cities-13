@@ -13,16 +13,18 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
 import { fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { getAuthStatus } from '../../store/user-process/selectors';
+import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
-  const isFullOfferLoaded = useAppSelector((store) => store.isFullOfferDataLoading);
-  const isReviewsLoaded = useAppSelector((store) => store.isReviewsDataLoading);
-  const isNearByLoaded = useAppSelector((store) => store.isNeighborPlacesDataLoading);
-  const authStatus = useAppSelector((store) => store.authStatus);
-  const fullOffer = useAppSelector((store) => store.fullOffer);
-  const neighborPlaces = useAppSelector((store) => store.neighborPlaces);
+  const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
+  const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
+  const isNearByLoaded = useAppSelector(getIsNearByLoaded);
+  const authStatus = useAppSelector(getAuthStatus);
+  const fullOffer = useAppSelector(getFullOffer);
+  const neighborPlaces = useAppSelector(getNeighborPlaces);
 
   useEffect(() => {
     let isOfferPageMounted = true;

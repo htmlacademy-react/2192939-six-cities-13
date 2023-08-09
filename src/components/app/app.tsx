@@ -12,10 +12,12 @@ import { useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
+import { getIsOffersDataLoading } from '../../store/app-data/selectors';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
 export default function App(): JSX.Element {
-  const isOffersDataLoading = useAppSelector((store) => store.isOffersDataLoading);
-  const authStatus = useAppSelector((store) => store.authStatus);
+  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
+  const authStatus = useAppSelector(getAuthStatus);
   if (authStatus === AuthStatus.Unknown && isOffersDataLoading) {
     return (
       <Loader />

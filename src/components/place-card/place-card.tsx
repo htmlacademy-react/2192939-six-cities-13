@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch } from '../../hooks';
-import { setActiveCardAction } from '../../store/action';
+import { setActiveCardAction } from '../../store/app-process/app-process';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -86,6 +86,5 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
-
   );
 }

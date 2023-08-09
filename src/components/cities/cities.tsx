@@ -3,18 +3,20 @@ import { CITIES, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
-// import { useAppSelector } from '../../hooks';
 import PlaceWithSorting from '../place-with-sorting';
 import { useRef } from 'react';
 import { createSelector } from '@reduxjs/toolkit';
-import { State } from '../../store/state';
 import { useAppSelector } from '../../hooks';
+import { getCityName } from '../../store/app-process/selectors';
+import { getOffers } from '../../store/app-data/selectors';
 
 export default function Cities(): JSX.Element {
-  const cityName = useAppSelector((store) => store.cityName);
+
+  const cityName = useAppSelector(getCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const cityOffersSelector = createSelector(
-    (store: State) => store.offers,
+    getOffers,
     (offers) => offers.filter((offer) => offer.city.name === cityName)
   );
   const cityOffers = useAppSelector(cityOffersSelector);

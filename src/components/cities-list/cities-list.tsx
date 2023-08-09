@@ -1,13 +1,16 @@
 import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectCityAction, setSortingType } from '../../store/action';
+import { selectCityAction, setSortingType } from '../../store/app-process/app-process';
 import { DEFAULT_SORTING } from '../../settings';
+import { getCityName } from '../../store/app-process/selectors';
+
 type CitiesListProps = {
   cities: string[];
 };
+
 export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
-  const selectedCity = useAppSelector((state) => state.cityName);
+  const selectedCity = useAppSelector(getCityName);
   const dispatch = useAppDispatch();
 
   const handleElementClick = (evt: MouseEvent<HTMLElement>) => {

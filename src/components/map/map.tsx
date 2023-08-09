@@ -5,6 +5,7 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
+import { getActiveCard } from '../../store/app-process/selectors';
 
 type MapProps = {
   city: City;
@@ -34,7 +35,7 @@ export default function Map({
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const selectedPlace = useAppSelector((store) => store.activeCard);
+  const selectedPlace = useAppSelector(getActiveCard);
 
   useEffect(() => {
     if (map) {

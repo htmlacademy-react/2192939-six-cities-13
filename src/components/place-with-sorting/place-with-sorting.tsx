@@ -4,8 +4,9 @@ import { Offers, SortingType } from '../../types/data-types';
 import { PlacesCard } from '../../settings';
 import { getSortedOffersBy } from '../../utils/offers';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSortingType } from '../../store/action';
+import { setSortingType } from '../../store/app-process/app-process';
 import { useCallback } from 'react';
+import { getSortingType } from '../../store/app-process/selectors';
 
 
 type PlaceWithSortingProps = {
@@ -14,7 +15,7 @@ type PlaceWithSortingProps = {
 
 export default function PlaceWithSorting({ cityOffers }: PlaceWithSortingProps) {
   const dispatch = useAppDispatch();
-  const typeSorting = useAppSelector((store) => store.sortingType);
+  const typeSorting = useAppSelector(getSortingType);
 
   const handleChangeSorting = useCallback((sortType: SortingType) => {
     dispatch(setSortingType(sortType));

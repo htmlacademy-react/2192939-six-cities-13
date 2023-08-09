@@ -97,3 +97,9 @@ export const StatusCode = {
 export const StatusMessage = {
   401: 'You\'re not authorized'
 };
+
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+  App = 'APP'
+}
