@@ -31,6 +31,7 @@ export const fetchReviewsFullOfferAction = createAsyncThunk<Reviews, I, C>(
   'data/fetchReviewsFullOffer',
   async (offerId, { extra: api }) => {
     const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
+
     return data;
   }
 );

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { FullOffer } from '../../types/data-types';
 import { NameSpace } from '../../settings';
 import { AppData } from '../state';
-import { fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../api-actions';
+import { fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
 
 const initialState: AppData = {
   offers: [],
@@ -54,6 +54,9 @@ export const appData = createSlice({
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
         state.isFavoritesLoading = false;
+      })
+      .addCase(reviewAction.fulfilled, (state, action) => {
+        state.reviews.push(action.payload);
       });
   }
 });

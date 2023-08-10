@@ -9,7 +9,6 @@ export type AppDispatch = typeof store.dispatch;
 export type UserProcess = {
   authStatus: AuthStatus;
   userName: string;
-  reviews: Reviews;
 }
 
 export type AppData = {
