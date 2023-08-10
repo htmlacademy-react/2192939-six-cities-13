@@ -7,7 +7,7 @@ import {
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { A, C, I, R, U, V } from '../types/api-types';
+import { A, C, F, I, R, U, V } from '../types/api-types';
 
 export const fetchOffersAction = createAsyncThunk<Offers, U, C>(
   'data/fetchOffers',
@@ -95,6 +95,19 @@ export const reviewAction = createAsyncThunk<Review, R, C>(
         comment,
         rating,
       },
+      { headers: { 'X-token': token } }
+    );
+    return response.data;
+  }
+);
+
+export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
+  'data/favoriteStatus',
+  async ({ offerId, status }, { extra: api }) => {
+    const token = getToken();
+    const response = await api.post<FullOffer>(
+      `${APIRoute.Favorites}/${offerId}/${status}`,
+      {},
       { headers: { 'X-token': token } }
     );
     return response.data;

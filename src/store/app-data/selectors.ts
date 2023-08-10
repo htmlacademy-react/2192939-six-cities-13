@@ -23,3 +23,5 @@ export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].h
 export const getFavorites = (state: State): Offers => state[NameSpace.Data].favorites;
 
 export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.Data].isFavoritesLoading;
+
+export const getIsFavoriteAdding = (state: State): boolean => state[NameSpace.Data].isFavoriteAdding;

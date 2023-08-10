@@ -8,7 +8,7 @@ const initialState: AppProcess = {
   cityName: DEFAULT_CITY,
   activeCard: undefined,
   sortingType: DEFAULT_SORTING,
-  favoritesCount: 0,
+  favoritesCount: 0
 };
 
 export const appProcess = createSlice({

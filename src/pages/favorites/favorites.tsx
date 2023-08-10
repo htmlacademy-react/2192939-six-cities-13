@@ -3,14 +3,36 @@ import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
 import { CITIES, PlacesCard } from '../../settings';
-import { useAppSelector } from '../../hooks';
-import { getFavorites } from '../../store/app-data/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFavorites, getIsFavoritesLoading } from '../../store/app-data/selectors';
 import FavoritesEmpty from '../../components/favorites-empty';
-import { getFavoritesCount } from '../../store/app-process/selectors';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import Loader from '../../components/loader';
 
 export default function FavoritesPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const favoriteOffers = useAppSelector(getFavorites);
-  const favoritesCount = useAppSelector(getFavoritesCount);
+  const favoritesCount = favoriteOffers.length;
+  const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+
+  useEffect(() => {
+    let isOfferPageMounted = true;
+
+    if (isOfferPageMounted) {
+      dispatch(fetchFavoritesAction());
+    }
+
+    return () => {
+      isOfferPageMounted = false;
+    };
+  }, [dispatch]);
+
+  if (isFavoritesLoading) {
+    return (
+      <Loader />
+    );
+  }
 
   if (!favoritesCount) {
     return (

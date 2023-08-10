@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { FullOffer } from '../../types/data-types';
 import { NameSpace } from '../../settings';
 import { AppData } from '../state';
-import { fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
+import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
 
 const initialState: AppData = {
   offers: [],
@@ -15,7 +15,8 @@ const initialState: AppData = {
   isReviewsDataLoading: true,
   isNeighborPlacesDataLoading: true,
   isFavoritesLoading: false,
-  hasError: false
+  isFavoriteAdding: false,
+  hasError: false,
 };
 
 export const appData = createSlice({
@@ -57,6 +58,14 @@ export const appData = createSlice({
       })
       .addCase(reviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
+      })
+      .addCase(favoriteStatusAction.fulfilled, (state, action) => {
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        state.offers[index].isFavorite = !state.offers[index].isFavorite;
+        state.isFavoriteAdding = false;
+      })
+      .addCase(favoriteStatusAction.pending, (state) => {
+        state.isFavoriteAdding = true;
       });
   }
 });

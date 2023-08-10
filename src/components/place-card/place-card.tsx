@@ -4,8 +4,11 @@ import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../hooks';
-import { setActiveCardAction } from '../../store/app-process/app-process';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setActiveCardAction, setFavoritesCount } from '../../store/app-process/app-process';
+import { favoriteStatusAction, fetchFavoritesAction } from '../../store/api-actions';
+import { getFavoritesCount } from '../../store/app-process/selectors';
+import { getIsFavoriteAdding } from '../../store/app-data/selectors';
 
 type PlaceCardProps = {
   offer: Offer;
@@ -15,15 +18,28 @@ type PlaceCardProps = {
 
 export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const favoritesCount = useAppSelector(getFavoritesCount);
+  const isFavoriteAdding = useAppSelector(getIsFavoriteAdding);
 
-  const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+  const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
     dispatch(setActiveCardAction(offer));
   };
 
-  const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
+  const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
     dispatch(setActiveCardAction(undefined));
+  };
+
+  const handleButtonClick = (): void => {
+    dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
+    if (!isFavoriteAdding) {
+      const count = !offer.isFavorite ? favoritesCount + 1 : favoritesCount - 1;
+      dispatch(setFavoritesCount(count));
+      dispatch(fetchFavoritesAction());
+      console.log('click');
+
+    }
   };
 
   return (
@@ -65,6 +81,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
               'button'
             )}
             type="button"
+            onClick={handleButtonClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
@@ -86,6 +103,5 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
-
   );
 }

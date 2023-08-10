@@ -22,6 +22,7 @@ export type AppData = {
   isReviewsDataLoading: boolean;
   isNeighborPlacesDataLoading: boolean;
   isFavoritesLoading: boolean;
+  isFavoriteAdding: boolean;
   hasError: boolean;
 };
 

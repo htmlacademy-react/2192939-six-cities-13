@@ -21,8 +21,6 @@ export default function Cities(): JSX.Element {
   );
   const cityOffers = useAppSelector(cityOffersSelector);
 
-  scrollRef.current?.scroll(0, 0);
-
   return (
     <main className={classNames('page__main', 'page__main--index',
       { 'page__main--index-empty': !cityOffers.length })}
