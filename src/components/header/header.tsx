@@ -1,18 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import { logoutAction } from '../../store/api-actions';
-import { getFavoritesCount } from '../../store/app-process/selectors';
 import { getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
 type HeaderProps = {
-  authStatus?: AuthStatus;
+  authStatus: AuthStatus;
+  favoritesCount: number;
 };
 
-export default function Header({ authStatus = AuthStatus.Auth, }: HeaderProps): JSX.Element {
+export default function Header({ authStatus, favoritesCount }: HeaderProps): JSX.Element {
   const userName = useAppSelector(getUserName);
-  const favoritesCount = useAppSelector(getFavoritesCount);
   const dispatch = useAppDispatch();
 
   const logoutHandle = () => {

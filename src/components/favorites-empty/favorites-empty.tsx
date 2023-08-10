@@ -1,13 +1,18 @@
+import { AuthStatus } from '../../settings';
 import Header from '../header';
 import { Helmet } from 'react-helmet-async';
 
-export default function FavoritesEmpty(): JSX.Element {
+type FavoritesEmptyPageProps = {
+  favoritesCount: number;
+  authStatus: AuthStatus;
+}
+export default function FavoritesEmpty({ favoritesCount, authStatus }: FavoritesEmptyPageProps): JSX.Element {
   return (
     <div className="page page--favorites-empty">
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <Header />
+      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
           <section className="favorites favorites--empty">

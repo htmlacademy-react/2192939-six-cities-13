@@ -2,18 +2,23 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { CITIES, PlacesCard } from '../../settings';
+import { AuthStatus, CITIES, PlacesCard } from '../../settings';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFavorites, getIsFavoritesLoading } from '../../store/app-data/selectors';
+import { getIsFavoritesLoading } from '../../store/app-data/selectors';
 import FavoritesEmpty from '../../components/favorites-empty';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import Loader from '../../components/loader';
+import { Offers } from '../../types/data-types';
 
-export default function FavoritesPage(): JSX.Element {
+type FavoritesPageProps = {
+  favoriteOffers: Offers;
+  favoritesCount: number;
+  authStatus: AuthStatus;
+}
+
+export default function FavoritesPage({ favoriteOffers, favoritesCount, authStatus }: FavoritesPageProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const favoriteOffers = useAppSelector(getFavorites);
-  const favoritesCount = favoriteOffers.length;
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
 
   useEffect(() => {
@@ -26,7 +31,7 @@ export default function FavoritesPage(): JSX.Element {
     return () => {
       isOfferPageMounted = false;
     };
-  }, [dispatch]);
+  }, [dispatch, favoritesCount]);
 
   if (isFavoritesLoading) {
     return (
@@ -36,7 +41,10 @@ export default function FavoritesPage(): JSX.Element {
 
   if (!favoritesCount) {
     return (
-      <FavoritesEmpty />
+      <FavoritesEmpty
+        favoritesCount={favoritesCount}
+        authStatus={authStatus}
+      />
     );
   }
   return (
@@ -44,7 +52,7 @@ export default function FavoritesPage(): JSX.Element {
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <Header />
+      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">
@@ -53,7 +61,7 @@ export default function FavoritesPage(): JSX.Element {
               {CITIES.map((city) => {
                 const cityFavoriteOffers = favoriteOffers.filter((offer) => offer.city.name === city);
                 return (
-                  cityFavoriteOffers.length ?
+                  {!cityFavoriteOffers.length ?
                     <li className="favorites__locations-items" key={city} >
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">

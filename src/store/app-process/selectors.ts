@@ -8,4 +8,3 @@ export const getSortingType = (store: State): SortingType => store[NameSpace.App
 
 export const getActiveCard = (store: State): Offer | undefined => store[NameSpace.App].activeCard;
 
-export const getFavoritesCount = (store: State): number => store[NameSpace.App].favoritesCount;

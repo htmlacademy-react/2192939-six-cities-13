@@ -24,11 +24,11 @@ export type AppData = {
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
   hasError: boolean;
+  favoritesCount: number;
 };
 
 export type AppProcess = {
   cityName: string;
   activeCard: Offer | undefined;
   sortingType: string;
-  favoritesCount: number;
 }

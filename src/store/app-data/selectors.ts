@@ -25,3 +25,5 @@ export const getFavorites = (state: State): Offers => state[NameSpace.Data].favo
 export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.Data].isFavoritesLoading;
 
 export const getIsFavoriteAdding = (state: State): boolean => state[NameSpace.Data].isFavoriteAdding;
+
+export const getFavoritesCount = (state: State): number => state[NameSpace.Data].favoritesCount;

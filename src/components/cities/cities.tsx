@@ -5,21 +5,20 @@ import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
 import PlaceWithSorting from '../place-with-sorting';
 import { useRef } from 'react';
-import { createSelector } from '@reduxjs/toolkit';
 import { useAppSelector } from '../../hooks';
 import { getCityName } from '../../store/app-process/selectors';
-import { getOffers } from '../../store/app-data/selectors';
+import { Offers } from '../../types/data-types';
 
-export default function Cities(): JSX.Element {
+type CitiesProps = {
+  offers: Offers;
+}
+
+export default function Cities({ offers }: CitiesProps): JSX.Element {
 
   const cityName = useAppSelector(getCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const cityOffersSelector = createSelector(
-    getOffers,
-    (offers) => offers.filter((offer) => offer.city.name === cityName)
-  );
-  const cityOffers = useAppSelector(cityOffersSelector);
+  const cityOffers = offers.filter((offer) => offer.city.name === cityName);
 
   return (
     <main className={classNames('page__main', 'page__main--index',
@@ -30,8 +29,7 @@ export default function Cities(): JSX.Element {
         <CitiesList cities={CITIES} />
       </div>
       <div className="cities">
-        {!cityOffers.length &&
-          <PlaceListEmpty />}
+        {!cityOffers.length && <PlaceListEmpty />}
         {cityOffers.length &&
           <div className="cities__places-container container">
             <section className="cities__places places" ref={scrollRef}>

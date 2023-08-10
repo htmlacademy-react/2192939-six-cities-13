@@ -105,11 +105,12 @@ export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
   'data/favoriteStatus',
   async ({ offerId, status }, { extra: api }) => {
     const token = getToken();
-    const response = await api.post<FullOffer>(
+    const { data } = await api.post<FullOffer>(
       `${APIRoute.Favorites}/${offerId}/${status}`,
       {},
       { headers: { 'X-token': token } }
     );
-    return response.data;
+
+    return data;
   }
 );

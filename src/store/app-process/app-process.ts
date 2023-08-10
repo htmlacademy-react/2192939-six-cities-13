@@ -8,7 +8,6 @@ const initialState: AppProcess = {
   cityName: DEFAULT_CITY,
   activeCard: undefined,
   sortingType: DEFAULT_SORTING,
-  favoritesCount: 0
 };
 
 export const appProcess = createSlice({
@@ -24,10 +23,7 @@ export const appProcess = createSlice({
     setSortingType: (state, action: PayloadAction<SortingType>) => {
       state.sortingType = action.payload;
     },
-    setFavoritesCount: (state, action: PayloadAction<number>) => {
-      state.favoritesCount = action.payload;
-    }
   },
 });
 
-export const { selectCityAction, setActiveCardAction, setSortingType, setFavoritesCount } = appProcess.actions;
+export const { selectCityAction, setActiveCardAction, setSortingType } = appProcess.actions;

@@ -4,12 +4,9 @@ import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setActiveCardAction, setFavoritesCount } from '../../store/app-process/app-process';
-import { favoriteStatusAction, fetchFavoritesAction } from '../../store/api-actions';
-import { getFavoritesCount } from '../../store/app-process/selectors';
-import { getIsFavoriteAdding } from '../../store/app-data/selectors';
-
+import { useAppDispatch, } from '../../hooks';
+import { setActiveCardAction, } from '../../store/app-process/app-process';
+import { favoriteStatusAction, } from '../../store/api-actions';
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
@@ -18,8 +15,6 @@ type PlaceCardProps = {
 
 export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const favoritesCount = useAppSelector(getFavoritesCount);
-  const isFavoriteAdding = useAppSelector(getIsFavoriteAdding);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -33,13 +28,6 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
 
   const handleButtonClick = (): void => {
     dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
-    if (!isFavoriteAdding) {
-      const count = !offer.isFavorite ? favoritesCount + 1 : favoritesCount - 1;
-      dispatch(setFavoritesCount(count));
-      dispatch(fetchFavoritesAction());
-      console.log('click');
-
-    }
   };
 
   return (

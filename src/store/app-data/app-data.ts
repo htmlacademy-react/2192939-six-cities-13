@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FullOffer } from '../../types/data-types';
 import { NameSpace } from '../../settings';
 import { AppData } from '../state';
@@ -17,12 +17,17 @@ const initialState: AppData = {
   isFavoritesLoading: false,
   isFavoriteAdding: false,
   hasError: false,
+  favoritesCount: 0
 };
 
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    setFavoritesCount: (state, action: PayloadAction<number>) => {
+      state.favoritesCount = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -59,13 +64,16 @@ export const appData = createSlice({
       .addCase(reviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
       })
-      .addCase(favoriteStatusAction.fulfilled, (state, action) => {
-        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
-        state.offers[index].isFavorite = !state.offers[index].isFavorite;
-        state.isFavoriteAdding = false;
-      })
       .addCase(favoriteStatusAction.pending, (state) => {
         state.isFavoriteAdding = true;
+      })
+      .addCase(favoriteStatusAction.fulfilled, (state, action) => {
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        state.isFavoriteAdding = false;
+        state.offers[index].isFavorite = action.payload.isFavorite;
+        state.favoritesCount += action.payload.isFavorite ? 1 : -1;
       });
   }
 });
+
+export const { setFavoritesCount } = appData.actions;

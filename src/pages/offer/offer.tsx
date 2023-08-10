@@ -16,7 +16,11 @@ import { useEffect } from 'react';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 
-export default function OfferPage(): JSX.Element {
+type OfferPageProps = {
+  favoritesCount: number;
+}
+
+export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
   const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
@@ -46,7 +50,7 @@ export default function OfferPage(): JSX.Element {
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-      <Header authStatus={authStatus} />
+      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
 
       {isFullOfferLoaded || isReviewsLoaded || isNearByLoaded
         ?
