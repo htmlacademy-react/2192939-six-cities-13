@@ -18,6 +18,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthStatus);
   const navigation = useNavigate();
+  const isAuth = authStatus === AuthStatus.Auth;
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -30,8 +31,9 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
   };
 
   const handleButtonClick = (): void => {
-    dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
-    if (authStatus !== AuthStatus.Auth) {
+    if (isAuth) {
+      dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
+    } else {
       navigation(AppRoute.Login);
     }
   };

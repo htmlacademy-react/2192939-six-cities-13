@@ -29,6 +29,7 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
   const navigation = useNavigate();
+  const isAuth = authStatus === AuthStatus.Auth;
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -45,8 +46,9 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
   }, [dispatch, offerId]);
 
   const handleButtonClick = (): void => {
-    dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
-    if (authStatus !== AuthStatus.Auth) {
+    if (isAuth) {
+      dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+    } else {
       navigation(AppRoute.Login);
     }
   };
