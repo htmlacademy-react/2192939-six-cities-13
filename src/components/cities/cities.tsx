@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { CITIES, StylesForMapMainPage } from '../../settings';
+import { CITIES, DEFAULT_CITY, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
 import PlaceWithSorting from '../place-with-sorting';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Offers } from '../../types/data-types';
 import { getCityName } from '../../store/app-data/selectors';
@@ -14,9 +14,14 @@ type CitiesProps = {
 }
 
 export default function Cities({ offers }: CitiesProps): JSX.Element {
-
+  const [prevCity, setPrevCity] = useState(DEFAULT_CITY);
   const cityName = useAppSelector(getCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  if (prevCity !== cityName) {
+    scrollRef.current?.scroll(0, 0);
+    setPrevCity(cityName);
+  }
 
   const cityOffers = offers.filter((offer) => offer.city.name === cityName);
 
