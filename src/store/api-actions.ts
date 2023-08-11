@@ -1,4 +1,3 @@
-import { getToken } from './../services/token';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FullOffer, Offers, Review, Reviews } from '../types/data-types';
 import { APIRoute, AppRoute } from '../settings';
@@ -49,10 +48,8 @@ export const fetchNeighborPlacesAction = createAsyncThunk<Offers, I, C>(
 export const fetchFavoritesAction = createAsyncThunk<Offers, U, C>(
   'data/fetchFavoritesAction',
   async (_arg, { extra: api }) => {
-    const token = getToken();
     const { data } = await api.get<Offers>(
       `${APIRoute.Favorites}`,
-      { headers: { 'X-token': token } }
     );
     return data;
   }
@@ -88,14 +85,12 @@ export const logoutAction = createAsyncThunk<V, U, C>(
 export const reviewAction = createAsyncThunk<Review, R, C>(
   'user/review',
   async ({ comment, rating, offerId }, { extra: api }) => {
-    const token = getToken();
     const response = await api.post<Review>(
       `${APIRoute.Comments}/${offerId}`,
       {
         comment,
         rating,
       },
-      { headers: { 'X-token': token } }
     );
     return response.data;
   }
@@ -104,11 +99,9 @@ export const reviewAction = createAsyncThunk<Review, R, C>(
 export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
   'data/favoriteStatus',
   async ({ offerId, status }, { extra: api }) => {
-    const token = getToken();
     const { data } = await api.post<FullOffer>(
       `${APIRoute.Favorites}/${offerId}/${status}`,
       {},
-      { headers: { 'X-token': token } }
     );
 
     return data;

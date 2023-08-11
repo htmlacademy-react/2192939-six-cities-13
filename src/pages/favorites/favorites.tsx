@@ -47,6 +47,8 @@ export default function FavoritesPage({ favoriteOffers, favoritesCount, authStat
       />
     );
   }
+
+
   return (
     <div className="page">
       <Helmet>
@@ -61,7 +63,7 @@ export default function FavoritesPage({ favoriteOffers, favoritesCount, authStat
               {CITIES.map((city) => {
                 const cityFavoriteOffers = favoriteOffers.filter((offer) => offer.city.name === city);
                 return (
-                  {!cityFavoriteOffers.length ?
+                  cityFavoriteOffers.length ?
                     <li className="favorites__locations-items" key={city} >
                       <div className="favorites__locations locations locations--current">
                         <div className="locations__item">

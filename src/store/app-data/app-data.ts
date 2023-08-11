@@ -72,6 +72,7 @@ export const appData = createSlice({
         state.isFavoriteAdding = false;
         state.offers[index].isFavorite = action.payload.isFavorite;
         state.favoritesCount += action.payload.isFavorite ? 1 : -1;
+        state.fullOffer = action.payload;
       });
   }
 });

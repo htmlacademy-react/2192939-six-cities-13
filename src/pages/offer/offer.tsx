@@ -11,7 +11,7 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
@@ -22,7 +22,7 @@ type OfferPageProps = {
 
 export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const offerId = useParams().id;
+  const offerId = useParams().id as string;
   const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
   const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
   const isNearByLoaded = useAppSelector(getIsNearByLoaded);
@@ -44,6 +44,9 @@ export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Eleme
     };
   }, [dispatch, offerId]);
 
+  const handleButtonClick = (): void => {
+    dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+  };
 
   return (
     <div className="page">
@@ -85,6 +88,7 @@ export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Eleme
                       'button'
                     )}
                     type="button"
+                    onClick={handleButtonClick}
                   >
                     <svg className="offer__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
@@ -161,7 +165,7 @@ export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Eleme
                 </div>
                 <section className="offer__reviews reviews">
                   <ReviewsList />
-                  {authStatus === AuthStatus.Auth && <ReviewForm offerId={offerId as string} />}
+                  {authStatus === AuthStatus.Auth && <ReviewForm offerId={offerId} />}
 
                 </section>
               </div>
