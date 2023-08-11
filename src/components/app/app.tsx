@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
-import { getErrorStatus, getFavorites, getFavoritesCount, getIsOffersDataLoading, getOffers }
+import { getErrorStatus, getFavorites, getIsOffersDataLoading }
   from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import ErrorScreen from '../../pages/error';
@@ -21,9 +21,7 @@ import { useEffect } from 'react';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const offers = useAppSelector(getOffers);
   const favorites = useAppSelector(getFavorites);
-  const favoritesCount = useAppSelector(getFavoritesCount);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const authStatus = useAppSelector(getAuthStatus);
   const hasError = useAppSelector(getErrorStatus);
@@ -52,31 +50,22 @@ export default function App(): JSX.Element {
           <Route
             path={AppRoute.Root}
             element={
-              <
-                MainPage
-                offers={offers}
-                favoritesCount={favoritesCount}
-                authStatus={authStatus}
-              />
+              < MainPage />
             }
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authStatus={authStatus}>
-                <FavoritesPage
-                  favoriteOffers={favorites}
-                  favoritesCount={favoritesCount}
-                  authStatus={authStatus}
-                />
+              <PrivateRoute >
+                <FavoritesPage />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <OfferPage favoritesCount={favoritesCount} authStatus={authStatus} />
+              <OfferPage />
             }
           />
           <Route path="*" element={<Page404 />} />

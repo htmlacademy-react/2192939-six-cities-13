@@ -1,22 +1,29 @@
 import classNames from 'classnames';
-import { CITIES, DEFAULT_CITY, StylesForMapMainPage } from '../../settings';
+import { CITIES, DEFAULT_CITY, PlacesCard, StylesForMapMainPage } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
-import PlaceWithSorting from '../place-with-sorting';
-import { useRef, useState } from 'react';
-import { useAppSelector } from '../../hooks';
-import { Offers } from '../../types/data-types';
-import { getcurrentCityName } from '../../store/app-data/selectors';
+import { useRef, useState, useCallback } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getOffers, getSortingType, getcurrentCityName } from '../../store/app-data/selectors';
+import Sorting from '../sorting';
+import PlaceList from '../place-list';
+import { getSortedOffersBy } from '../../utils/offers';
+import { setSortingType } from '../../store/app-data/app-data';
+import { SortingType } from '../../types/data-types';
 
-type CitiesProps = {
-  offers: Offers;
-}
-
-export default function Cities({ offers }: CitiesProps): JSX.Element {
+export default function Cities(): JSX.Element {
   const [prevCity, setPrevCity] = useState(DEFAULT_CITY);
   const currentCityName = useAppSelector(getcurrentCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const offers = useAppSelector(getOffers);
+  const dispatch = useAppDispatch();
+  const typeSorting = useAppSelector(getSortingType);
+
+  const handleChangeSorting = useCallback((sortType: SortingType) => {
+    dispatch(setSortingType(sortType));
+  }, [dispatch]);
+
 
   if (prevCity !== currentCityName) {
     scrollRef.current?.scroll(0, 0);
@@ -42,7 +49,11 @@ export default function Cities({ offers }: CitiesProps): JSX.Element {
               <b className="places__found">
                 {cityOffers.length} places to stay in {currentCityName}
               </b>
-              <PlaceWithSorting cityOffers={cityOffers} />
+              <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
+              <PlaceList
+                offers={getSortedOffersBy(cityOffers, typeSorting)}
+                type={PlacesCard.Cities}
+              />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

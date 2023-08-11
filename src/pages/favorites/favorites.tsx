@@ -2,24 +2,21 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { AuthStatus, CITIES, PlacesCard } from '../../settings';
+import { CITIES, PlacesCard } from '../../settings';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsFavoritesLoading } from '../../store/app-data/selectors';
+import { getFavorites, getFavoritesCount, getIsFavoritesLoading } from '../../store/app-data/selectors';
 import FavoritesEmpty from '../../components/favorites-empty';
 import { fetchFavoritesAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import Loader from '../../components/loader';
-import { Offers } from '../../types/data-types';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
-type FavoritesPageProps = {
-  favoriteOffers: Offers;
-  favoritesCount: number;
-  authStatus: AuthStatus;
-}
-
-export default function FavoritesPage({ favoriteOffers, favoritesCount, authStatus }: FavoritesPageProps): JSX.Element {
+export default function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+  const authStatus = useAppSelector(getAuthStatus);
+  const favoritesCount = useAppSelector(getFavoritesCount);
+  const favoriteOffers = useAppSelector(getFavorites);
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -54,7 +51,7 @@ export default function FavoritesPage({ favoriteOffers, favoritesCount, authStat
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

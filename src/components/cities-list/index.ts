@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import CitiesList from './cities-list';
 
-export default CitiesList;
+export default memo(CitiesList);
