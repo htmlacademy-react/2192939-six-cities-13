@@ -6,8 +6,8 @@ import PlaceListEmpty from '../../components/place-list-empty';
 import PlaceWithSorting from '../place-with-sorting';
 import { useRef } from 'react';
 import { useAppSelector } from '../../hooks';
-import { getCityName } from '../../store/app-process/selectors';
 import { Offers } from '../../types/data-types';
+import { getCityName } from '../../store/app-data/selectors';
 
 type CitiesProps = {
   offers: Offers;

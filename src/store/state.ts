@@ -25,10 +25,7 @@ export type AppData = {
   isFavoriteAdding: boolean;
   hasError: boolean;
   favoritesCount: number;
-};
-
-export type AppProcess = {
   cityName: string;
-  activeCard: Offer | undefined;
+  activeCard: Offer | null;
   sortingType: string;
-}
+};

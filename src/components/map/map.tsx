@@ -5,7 +5,7 @@ import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
-import { getActiveCard } from '../../store/app-process/selectors';
+import { getActiveCard } from '../../store/app-data/selectors';
 
 type MapProps = {
   city: City;

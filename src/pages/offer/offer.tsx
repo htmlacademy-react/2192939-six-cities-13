@@ -13,20 +13,19 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
 import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getAuthStatus } from '../../store/user-process/selectors';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 
 type OfferPageProps = {
   favoritesCount: number;
+  authStatus: AuthStatus;
 }
 
-export default function OfferPage({ favoritesCount }: OfferPageProps): JSX.Element {
+export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
   const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
   const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
   const isNearByLoaded = useAppSelector(getIsNearByLoaded);
-  const authStatus = useAppSelector(getAuthStatus);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
 

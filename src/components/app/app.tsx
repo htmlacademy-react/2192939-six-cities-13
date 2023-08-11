@@ -76,7 +76,7 @@ export default function App(): JSX.Element {
           <Route
             path={`${AppRoute.Offer}/:id`}
             element={
-              <OfferPage favoritesCount={favoritesCount} />
+              <OfferPage favoritesCount={favoritesCount} authStatus={authStatus} />
             }
           />
           <Route path="*" element={<Page404 />} />

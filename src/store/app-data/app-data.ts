@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FullOffer } from '../../types/data-types';
-import { NameSpace } from '../../settings';
+import { FullOffer, Offer, SortingType } from '../../types/data-types';
+import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace } from '../../settings';
 import { AppData } from '../state';
 import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
 
@@ -17,7 +17,11 @@ const initialState: AppData = {
   isFavoritesLoading: false,
   isFavoriteAdding: false,
   hasError: false,
-  favoritesCount: 0
+  favoritesCount: 0,
+  cityName: DEFAULT_CITY,
+  activeCard: null,
+  sortingType: DEFAULT_SORTING,
+
 };
 
 export const appData = createSlice({
@@ -26,7 +30,16 @@ export const appData = createSlice({
   reducers: {
     setFavoritesCount: (state, action: PayloadAction<number>) => {
       state.favoritesCount = action.payload;
-    }
+    },
+    selectCityAction: (state, action: PayloadAction<string>) => {
+      state.cityName = action.payload;
+    },
+    setActiveCardAction: (state, action: PayloadAction<Offer | null>) => {
+      state.activeCard = action.payload;
+    },
+    setSortingType: (state, action: PayloadAction<SortingType>) => {
+      state.sortingType = action.payload;
+    },
   },
   extraReducers(builder) {
     builder
@@ -77,4 +90,4 @@ export const appData = createSlice({
   }
 });
 
-export const { setFavoritesCount } = appData.actions;
+export const { setFavoritesCount, selectCityAction, setActiveCardAction, setSortingType } = appData.actions;

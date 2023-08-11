@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectCityAction, setSortingType } from '../../store/app-process/app-process';
 import { DEFAULT_SORTING } from '../../settings';
-import { getCityName } from '../../store/app-process/selectors';
+import { getCityName } from '../../store/app-data/selectors';
+import { selectCityAction, setSortingType } from '../../store/app-data/app-data';
 
 type CitiesListProps = {
   cities: string[];

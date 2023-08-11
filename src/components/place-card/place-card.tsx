@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, } from '../../hooks';
-import { setActiveCardAction, } from '../../store/app-process/app-process';
 import { favoriteStatusAction, } from '../../store/api-actions';
+import { setActiveCardAction } from '../../store/app-data/app-data';
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
