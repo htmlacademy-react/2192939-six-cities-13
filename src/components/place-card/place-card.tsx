@@ -1,12 +1,13 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PlacesCard } from '../../settings';
+import { AppRoute, RATING_IN_PERCENT, PlacesCard, AuthStatus } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MouseEvent } from 'react';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../hooks';
-import { setActiveCardAction } from '../../store/app-process/app-process';
-
+import { useAppDispatch, useAppSelector, } from '../../hooks';
+import { favoriteStatusAction, } from '../../store/api-actions';
+import { setActiveCardAction } from '../../store/app-data/app-data';
+import { getAuthStatus } from '../../store/user-process/selectors';
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
@@ -15,15 +16,26 @@ type PlaceCardProps = {
 
 export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthStatus);
+  const navigation = useNavigate();
+  const isAuth = authStatus === AuthStatus.Auth;
 
-  const handleMouseEnter = (evt: MouseEvent<HTMLElement>) => {
+  const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
     dispatch(setActiveCardAction(offer));
   };
 
-  const handleMouseLeave = (evt: MouseEvent<HTMLElement>) => {
+  const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    dispatch(setActiveCardAction(undefined));
+    dispatch(setActiveCardAction(null));
+  };
+
+  const handleButtonClick = (): void => {
+    if (isAuth) {
+      dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
+    } else {
+      navigation(AppRoute.Login);
+    }
   };
 
   return (
@@ -65,6 +77,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
               'button'
             )}
             type="button"
+            onClick={handleButtonClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
               <use xlinkHref="#icon-bookmark" />
@@ -86,6 +99,5 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>
-
   );
 }

@@ -14,6 +14,7 @@ export enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
   NearBy = '/nearby',
+  Favorites = '/favorite'
 }
 
 export enum AuthStatus {
@@ -101,5 +102,4 @@ export const StatusMessage = {
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
-  App = 'APP'
 }

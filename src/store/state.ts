@@ -9,7 +9,6 @@ export type AppDispatch = typeof store.dispatch;
 export type UserProcess = {
   authStatus: AuthStatus;
   userName: string;
-  reviews: Reviews;
 }
 
 export type AppData = {
@@ -17,15 +16,16 @@ export type AppData = {
   fullOffer: FullOffer;
   reviews: Reviews;
   neighborPlaces: Offers;
+  favorites: Offers;
   isOffersDataLoading: boolean;
   isFullOfferDataLoading: boolean;
   isReviewsDataLoading: boolean;
   isNeighborPlacesDataLoading: boolean;
+  isFavoritesLoading: boolean;
+  isFavoriteAdding: boolean;
   hasError: boolean;
-};
-
-export type AppProcess = {
+  favoritesCount: number;
   cityName: string;
-  activeCard: Offer | undefined;
+  activeCard: Offer | null;
   sortingType: string;
-}
+};

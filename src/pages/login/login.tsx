@@ -4,10 +4,10 @@ import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
-import { selectCityAction } from '../../store/app-process/app-process';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { getRandomCity } from '../../utils/offers';
+import { selectCityAction } from '../../store/app-data/app-data';
 
 
 export default function LoginPage(): JSX.Element {

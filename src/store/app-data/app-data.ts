@@ -1,25 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FullOffer } from '../../types/data-types';
-import { NameSpace } from '../../settings';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { FullOffer, Offer, SortingType } from '../../types/data-types';
+import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace } from '../../settings';
 import { AppData } from '../state';
-import { fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../api-actions';
+import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
 
 const initialState: AppData = {
   offers: [],
   fullOffer: {} as FullOffer,
   reviews: [],
   neighborPlaces: [],
+  favorites: [],
   isOffersDataLoading: false,
   isFullOfferDataLoading: true,
   isReviewsDataLoading: true,
   isNeighborPlacesDataLoading: true,
-  hasError: false
+  isFavoritesLoading: false,
+  isFavoriteAdding: false,
+  hasError: false,
+  favoritesCount: 0,
+  cityName: DEFAULT_CITY,
+  activeCard: null,
+  sortingType: DEFAULT_SORTING,
+
 };
 
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    setFavoritesCount: (state, action: PayloadAction<number>) => {
+      state.favoritesCount = action.payload;
+    },
+    selectCityAction: (state, action: PayloadAction<string>) => {
+      state.cityName = action.payload;
+    },
+    setActiveCardAction: (state, action: PayloadAction<Offer | null>) => {
+      state.activeCard = action.payload;
+    },
+    setSortingType: (state, action: PayloadAction<SortingType>) => {
+      state.sortingType = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -45,6 +66,28 @@ export const appData = createSlice({
       .addCase(fetchNeighborPlacesAction.fulfilled, (state, action) => {
         state.neighborPlaces = action.payload;
         state.isNeighborPlacesDataLoading = false;
+      })
+      .addCase(fetchFavoritesAction.pending, (state) => {
+        state.isFavoritesLoading = true;
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.isFavoritesLoading = false;
+      })
+      .addCase(reviewAction.fulfilled, (state, action) => {
+        state.reviews.push(action.payload);
+      })
+      .addCase(favoriteStatusAction.pending, (state) => {
+        state.isFavoriteAdding = true;
+      })
+      .addCase(favoriteStatusAction.fulfilled, (state, action) => {
+        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
+        state.isFavoriteAdding = false;
+        state.offers[index].isFavorite = action.payload.isFavorite;
+        state.favoritesCount += action.payload.isFavorite ? 1 : -1;
+        state.fullOffer = action.payload;
       });
   }
 });
+
+export const { setFavoritesCount, selectCityAction, setActiveCardAction, setSortingType } = appData.actions;

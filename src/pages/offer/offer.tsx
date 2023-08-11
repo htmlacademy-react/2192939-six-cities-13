@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
+import { AppRoute, AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
@@ -11,20 +11,25 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getAuthStatus } from '../../store/user-process/selectors';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 
-export default function OfferPage(): JSX.Element {
+type OfferPageProps = {
+  favoritesCount: number;
+  authStatus: AuthStatus;
+}
+
+export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const offerId = useParams().id;
+  const offerId = useParams().id as string;
   const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
   const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
   const isNearByLoaded = useAppSelector(getIsNearByLoaded);
-  const authStatus = useAppSelector(getAuthStatus);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
+  const navigation = useNavigate();
+  const isAuth = authStatus === AuthStatus.Auth;
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -40,13 +45,20 @@ export default function OfferPage(): JSX.Element {
     };
   }, [dispatch, offerId]);
 
+  const handleButtonClick = (): void => {
+    if (isAuth) {
+      dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+    } else {
+      navigation(AppRoute.Login);
+    }
+  };
 
   return (
     <div className="page">
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-      <Header authStatus={authStatus} />
+      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
 
       {isFullOfferLoaded || isReviewsLoaded || isNearByLoaded
         ?
@@ -81,6 +93,7 @@ export default function OfferPage(): JSX.Element {
                       'button'
                     )}
                     type="button"
+                    onClick={handleButtonClick}
                   >
                     <svg className="offer__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
@@ -157,7 +170,7 @@ export default function OfferPage(): JSX.Element {
                 </div>
                 <section className="offer__reviews reviews">
                   <ReviewsList />
-                  {authStatus === AuthStatus.Auth && <ReviewForm offerId={offerId as string} />}
+                  {authStatus === AuthStatus.Auth && <ReviewForm offerId={offerId} />}
 
                 </section>
               </div>

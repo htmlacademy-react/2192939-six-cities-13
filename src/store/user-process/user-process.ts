@@ -1,12 +1,11 @@
 import { AuthStatus, NameSpace } from '../../settings';
-import { checkAuthStatus, loginAction, logoutAction, reviewAction } from '../api-actions';
+import { checkAuthStatus, loginAction, logoutAction } from '../api-actions';
 import { UserProcess } from '../state';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: UserProcess = {
   authStatus: AuthStatus.Unknown,
   userName: '',
-  reviews: []
 };
 
 export const userProcess = createSlice({
@@ -31,9 +30,6 @@ export const userProcess = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authStatus = AuthStatus.NoAuth;
-      })
-      .addCase(reviewAction.fulfilled, (state, action) => {
-        state.reviews.push(action.payload);
       });
   }
 });

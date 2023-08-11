@@ -6,12 +6,11 @@ import LogoLeft from '../logo-left';
 import { Link } from 'react-router-dom';
 
 type HeaderProps = {
-  authStatus?: AuthStatus;
+  authStatus: AuthStatus;
+  favoritesCount: number;
 };
 
-export default function Header({
-  authStatus = AuthStatus.Auth,
-}: HeaderProps): JSX.Element {
+export default function Header({ authStatus, favoritesCount }: HeaderProps): JSX.Element {
   const userName = useAppSelector(getUserName);
   const dispatch = useAppDispatch();
 
@@ -37,7 +36,7 @@ export default function Header({
                       <span className="header__user-name user__name">
                         {userName}
                       </span>
-                      <span className="header__favorite-count">3</span>
+                      <span className="header__favorite-count">{favoritesCount}</span>
                     </Link>
                   </li>
                   <li className="header__nav-item" >

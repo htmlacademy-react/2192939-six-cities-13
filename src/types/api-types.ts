@@ -12,6 +12,11 @@ export type R = {
   offerId: string;
 };
 
+export type F = {
+  offerId: string;
+  status: number;
+}
+
 export type V = void;
 
 export type I = string;
