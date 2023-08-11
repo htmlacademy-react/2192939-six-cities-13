@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
+import { AppRoute, AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
@@ -28,6 +28,7 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
   const isNearByLoaded = useAppSelector(getIsNearByLoaded);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
+  const navigation = useNavigate();
 
   useEffect(() => {
     let isOfferPageMounted = true;
@@ -45,6 +46,9 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
 
   const handleButtonClick = (): void => {
     dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+    if (authStatus !== AuthStatus.Auth) {
+      navigation(AppRoute.Login);
+    }
   };
 
   return (
