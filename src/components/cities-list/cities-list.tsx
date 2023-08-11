@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { DEFAULT_SORTING } from '../../settings';
-import { getCityName } from '../../store/app-data/selectors';
+import { getcurrentCityName } from '../../store/app-data/selectors';
 import { selectCityAction, setSortingType } from '../../store/app-data/app-data';
 
 type CitiesListProps = {
@@ -10,7 +10,7 @@ type CitiesListProps = {
 };
 
 export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
-  const selectedCity = useAppSelector(getCityName);
+  const selectedCity = useAppSelector(getcurrentCityName);
   const dispatch = useAppDispatch();
 
   const handleElementClick = (evt: MouseEvent<HTMLElement>) => {

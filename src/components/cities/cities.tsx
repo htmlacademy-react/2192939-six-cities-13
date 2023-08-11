@@ -7,7 +7,7 @@ import PlaceWithSorting from '../place-with-sorting';
 import { useRef, useState } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Offers } from '../../types/data-types';
-import { getCityName } from '../../store/app-data/selectors';
+import { getcurrentCityName } from '../../store/app-data/selectors';
 
 type CitiesProps = {
   offers: Offers;
@@ -15,15 +15,15 @@ type CitiesProps = {
 
 export default function Cities({ offers }: CitiesProps): JSX.Element {
   const [prevCity, setPrevCity] = useState(DEFAULT_CITY);
-  const cityName = useAppSelector(getCityName);
+  const currentCityName = useAppSelector(getcurrentCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  if (prevCity !== cityName) {
+  if (prevCity !== currentCityName) {
     scrollRef.current?.scroll(0, 0);
-    setPrevCity(cityName);
+    setPrevCity(currentCityName);
   }
 
-  const cityOffers = offers.filter((offer) => offer.city.name === cityName);
+  const cityOffers = offers.filter((offer) => offer.city.name === currentCityName);
 
   return (
     <main className={classNames('page__main', 'page__main--index',
@@ -40,7 +40,7 @@ export default function Cities({ offers }: CitiesProps): JSX.Element {
             <section className="cities__places places" ref={scrollRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cityOffers.length} places to stay in {cityName}
+                {cityOffers.length} places to stay in {currentCityName}
               </b>
               <PlaceWithSorting cityOffers={cityOffers} />
             </section>

@@ -18,7 +18,7 @@ const initialState: AppData = {
   isFavoriteAdding: false,
   hasError: false,
   favoritesCount: 0,
-  cityName: DEFAULT_CITY,
+  currentCityName: DEFAULT_CITY,
   activeCard: null,
   sortingType: DEFAULT_SORTING,
 
@@ -32,7 +32,7 @@ export const appData = createSlice({
       state.favoritesCount = action.payload;
     },
     selectCityAction: (state, action: PayloadAction<string>) => {
-      state.cityName = action.payload;
+      state.currentCityName = action.payload;
     },
     setActiveCardAction: (state, action: PayloadAction<Offer | null>) => {
       state.activeCard = action.payload;

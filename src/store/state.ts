@@ -25,7 +25,7 @@ export type AppData = {
   isFavoriteAdding: boolean;
   hasError: boolean;
   favoritesCount: number;
-  cityName: string;
+  currentCityName: string;
   activeCard: Offer | null;
   sortingType: string;
 };
