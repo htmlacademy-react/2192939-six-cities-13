@@ -4,16 +4,20 @@ import { logoutAction } from '../../store/api-actions';
 import { getFavoritesCount } from '../../store/app-data/selectors';
 import { getAuthStatus, getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Header(): JSX.Element {
   const userName = useAppSelector(getUserName);
   const authStatus = useAppSelector(getAuthStatus);
   const favoritesCount = useAppSelector(getFavoritesCount);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const logoutHandle = () => {
     dispatch(logoutAction());
+    if (authStatus === AuthStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    }
   };
 
   return (
@@ -38,9 +42,9 @@ export default function Header(): JSX.Element {
                     </Link>
                   </li>
                   <li className="header__nav-item" >
-                    <Link className="header__nav-link" to={AppRoute.Root} onClick={logoutHandle}>
+                    <a className="header__nav-link" onClick={logoutHandle}>
                       <span className="header__signout">Sign out</span>
-                    </Link>
+                    </a>
                   </li>
                 </>
               ) : (

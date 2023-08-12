@@ -93,9 +93,11 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={`${AppRoute.Offer}/${offer.id}`}>
-          <h2 className="place-card__name">{offer.title}</h2>
-        </Link>
+        <h2 className="place-card__name">
+          <Link to={`${AppRoute.Offer}/${offer.id}`}>
+            {offer.title}
+          </Link>
+        </h2>
         <p className="place-card__type" >{capitalizeFirstLetter(offer.type)}</p>
       </div>
     </article>

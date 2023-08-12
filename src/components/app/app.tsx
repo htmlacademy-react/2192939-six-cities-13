@@ -18,6 +18,7 @@ import { getAuthStatus } from '../../store/user-process/selectors';
 import ErrorScreen from '../../pages/error';
 import { setFavoritesCount } from '../../store/app-data/app-data';
 import { useEffect } from 'react';
+import { fetchFavoritesAction } from '../../store/api-actions';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -27,8 +28,11 @@ export default function App(): JSX.Element {
   const hasError = useAppSelector(getErrorStatus);
 
   useEffect(() => {
+    dispatch(fetchFavoritesAction());
+
     dispatch(setFavoritesCount(favorites.length));
   }, [dispatch, favorites.length]);
+
 
   if (authStatus === AuthStatus.Unknown || isOffersDataLoading) {
     return (

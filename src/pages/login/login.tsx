@@ -5,7 +5,6 @@ import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
 
@@ -35,7 +34,6 @@ export default function LoginPage(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       if (!regex.test(passwordRef.current.value)) {
-        toast.warn('The password must have at least one letter and one symbol and no spaces');
         return;
       }
 
