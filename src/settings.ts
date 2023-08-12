@@ -66,9 +66,9 @@ export const EMPTY_RATING = 0;
 
 export const MAX_QUANTITY_REVIEWS = 10;
 
-export const URL_MARKER_DEFAULT = '../img/pin.svg';
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
-export const URL_MARKER_CURRENT = '../img/pin-active.svg';
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const DEFAULT_CITY = 'Paris';
 

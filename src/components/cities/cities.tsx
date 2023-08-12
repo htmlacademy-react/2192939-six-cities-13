@@ -5,7 +5,7 @@ import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
 import { useRef, useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getOffers, getSortingType, getcurrentCityName } from '../../store/app-data/selectors';
+import { getOffers, getSortingType, getCurrentCityName } from '../../store/app-data/selectors';
 import Sorting from '../sorting';
 import PlaceList from '../place-list';
 import { getSortedOffersBy } from '../../utils/offers';
@@ -14,7 +14,7 @@ import { SortingType } from '../../types/data-types';
 
 export default function Cities(): JSX.Element {
   const [prevCity, setPrevCity] = useState(DEFAULT_CITY);
-  const currentCityName = useAppSelector(getcurrentCityName);
+  const currentCityName = useAppSelector(getCurrentCityName);
   const scrollRef = useRef<HTMLDivElement>(null);
   const offers = useAppSelector(getOffers);
   const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ export default function Cities(): JSX.Element {
             <section className="cities__places places" ref={scrollRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cityOffers.length} places to stay in {currentCityName}
+                {cityOffers.length} {cityOffers.length === 1 ? 'place' : 'places'} to stay in {currentCityName}
               </b>
               <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
               <PlaceList

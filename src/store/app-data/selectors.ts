@@ -28,7 +28,7 @@ export const getIsFavoriteAdding = (state: State): boolean => state[NameSpace.Da
 
 export const getFavoritesCount = (state: State): number => state[NameSpace.Data].favoritesCount;
 
-export const getcurrentCityName = (store: State): string => store[NameSpace.Data].currentCityName;
+export const getCurrentCityName = (store: State): string => store[NameSpace.Data].currentCityName;
 
 export const getSortingType = (store: State): SortingType => store[NameSpace.Data].sortingType as SortingType;
 
