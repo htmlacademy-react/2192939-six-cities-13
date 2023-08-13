@@ -8,15 +8,16 @@ import { useAppDispatch, useAppSelector, } from '../../hooks';
 import { favoriteStatusAction, } from '../../store/api-actions';
 import { setActiveCardAction } from '../../store/app-data/app-data';
 import { getAuthStatus } from '../../store/user-process/selectors';
+import { getFavorites } from '../../store/app-data/selectors';
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
 }
 
-
 export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthStatus);
+  const favorites = useAppSelector(getFavorites);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -30,9 +31,11 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
     dispatch(setActiveCardAction(null));
   };
 
+  const isFavorite = favorites.find((favoriteOffer) => offer.id === favoriteOffer.id);
+
   const handleButtonClick = (): void => {
     if (isAuth) {
-      dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!offer.isFavorite) }));
+      dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(isFavorite) }));
     } else {
       navigation(AppRoute.Login);
     }
@@ -73,7 +76,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
           <button
             className={classNames(
               'place-card__bookmark-button',
-              { 'place-card__bookmark-button--active': offer.isFavorite },
+              { 'place-card__bookmark-button--active': isFavorite },
               'button'
             )}
             type="button"

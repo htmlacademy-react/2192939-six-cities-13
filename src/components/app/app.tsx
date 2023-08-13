@@ -12,26 +12,24 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
-import { getErrorStatus, getFavorites, getIsOffersDataLoading }
+import { getErrorStatus, getIsOffersDataLoading }
   from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import ErrorScreen from '../../pages/error';
-import { setFavoritesCount } from '../../store/app-data/app-data';
 import { useEffect } from 'react';
 import { fetchFavoritesAction } from '../../store/api-actions';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector(getFavorites);
   const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const authStatus = useAppSelector(getAuthStatus);
   const hasError = useAppSelector(getErrorStatus);
 
   useEffect(() => {
-    dispatch(fetchFavoritesAction());
-
-    dispatch(setFavoritesCount(favorites.length));
-  }, [dispatch, favorites.length]);
+    if (authStatus === AuthStatus.Auth) {
+      dispatch(fetchFavoritesAction());
+    }
+  }, [authStatus, dispatch]);
 
 
   if (authStatus === AuthStatus.Unknown || isOffersDataLoading) {

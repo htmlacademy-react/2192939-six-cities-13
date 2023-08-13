@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import { logoutAction } from '../../store/api-actions';
-import { getFavoritesCount } from '../../store/app-data/selectors';
+import { getFavorites } from '../../store/app-data/selectors';
 import { getAuthStatus, getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function Header(): JSX.Element {
   const userName = useAppSelector(getUserName);
   const authStatus = useAppSelector(getAuthStatus);
-  const favoritesCount = useAppSelector(getFavoritesCount);
+  const favoritesCount = useAppSelector(getFavorites).length;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

@@ -16,7 +16,7 @@ export type AppData = {
   fullOffer: FullOffer;
   reviews: Reviews;
   neighborPlaces: Offers;
-  favorites: Offers;
+  favorites: (Offer | FullOffer)[];
   isOffersDataLoading: boolean;
   isFullOfferDataLoading: boolean;
   isReviewsDataLoading: boolean;
@@ -24,7 +24,6 @@ export type AppData = {
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
   hasError: boolean;
-  favoritesCount: number;
   currentCityName: string;
   activeCard: Offer | null;
   sortingType: string;

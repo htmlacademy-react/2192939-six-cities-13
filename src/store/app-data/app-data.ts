@@ -2,7 +2,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FullOffer, Offer, SortingType } from '../../types/data-types';
 import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace, Status } from '../../settings';
 import { AppData } from '../state';
-import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
+import {
+  favoriteStatusAction,
+  fetchFavoritesAction,
+  fetchFullOfferAction,
+  fetchNeighborPlacesAction,
+  fetchOffersAction,
+  fetchReviewsFullOfferAction,
+  reviewAction
+} from '../api-actions';
 
 const initialState: AppData = {
   offers: [],
@@ -17,7 +25,6 @@ const initialState: AppData = {
   isFavoritesLoading: false,
   isFavoriteAdding: false,
   hasError: false,
-  favoritesCount: 0,
   currentCityName: DEFAULT_CITY,
   activeCard: null,
   sortingType: DEFAULT_SORTING,
@@ -28,9 +35,6 @@ export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
   reducers: {
-    setFavoritesCount: (state, action: PayloadAction<number>) => {
-      state.favoritesCount = action.payload;
-    },
     selectCityAction: (state, action: PayloadAction<string>) => {
       state.currentCityName = action.payload;
     },
@@ -92,9 +96,13 @@ export const appData = createSlice({
         state.isFavoriteAdding = true;
       })
       .addCase(favoriteStatusAction.fulfilled, (state, action) => {
-        const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
-        state.offers[index].isFavorite = action.payload.isFavorite;
-        state.favoritesCount += action.payload.isFavorite ? 1 : -1;
+        const isRemoval = action.meta.arg.status === 0;
+
+        if (isRemoval) {
+          state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
+        } else {
+          state.favorites = [...state.favorites, action.payload];
+        }
         state.fullOffer = action.payload;
         state.isFavoriteAdding = false;
       })
@@ -104,4 +112,9 @@ export const appData = createSlice({
   }
 });
 
-export const { setFavoritesCount, selectCityAction, setActiveCardAction, setSortingType, setReviewStatus } = appData.actions;
+export const {
+  selectCityAction,
+  setActiveCardAction,
+  setSortingType,
+  setReviewStatus
+} = appData.actions;
