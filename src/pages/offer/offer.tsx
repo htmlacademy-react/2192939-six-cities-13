@@ -116,10 +116,14 @@ export default function OfferPage(): JSX.Element {
                     {capitalizeFirstLetter(fullOffer.type)}
                   </li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    {fullOffer.bedrooms} Bedrooms
+                    {fullOffer.bedrooms > 1
+                      ? `${fullOffer.bedrooms} Bedrooms`
+                      : `${fullOffer.bedrooms} Bedroom`}
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                    Max {fullOffer.maxAdults} adults
+                    Max {fullOffer.maxAdults > 1
+                      ? `${fullOffer.maxAdults} adults`
+                      : `${fullOffer.maxAdults} adult`}
                   </li>
                 </ul>
                 <div className="offer__price">
@@ -156,9 +160,7 @@ export default function OfferPage(): JSX.Element {
                     <span className="offer__user-name">
                       {fullOffer.host.name}
                     </span>
-                    <span className="offer__user-status">
-                      {fullOffer.host.isPro ? 'Pro' : ''}
-                    </span>
+                    {fullOffer.host.isPro && <span className="offer__user-status">Pro</span>}
                   </div>
                   <div className="offer__description">
                     <p className="offer__text">{fullOffer.description}</p>
