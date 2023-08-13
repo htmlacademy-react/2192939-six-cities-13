@@ -33,3 +33,5 @@ export const getCurrentCityName = (store: State): string => store[NameSpace.Data
 export const getSortingType = (store: State): SortingType => store[NameSpace.Data].sortingType as SortingType;
 
 export const getActiveCard = (store: State): Offer | null => store[NameSpace.Data].activeCard;
+
+export const getReviewStatus = (store: State): string => store[NameSpace.Data].statusReview;

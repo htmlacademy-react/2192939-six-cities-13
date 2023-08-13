@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { FullOffer, Offer, SortingType } from '../../types/data-types';
-import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace } from '../../settings';
+import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace, Status } from '../../settings';
 import { AppData } from '../state';
 import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
 
@@ -21,8 +21,7 @@ const initialState: AppData = {
   currentCityName: DEFAULT_CITY,
   activeCard: null,
   sortingType: DEFAULT_SORTING,
-  isReviewDataLoading: true,
-  isReviewDataLoadedError: false,
+  statusReview: Status.Idle,
 };
 
 export const appData = createSlice({
@@ -41,8 +40,8 @@ export const appData = createSlice({
     setSortingType: (state, action: PayloadAction<SortingType>) => {
       state.sortingType = action.payload;
     },
-    setStatusReviewLoading: (state, action: PayloadAction<boolean>) => {
-      state.isOffersDataLoading = action.payload;
+    setReviewStatus: (state, action: PayloadAction<string>) => {
+      state.statusReview = action.payload;
     }
   },
   extraReducers(builder) {
@@ -80,14 +79,14 @@ export const appData = createSlice({
         state.isFavoritesLoading = false;
       })
       .addCase(reviewAction.pending, (state) => {
-        state.isReviewDataLoading = true;
+        state.statusReview = Status.Loading;
       })
       .addCase(reviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
-        state.isReviewDataLoading = false;
+        state.statusReview = Status.Success;
       })
       .addCase(reviewAction.rejected, (state) => {
-        state.isReviewDataLoadedError = true;
+        state.statusReview = Status.Error;
       })
       .addCase(favoriteStatusAction.pending, (state) => {
         state.isFavoriteAdding = true;
@@ -105,4 +104,4 @@ export const appData = createSlice({
   }
 });
 
-export const { setFavoritesCount, selectCityAction, setActiveCardAction, setSortingType } = appData.actions;
+export const { setFavoritesCount, selectCityAction, setActiveCardAction, setSortingType, setReviewStatus } = appData.actions;

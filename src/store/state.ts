@@ -28,6 +28,5 @@ export type AppData = {
   currentCityName: string;
   activeCard: Offer | null;
   sortingType: string;
-  isReviewDataLoading: boolean;
-  isReviewDataLoadedError: boolean;
+  statusReview: string;
 };
