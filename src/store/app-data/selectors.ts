@@ -20,13 +20,12 @@ export const getIsNearByLoaded = (state: State): boolean => state[NameSpace.Data
 
 export const getErrorStatus = (state: State): boolean => state[NameSpace.Data].hasError;
 
-export const getFavorites = (state: State): Offers => state[NameSpace.Data].favorites;
+export const getFavorites = (state: State): (Offer | FullOffer)[] => state[NameSpace.Data].favorites;
 
 export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.Data].isFavoritesLoading;
 
 export const getIsFavoriteAdding = (state: State): boolean => state[NameSpace.Data].isFavoriteAdding;
 
-export const getFavoritesCount = (state: State): number => state[NameSpace.Data].favoritesCount;
 
 export const getCurrentCityName = (store: State): string => store[NameSpace.Data].currentCityName;
 

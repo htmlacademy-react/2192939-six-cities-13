@@ -2,13 +2,12 @@ import { Offer } from '../../types/data-types';
 import { AppRoute, RATING_IN_PERCENT, PlacesCard, AuthStatus } from '../../settings';
 import { capitalizeFirstLetter } from '../../utils/offers';
 import { Link, useNavigate } from 'react-router-dom';
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector, } from '../../hooks';
-import { favoriteStatusAction, } from '../../store/api-actions';
+import { favoriteStatusAction, fetchOffersAction, } from '../../store/api-actions';
 import { setActiveCardAction } from '../../store/app-data/app-data';
 import { getAuthStatus } from '../../store/user-process/selectors';
-import { getFavorites } from '../../store/app-data/selectors';
 type PlaceCardProps = {
   offer: Offer;
   type: 'cities' | 'near-places' | 'favorites';
@@ -17,9 +16,9 @@ type PlaceCardProps = {
 export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element {
   const dispatch = useAppDispatch();
   const authStatus = useAppSelector(getAuthStatus);
-  const favorites = useAppSelector(getFavorites);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
+  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -31,11 +30,11 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
     dispatch(setActiveCardAction(null));
   };
 
-  const isFavorite = favorites.find((favoriteOffer) => offer.id === favoriteOffer.id);
-
-  const handleButtonClick = (): void => {
+  const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(isFavorite) }));
+      await dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(isFavorite) }));
+      setIsFavorite(!isFavorite);
+      await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
     }
@@ -80,6 +79,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
               'button'
             )}
             type="button"
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={handleButtonClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>

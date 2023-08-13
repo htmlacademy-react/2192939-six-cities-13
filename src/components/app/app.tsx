@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import browserHistory from '../../browser-history';
 import HistoryRouter from '../history-route';
-import { getErrorStatus, getIsOffersDataLoading }
+import { getErrorStatus }
   from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import ErrorScreen from '../../pages/error';
@@ -21,7 +21,6 @@ import { fetchFavoritesAction } from '../../store/api-actions';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isOffersDataLoading = useAppSelector(getIsOffersDataLoading);
   const authStatus = useAppSelector(getAuthStatus);
   const hasError = useAppSelector(getErrorStatus);
 
@@ -32,7 +31,7 @@ export default function App(): JSX.Element {
   }, [authStatus, dispatch]);
 
 
-  if (authStatus === AuthStatus.Unknown || isOffersDataLoading) {
+  if (authStatus === AuthStatus.Unknown) {
     return (
       <Loader />
     );
