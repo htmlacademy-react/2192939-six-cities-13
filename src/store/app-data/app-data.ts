@@ -21,7 +21,8 @@ const initialState: AppData = {
   currentCityName: DEFAULT_CITY,
   activeCard: null,
   sortingType: DEFAULT_SORTING,
-
+  isReviewDataLoading: true,
+  isReviewDataLoadedError: false,
 };
 
 export const appData = createSlice({
@@ -40,6 +41,9 @@ export const appData = createSlice({
     setSortingType: (state, action: PayloadAction<SortingType>) => {
       state.sortingType = action.payload;
     },
+    setStatusReviewLoading: (state, action: PayloadAction<boolean>) => {
+      state.isOffersDataLoading = action.payload;
+    }
   },
   extraReducers(builder) {
     builder
@@ -72,20 +76,28 @@ export const appData = createSlice({
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
+
         state.isFavoritesLoading = false;
+      })
+      .addCase(reviewAction.pending, (state) => {
+        state.isReviewDataLoading = true;
       })
       .addCase(reviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
+        state.isReviewDataLoading = false;
+      })
+      .addCase(reviewAction.rejected, (state) => {
+        state.isReviewDataLoadedError = true;
       })
       .addCase(favoriteStatusAction.pending, (state) => {
         state.isFavoriteAdding = true;
       })
       .addCase(favoriteStatusAction.fulfilled, (state, action) => {
         const index = state.offers.findIndex((offer) => offer.id === action.payload.id);
-        state.isFavoriteAdding = false;
         state.offers[index].isFavorite = action.payload.isFavorite;
         state.favoritesCount += action.payload.isFavorite ? 1 : -1;
         state.fullOffer = action.payload;
+        state.isFavoriteAdding = false;
       })
       .addCase(favoriteStatusAction.rejected, (state) => {
         state.isFavoriteAdding = true;
