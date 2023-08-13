@@ -4,7 +4,7 @@ import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch } from '../../hooks';
 import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
 
@@ -14,6 +14,7 @@ export default function LoginPage(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
   const randomCity = getRandomCity(CITIES);
+  const navigation = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -44,6 +45,7 @@ export default function LoginPage(): JSX.Element {
         password: passwordRef.current.value
       }));
     }
+    navigation(AppRoute.Root);
   };
 
   return (

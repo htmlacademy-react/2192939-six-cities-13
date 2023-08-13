@@ -51,7 +51,7 @@ export default function App(): JSX.Element {
           <Route
             path={AppRoute.Root}
             element={
-              < MainPage />
+              <MainPage />
             }
           />
           <Route path={AppRoute.Login} element={<LoginPage />} />
