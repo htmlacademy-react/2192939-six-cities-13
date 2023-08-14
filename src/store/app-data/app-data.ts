@@ -46,7 +46,7 @@ export const appData = createSlice({
     },
     setReviewStatus: (state, action: PayloadAction<string>) => {
       state.statusReview = action.payload;
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -116,5 +116,5 @@ export const {
   selectCityAction,
   setActiveCardAction,
   setSortingType,
-  setReviewStatus
+  setReviewStatus,
 } = appData.actions;

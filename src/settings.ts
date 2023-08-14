@@ -100,7 +100,6 @@ export const StatusMessage = {
 };
 
 export enum NameSpace {
-  App = 'APP',
   Data = 'DATA',
   User = 'USER',
 }
@@ -115,5 +114,3 @@ export enum Status {
   Success = 'success',
   Error = 'error',
 }
-
-export const TIMEOUT_SHOW_ERROR = 2000;

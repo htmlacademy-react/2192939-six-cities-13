@@ -11,10 +11,6 @@ export type UserProcess = {
   userName: string;
 }
 
-export type AppProcess = {
-  error: string | null;
-}
-
 export type AppData = {
   offers: Offers;
   fullOffer: FullOffer;
