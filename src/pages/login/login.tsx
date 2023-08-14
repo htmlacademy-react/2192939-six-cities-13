@@ -3,11 +3,11 @@ import { FormEvent, useEffect, useRef } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AppRoute, CITIES, DEFAULT_CITY, Status } from '../../settings';
+import { AppRoute, AuthStatus, CITIES, DEFAULT_CITY, Status } from '../../settings';
 import { Link, useNavigate } from 'react-router-dom';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
-import { getLoginStatus } from '../../store/user-process/selectors';
+import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
 
 
@@ -18,8 +18,14 @@ export default function LoginPage(): JSX.Element {
   const randomCity = getRandomCity(CITIES);
   const navigation = useNavigate();
   const loginStatus = useAppSelector(getLoginStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    if (authStatus === AuthStatus.Auth) {
+      navigation(AppRoute.Root);
+    }
+  }, [authStatus, navigation]);
 
   useEffect(() => {
     dispatch(selectCityAction(randomCity));
@@ -33,7 +39,6 @@ export default function LoginPage(): JSX.Element {
       navigation(AppRoute.Root);
     }
   }, [dispatch, loginStatus, navigation]);
-
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

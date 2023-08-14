@@ -22,12 +22,16 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    dispatch(setActiveCardAction(offer));
+    if (type === 'cities') {
+      dispatch(setActiveCardAction(offer));
+    }
   };
 
   const handleMouseLeave = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
-    dispatch(setActiveCardAction(null));
+    if (type === 'cities') {
+      dispatch(setActiveCardAction(null));
+    }
   };
 
   const handleButtonClick = async (): Promise<void> => {
