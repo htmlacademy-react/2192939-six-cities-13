@@ -8,6 +8,7 @@ export type AppDispatch = typeof store.dispatch;
 
 export type UserProcess = {
   authStatus: AuthStatus;
+  loginStatus: string;
   userName: string;
 }
 

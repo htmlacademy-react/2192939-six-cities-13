@@ -2,11 +2,13 @@ import { Helmet } from 'react-helmet-async';
 import { FormEvent, useEffect, useRef } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
-import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, CITIES, DEFAULT_CITY, Status } from '../../settings';
 import { Link, useNavigate } from 'react-router-dom';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
+import { getLoginStatus } from '../../store/user-process/selectors';
+import { setLoginStatus } from '../../store/user-process/user-process';
 
 
 export default function LoginPage(): JSX.Element {
@@ -15,25 +17,28 @@ export default function LoginPage(): JSX.Element {
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
   const randomCity = getRandomCity(CITIES);
   const navigation = useNavigate();
+  const loginStatus = useAppSelector(getLoginStatus);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    let isLoginMounted = true;
-
-    if (isLoginMounted) {
-      dispatch(selectCityAction(randomCity));
-    }
-
-    return () => {
-      isLoginMounted = false;
-    };
+    dispatch(selectCityAction(randomCity));
   });
+
+  useEffect(() => {
+    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+      dispatch(setLoginStatus(Status.Idle));
+      loginRef.current.value = '';
+      passwordRef.current.value = '';
+      navigation(AppRoute.Root);
+    }
+  }, [dispatch, loginStatus, navigation]);
+
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current && passwordRef.current) {
       if (!regex.test(passwordRef.current.value)) {
         return;
       }
@@ -45,7 +50,6 @@ export default function LoginPage(): JSX.Element {
         password: passwordRef.current.value
       }));
     }
-    navigation(AppRoute.Root);
   };
 
   return (

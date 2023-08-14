@@ -5,4 +5,4 @@ export const getAuthStatus = (state: State): AuthStatus => state[NameSpace.User]
 
 export const getUserName = (state: State): string => state[NameSpace.User].userName;
 
-
+export const getLoginStatus = (state: State): string => state[NameSpace.User].loginStatus;
