@@ -1,12 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { FullOffer, Offers, Review, Reviews } from '../types/data-types';
-import { APIRoute, AppRoute } from '../settings';
+import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../settings';
 import {
   redirectToRoute,
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
 import { A, C, F, I, R, U, V } from '../types/api-types';
+import { store } from '.';
+import { setError } from './app-process/app-process';
 
 export const fetchOffersAction = createAsyncThunk<Offers, U, C>(
   'data/fetchOffers',
@@ -105,5 +107,15 @@ export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
     );
 
     return data;
+  }
+);
+
+export const clearErrorAction = createAsyncThunk(
+  'app/clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
   }
 );

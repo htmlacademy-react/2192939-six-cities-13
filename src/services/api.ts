@@ -6,8 +6,8 @@ import axios, {
 } from 'axios';
 import { getToken } from './token';
 import { StatusCodes } from 'http-status-codes';
-// import { toast } from 'react-toastify';
-// import { AppRoute, StatusCode, StatusMessage } from '../settings';
+import { AppRoute, StatusCode, StatusMessage } from '../settings';
+import { processErrorHandle } from './process-error-handle';
 
 type DetailMessageType = {
   type: string;
@@ -45,12 +45,9 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        // const detailMessage = error.response.data;
-        // const detailStatus = error.response.status;
+        const detailMessage = error.response.data;
 
-        // if (detailStatus === StatusCode[401] && error.config.url === AppRoute.Login) {
-        //   toast.warn(StatusMessage[401]);
-        // }
+        processErrorHandle(detailMessage.message);
       }
 
       throw error;
