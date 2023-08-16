@@ -417,7 +417,7 @@ describe('AppData Slice', () => {
 
     const expectedState = {
       offers: [],
-      fullOffer: {},
+      fullOffer: fullOffer,
       reviews: [],
       neighborPlaces: [],
       favorites: [],
