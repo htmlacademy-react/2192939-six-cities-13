@@ -1,3 +1,4 @@
+import { Status } from './../settings';
 import { AuthStatus } from '../settings';
 import { FullOffer, Offer, Offers, Reviews } from '../types/data-types';
 import { store } from './index';
@@ -8,12 +9,12 @@ export type AppDispatch = typeof store.dispatch;
 
 export type UserProcess = {
   authStatus: AuthStatus;
-  loginStatus: string;
+  loginStatus: Status;
   userName: string;
 }
 
 export type AppData = {
-  offers: Offers;
+  offers: Offer[];
   fullOffer: FullOffer;
   reviews: Reviews;
   neighborPlaces: Offers;

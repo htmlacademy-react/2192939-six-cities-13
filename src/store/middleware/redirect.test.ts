@@ -28,13 +28,13 @@ describe('Redirect middleware', () => {
     browserHistory.push('');
   });
 
-  it('should redirect to "/login" with redirectToRout action', () => {
+  it('Должен перенаправить на "/login" с помощью redirectToRoute', () => {
     const redirectAction = redirectToRoute(AppRoute.Login);
     store.dispatch(redirectAction);
     expect(browserHistory.location.pathname).toBe(AppRoute.Login);
   });
 
-  it('should not redirect to "/not-found" with empty action', () => {
+  it('Не должен перенаправить на "/not-found" при пустом действии', () => {
     const emptyAction = { type: '', payload: AppRoute.NoFound };
     store.dispatch(emptyAction);
     expect(browserHistory.location.pathname).not.toBe(AppRoute.NoFound);

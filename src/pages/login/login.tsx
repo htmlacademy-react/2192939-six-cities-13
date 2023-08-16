@@ -4,28 +4,28 @@ import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus, CITIES, DEFAULT_CITY, Status } from '../../settings';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
 import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
+import { redirectToRoute } from '../../store/action';
 
 
 export default function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
   const randomCity = getRandomCity(CITIES);
-  const navigation = useNavigate();
   const loginStatus = useAppSelector(getLoginStatus);
   const authStatus = useAppSelector(getAuthStatus);
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
     if (authStatus === AuthStatus.Auth) {
-      navigation(AppRoute.Root);
+      dispatch(redirectToRoute(AppRoute.Root));
     }
-  }, [authStatus, navigation]);
+  }, [authStatus, dispatch]);
 
   useEffect(() => {
     dispatch(selectCityAction(randomCity));
@@ -36,9 +36,9 @@ export default function LoginPage(): JSX.Element {
       dispatch(setLoginStatus(Status.Idle));
       loginRef.current.value = '';
       passwordRef.current.value = '';
-      navigation(AppRoute.Root);
+      dispatch(redirectToRoute(AppRoute.Root));
     }
-  }, [dispatch, loginStatus, navigation]);
+  }, [dispatch, loginStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
