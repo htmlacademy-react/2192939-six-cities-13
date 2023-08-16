@@ -13,7 +13,7 @@ export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
   reducers: {
-    setLoginStatus: (state, action: PayloadAction<string>) => {
+    setLoginStatus: (state, action: PayloadAction<Status>) => {
       state.loginStatus = action.payload;
     },
   },

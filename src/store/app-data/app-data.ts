@@ -102,8 +102,8 @@ export const appData = createSlice({
           state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
         } else {
           state.favorites = [...state.favorites, action.payload];
+          state.fullOffer = action.payload;
         }
-        state.fullOffer = action.payload;
         state.isFavoriteAdding = false;
       })
       .addCase(favoriteStatusAction.rejected, (state) => {
