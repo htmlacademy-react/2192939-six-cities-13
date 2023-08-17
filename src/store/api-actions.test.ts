@@ -190,12 +190,11 @@ describe('Асинхронные операции', () => {
 
   describe('fetchFavoritesAction', () => {
     const mockFavorites = makeFakeFavorites();
-    const mockOfferId = mockFavorites.id;
 
     it('Должен вернуть массив избранных предложений при коде ответа сервера 200', async () => {
       mockAxiosAdapter.onGet(APIRoute.Favorites).reply(200, [mockFavorites]);
 
-      await store.dispatch(fetchFavoritesAction(mockOfferId));
+      await store.dispatch(fetchFavoritesAction());
 
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
@@ -212,7 +211,7 @@ describe('Асинхронные операции', () => {
     it('Должен вернуть fetchFavoritesAction.pending и fetchFavoritesAction.rejected при коде ответа сервера 400', async () => {
       mockAxiosAdapter.onGet(APIRoute.Favorites).reply(400, []);
 
-      await store.dispatch(fetchFavoritesAction(mockOfferId));
+      await store.dispatch(fetchFavoritesAction());
 
       const actions = extractActionTypes(store.getActions());
 
