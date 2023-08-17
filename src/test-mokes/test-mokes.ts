@@ -1,5 +1,12 @@
+import { Action, ThunkDispatch } from '@reduxjs/toolkit';
 import { City, FullOffer, Location, Offer, Review } from '../types/data-types';
 import faker from 'faker';
+import { State } from '../store/state';
+import { createAPI } from '../services/api';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>
+
+export const extractActionTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
 
 const Location: Location = {
   latitude: Number(faker.address.latitude()),
@@ -80,3 +87,7 @@ export const makeFakeFavorites = (): Offer => ({
   rating: faker.datatype.number({ min: 1, max: 5 }),
   previewImage: faker.image.city(),
 } as Offer);
+
+export const makeFakeUserName = () => ({
+  userName: faker.internet.email()
+});
