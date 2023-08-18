@@ -1,5 +1,5 @@
 import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace, Status } from '../../settings';
-import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mokes/test-mokes';
+import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
 import { getActiveCard, getCurrentCityName, getErrorStatus, getFavorites, getFullOffer, getIsFavoriteAdding, getIsFavoritesLoading, getIsFullOfferLoaded, getIsNearByLoaded, getIsOffersDataLoading, getIsReviewsLoaded, getNeighborPlaces, getOffers, getReviewStatus, getReviewsData, getSortingType } from './selectors';
 
 describe('Селекторы AppData', () => {

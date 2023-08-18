@@ -3,10 +3,38 @@ import { City, FullOffer, Location, Offer, Review } from '../types/data-types';
 import faker from 'faker';
 import { State } from '../store/state';
 import { createAPI } from '../services/api';
+import { AuthStatus, DEFAULT_CITY, DEFAULT_SORTING, Status } from '../settings';
 
 export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>
 
 export const extractActionTypes = (actions: Action<string>[]) => actions.map(({ type }) => type);
+
+export const makeFakeStore = (initialState?: Partial<State>): State => ({
+  USER: {
+    authStatus: AuthStatus.NoAuth,
+    loginStatus: Status.Success,
+    userName: '',
+  },
+  DATA: {
+    offers: [],
+    fullOffer: {} as FullOffer,
+    reviews: [],
+    neighborPlaces: [],
+    favorites: [],
+    isOffersDataLoading: false,
+    isFullOfferDataLoading: true,
+    isReviewsDataLoading: true,
+    isNeighborPlacesDataLoading: true,
+    isFavoritesLoading: false,
+    isFavoriteAdding: false,
+    hasError: false,
+    currentCityName: DEFAULT_CITY,
+    activeCard: null,
+    sortingType: DEFAULT_SORTING,
+    statusReview: Status.Idle,
+  },
+  ...initialState ?? {}
+});
 
 const Location: Location = {
   latitude: Number(faker.address.latitude()),
@@ -19,12 +47,15 @@ const City: City = {
   location: Location,
 };
 
-export const makeFakeOffer = (): Offer => ({
+export const makeFakeOffer = (defaultCity?: string): Offer => ({
   id: faker.random.alphaNumeric(20),
   title: faker.lorem.lines(),
   type: faker.lorem.word(),
   price: faker.datatype.number(500),
-  city: City,
+  city: {
+    name: defaultCity ? defaultCity : faker.address.cityName(),
+    location: Location,
+  },
   location: Location,
   isFavorite: faker.datatype.boolean(),
   isPremium: faker.datatype.boolean(),

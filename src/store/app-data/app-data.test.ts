@@ -1,6 +1,6 @@
 import { expect } from 'vitest';
 import { DEFAULT_CITY, DEFAULT_SORTING, Status } from '../../settings';
-import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mokes/test-mokes';
+import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
 import { FullOffer } from '../../types/data-types';
 import { appData, selectCityAction, setActiveCardAction, setReviewStatus, setSortingType } from './app-data';
 import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';

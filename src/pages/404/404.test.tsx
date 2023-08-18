@@ -1,5 +1,5 @@
 import Page404 from '.';
-import { withHistory } from '../../test-mokes/test-component';
+import { withHistory } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
 
 describe('Component: LogoLeft', () => {

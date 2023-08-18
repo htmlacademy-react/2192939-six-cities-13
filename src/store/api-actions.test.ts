@@ -1,10 +1,10 @@
-import { extractActionTypes, makeFakeFavorites, makeFakeFullOffer, makeFakeReview } from './../test-mokes/test-mokes';
+import { extractActionTypes, makeFakeFavorites, makeFakeFullOffer, makeFakeReview } from '../test-mocks/test-mocks';
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { createAPI } from '../services/api';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 import { State } from './state';
-import { AppThunkDispatch, makeFakeOffer } from '../test-mokes/test-mokes';
+import { AppThunkDispatch, makeFakeOffer } from '../test-mocks/test-mocks';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../settings';
 import { checkAuthStatus, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from './api-actions';
