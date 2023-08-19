@@ -44,12 +44,7 @@ export default function App(): JSX.Element {
     <HelmetProvider>
       <ScrollToTop />
       <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={
-            <MainPage />
-          }
-        />
+        <Route path={AppRoute.Root} element={<MainPage />} />
         <Route path={AppRoute.Login} element={<LoginPage />} />
         <Route
           path={AppRoute.Favorites}
@@ -59,12 +54,7 @@ export default function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route
-          path={`${AppRoute.Offer}/:id`}
-          element={
-            <OfferPage />
-          }
-        />
+        <Route path={`${AppRoute.Offer}/:id`} element={<OfferPage />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </HelmetProvider>

@@ -12,7 +12,6 @@ import { Action } from 'redux';
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();
-
   return (
     <HistoryRouter history={memoryHistory}>
       <HelmetProvider>
@@ -30,7 +29,7 @@ type ComponentWithMockStore = {
 
 export function withStore(
   component: JSX.Element,
-  initialState: Partial<State> = {}
+  initialState: Partial<State> = {},
 ): ComponentWithMockStore {
   const axios = createAPI();
   const mockAxiosAdapter = new MockAdapter(axios);
@@ -41,6 +40,6 @@ export function withStore(
   return ({
     withStoreComponent: <Provider store={mockStore}>{component}</Provider>,
     mockStore,
-    mockAxiosAdapter
+    mockAxiosAdapter,
   });
 }

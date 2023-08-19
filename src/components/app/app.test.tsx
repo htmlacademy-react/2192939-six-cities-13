@@ -1,12 +1,12 @@
-import { MemoryHistory, createMemoryHistory } from 'history';
-import { withHistory, withStore } from '../../test-mocks/test-component';
-import App from '.';
-import { makeFakeStore } from '../../test-mocks/test-mocks';
-import { AppRoute } from '../../settings';
 import { render, screen } from '@testing-library/react';
+import { MemoryHistory, createMemoryHistory } from 'history';
+import { AppRoute } from '../../settings';
+import { withHistory, withStore } from '../../test-mocks/test-component';
+import { makeFakeStore } from '../../test-mocks/test-mocks';
+import LoginPage from '../../pages/login';
+import Page404 from '../../pages/404';
 
 describe('Маршрутизация приложения', () => {
-
   let mockHistory: MemoryHistory;
 
   beforeEach(() => {
@@ -14,28 +14,25 @@ describe('Маршрутизация приложения', () => {
   });
 
   it('Ожидаю страницу авторизации', () => {
-    const withHistoryComponent = withHistory(<App />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-
+    const { withStoreComponent } = withStore(<LoginPage />, makeFakeStore());
+    const withHistoryComponent = withHistory(withStoreComponent, mockHistory);
     mockHistory.push(AppRoute.Login);
-    const path = mockHistory.location;
-    console.log(path);
+
+    render(withHistoryComponent);
+
+    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+  });
+
+  it('Ожидаю страницу 404', () => {
+    const withHistoryComponent = withHistory(<Page404 />, mockHistory);
+    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
+    mockHistory.push(AppRoute.NoFound);
 
     render(withStoreComponent);
 
-    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
+    expect(screen.getByText('404 Not Found')).toBeInTheDocument();
   });
-
-  // it('Ожидаю страницу 404', () => {
-  //   const withHistoryComponent = withHistory(<App />, mockHistory);
-  //   const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
-
-  //   mockHistory.push('/not-found');
-
-  //   render(withStoreComponent);
-
-  //   expect(screen.getByText('404 Not Found')).toBeInTheDocument();
-  // });
 
 
 });

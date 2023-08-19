@@ -12,7 +12,7 @@ export const extractActionTypes = (actions: Action<string>[]) => actions.map(({ 
 export const makeFakeStore = (initialState?: Partial<State>): State => ({
   USER: {
     authStatus: AuthStatus.NoAuth,
-    loginStatus: Status.Success,
+    loginStatus: Status.Idle,
     userName: '',
   },
   DATA: {

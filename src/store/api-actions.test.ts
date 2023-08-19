@@ -7,7 +7,10 @@ import { State } from './state';
 import { AppThunkDispatch, makeFakeOffer } from '../test-mocks/test-mocks';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../settings';
-import { checkAuthStatus, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from './api-actions';
+import { checkAuthStatus, favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, loginAction, logoutAction, reviewAction } from './api-actions';
+import { AuthData } from '../types/auth-data';
+import { redirectToRoute } from './action';
+import * as tokenStorage from '../services/token';
 
 describe('Асинхронные операции', () => {
   const axios = createAPI();
@@ -220,7 +223,143 @@ describe('Асинхронные операции', () => {
         fetchFavoritesAction.rejected.type
       ]);
     });
+  });
+
+  describe('loginAction', () => {
+    it('Проверяем состояния при коде ответа сервера 200', async () => {
+      const fakeUser: AuthData = { login: 'Lorem@test.com', password: 'w2' };
+      const fakeServerReplay = { token: 'secret' };
+      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
+
+      await store.dispatch(loginAction(fakeUser));
+
+      const actions = extractActionTypes(store.getActions());
+
+      expect(actions).toEqual([
+        loginAction.pending.type,
+        redirectToRoute.type,
+        loginAction.fulfilled.type
+      ]);
+    });
+
+    it('Проверяем вызов функции SaveToken', async () => {
+      const fakeUser: AuthData = { login: 'Lorem@test.com', password: 'w2' };
+      const fakeServerReplay = { token: 'secret' };
+      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
+      const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
+
+      await store.dispatch(loginAction(fakeUser));
+
+      expect(mockSaveToken).toBeCalledTimes(1);
+      expect(mockSaveToken).toBeCalledWith(fakeServerReplay.token);
+    });
+  });
+
+  describe('logoutAction', () => {
+    it('Проверяем состояния при коде ответа сервера 204', async () => {
+      mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
+
+      await store.dispatch(logoutAction());
+
+      const actions = extractActionTypes(store.getActions());
+
+      expect(actions).toEqual([
+        logoutAction.pending.type,
+        logoutAction.fulfilled.type
+      ]);
+    });
+
+    it('Проверяем вызов функции DropToken', async () => {
+      mockAxiosAdapter.onDelete(APIRoute.Logout).reply(204);
+      const mockDropToken = vi.spyOn(tokenStorage, 'dropToken');
+
+      await store.dispatch(logoutAction());
+
+      expect(mockDropToken).toBeCalledTimes(1);
+    });
+  });
+
+  describe('reviewAction', () => {
+    it('Проверяем ответ и состояния при коде ответа сервера 201', async () => {
+      const mockReview = makeFakeReview();
+      const mockData = {
+        comment: mockReview.comment,
+        rating: mockReview.rating,
+        offerId: mockReview.id,
+      };
+      mockAxiosAdapter.onPost(`${APIRoute.Comments}/${mockReview.id}`).reply(204, mockReview);
+
+      await store.dispatch(reviewAction(mockData));
+      const emittedActions = store.getActions();
+      const extractedActionTypes = extractActionTypes(emittedActions);
+      const fetchReviewActionFulfilled = emittedActions.at(1) as ReturnType<typeof reviewAction.fulfilled>;
+
+      expect(extractedActionTypes).toEqual([
+        reviewAction.pending.type,
+        reviewAction.fulfilled.type
+      ]);
+
+      expect(fetchReviewActionFulfilled.payload).toEqual(mockReview);
+    });
+  });
+
+  describe('favoriteStatusAction', () => {
+    it('Проверяем ответ и состояния при коде ответа сервера 200', async () => {
+      const mockFavorite = makeFakeFullOffer();
+      mockFavorite.isFavorite = false;
+      const mockData = {
+        offerId: mockFavorite.id,
+        status: 0
+      };
+      mockAxiosAdapter.onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`).reply(200, mockFavorite);
+
+      await store.dispatch(favoriteStatusAction(mockData));
+      const emittedActions = store.getActions();
+      const extractedActionTypes = extractActionTypes(emittedActions);
+      const fetchFavoriteActionFulfilled = emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
+
+      expect(extractedActionTypes).toEqual([
+        favoriteStatusAction.pending.type,
+        favoriteStatusAction.fulfilled.type
+      ]);
+
+      expect(fetchFavoriteActionFulfilled.payload).toEqual(mockFavorite);
+    });
+    it('Проверяем ответ и состояния при коде ответа сервера 201', async () => {
+      const mockFavorite = makeFakeFullOffer();
+      mockFavorite.isFavorite = true;
+      const mockData = {
+        offerId: mockFavorite.id,
+        status: 1
+      };
+      mockAxiosAdapter.onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`).reply(201, mockFavorite);
+
+      await store.dispatch(favoriteStatusAction(mockData));
+      const emittedActions = store.getActions();
+      const extractedActionTypes = extractActionTypes(emittedActions);
+      const fetchFavoriteActionFulfilled = emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
+
+      expect(extractedActionTypes).toEqual([
+        favoriteStatusAction.pending.type,
+        favoriteStatusAction.fulfilled.type
+      ]);
+
+      expect(fetchFavoriteActionFulfilled.payload).toEqual(mockFavorite);
+    });
 
   });
 
 });
+
+
+// export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
+//   'data/favoriteStatus',
+//   async ({ offerId, status }, { extra: api }) => {
+//     const { data } = await api.post<FullOffer>(
+//       `${APIRoute.Favorites}/${offerId}/${status}`,
+//       {},
+//     );
+
+//     return data;
+//   }
+// );
