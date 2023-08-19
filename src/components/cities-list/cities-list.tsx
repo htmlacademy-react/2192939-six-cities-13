@@ -33,7 +33,7 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
                 'tabs__item',
                 { 'tabs__item--active': city === selectedCity, })}
             >
-              <span>{city}</span>
+              <span data-testid='cityNameElement'>{city}</span>
             </a>
           </li>
         ))}

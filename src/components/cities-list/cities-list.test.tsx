@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { withStore } from '../../test-mocks/test-component';
-import ErrorScreen from '.';
-import { APIRoute, DEFAULT_SORTING, Status } from '../../settings';
-import { extractActionTypes, makeFakeCity } from '../../test-mocks/test-mocks';
-import { fetchOffersAction } from '../../store/api-actions';
+import { DEFAULT_SORTING, Status } from '../../settings';
+import { makeFakeCity } from '../../test-mocks/test-mocks';
 import CitiesList from './cities-list';
 import { FullOffer } from '../../types/data-types';
 
 describe('Component: CitiesList', () => {
   it('Проверяем правильность отрисовки', () => {
+    const cityNameTestId = 'cityNameElement';
     const mockExpectedCityName = [makeFakeCity().name];
     const { withStoreComponent } = withStore(<CitiesList cities={mockExpectedCityName} />, {
       DATA: {
@@ -35,21 +33,6 @@ describe('Component: CitiesList', () => {
     render(withStoreComponent);
 
     expect(screen.getByText(mockExpectedCityName[0])).toBeInTheDocument();
-    expect(screen.getBy('anchor')).toBeInTheDocument();
+    expect(screen.getAllByTestId(cityNameTestId).length).toBe(mockExpectedCityName.length);
   });
-
-  it('Проверяем действия пользователя', async () => {
-    const { withStoreComponent, mockStore, mockAxiosAdapter } = withStore(<CitiesList />, {});
-    mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, []);
-
-    render(withStoreComponent);
-    await userEvent.click(screen.getByRole('button'));
-    const actions = extractActionTypes(mockStore.getActions());
-
-    expect(actions).toEqual([
-      fetchOffersAction.pending.type,
-      fetchOffersAction.fulfilled.type
-    ]);
-  });
-
 });
