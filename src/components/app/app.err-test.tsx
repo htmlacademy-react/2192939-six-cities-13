@@ -3,8 +3,7 @@ import { MemoryHistory, createMemoryHistory } from 'history';
 import { AppRoute } from '../../settings';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { makeFakeStore } from '../../test-mocks/test-mocks';
-import LoginPage from '../../pages/login';
-import Page404 from '../../pages/404';
+import App from '.';
 
 describe('Маршрутизация приложения', () => {
   let mockHistory: MemoryHistory;
@@ -14,7 +13,7 @@ describe('Маршрутизация приложения', () => {
   });
 
   it('Ожидаю страницу авторизации', () => {
-    const { withStoreComponent } = withStore(<LoginPage />, makeFakeStore());
+    const { withStoreComponent } = withStore(<App />, makeFakeStore());
     const withHistoryComponent = withHistory(withStoreComponent, mockHistory);
     mockHistory.push(AppRoute.Login);
 
@@ -25,7 +24,7 @@ describe('Маршрутизация приложения', () => {
   });
 
   it('Ожидаю страницу 404', () => {
-    const withHistoryComponent = withHistory(<Page404 />, mockHistory);
+    const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
     mockHistory.push(AppRoute.NoFound);
 
