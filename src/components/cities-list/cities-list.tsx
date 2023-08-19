@@ -28,9 +28,10 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
         {cities.map((city) => (
           <li className="locations__item" key={city} onClick={handleElementClick}>
             <a
-              className={classNames('locations__item-link', 'tabs__item', {
-                'tabs__item--active': city === selectedCity,
-              })}
+              className={classNames(
+                'locations__item-link',
+                'tabs__item',
+                { 'tabs__item--active': city === selectedCity, })}
             >
               <span>{city}</span>
             </a>

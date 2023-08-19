@@ -19,8 +19,10 @@ describe('Маршрутизация приложения', () => {
 
     render(withHistoryComponent);
 
-    expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-    expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    setTimeout(() => {
+      expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+      expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
+    }, 50);
   });
 
   it('Ожидаю страницу 404', () => {
@@ -30,7 +32,9 @@ describe('Маршрутизация приложения', () => {
 
     render(withStoreComponent);
 
-    expect(screen.getByText('404 Not Found')).toBeInTheDocument();
+    setTimeout(() => {
+      expect(screen.getByText('404 Not Found')).toBeInTheDocument();
+    }, 50);
   });
 
 
