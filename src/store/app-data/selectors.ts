@@ -20,7 +20,7 @@ export const getIsNearByLoaded = (state: Pick<State, NameSpace.Data>): boolean =
 
 export const getErrorStatus = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].hasError;
 
-export const getFavorites = (state: Pick<State, NameSpace.Data>): (Offer | FullOffer)[] => state[NameSpace.Data].favorites;
+export const getFavorites = (state: Pick<State, NameSpace.Data>): (Offer)[] => state[NameSpace.Data].favorites;
 
 export const getIsFavoritesLoading = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isFavoritesLoading;
 

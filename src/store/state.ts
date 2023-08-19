@@ -18,7 +18,7 @@ export type AppData = {
   fullOffer: FullOffer;
   reviews: Reviews;
   neighborPlaces: Offers;
-  favorites: (Offer | FullOffer)[];
+  favorites: (Offer)[];
   isOffersDataLoading: boolean;
   isFullOfferDataLoading: boolean;
   isReviewsDataLoading: boolean;

@@ -1,9 +1,9 @@
 import { MouseEvent, useState } from 'react';
 import { SortingType } from '../types/data-types';
 
-
-export default function useSorting(onChangeSorting: (value: SortingType) => void):
-  [boolean, () => void, (evt: MouseEvent<HTMLSpanElement>) => void] {
+export default function useSorting({ onChangeSorting }: {
+  onChangeSorting: (value: SortingType) => void;
+}): [boolean, () => void, (evt: MouseEvent<HTMLSpanElement>) => void] {
   const [changeSorting, setChangeSorting] = useState(false);
 
 
