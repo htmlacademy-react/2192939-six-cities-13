@@ -7,7 +7,6 @@ import Page404 from '../../pages/404';
 import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';
-import ScrollToTop from '../scroll-to-top';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import { getErrorStatus } from '../../store/app-data/selectors';
@@ -42,7 +41,6 @@ export default function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <ScrollToTop />
       <Routes>
         <Route path={AppRoute.Root} element={<MainPage />} />
         <Route path={AppRoute.Login} element={<LoginPage />} />

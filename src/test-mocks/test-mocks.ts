@@ -42,10 +42,10 @@ const Location: Location = {
   zoom: faker.datatype.number({ min: 10, max: 15 }),
 };
 
-const City: City = {
+export const makeFakeCity = (): City => ({
   name: faker.address.cityName(),
   location: Location,
-};
+});
 
 export const makeFakeOffer = (defaultCity?: string): Offer => ({
   id: faker.random.alphaNumeric(20),
@@ -68,7 +68,7 @@ export const makeFakeFullOffer = (): FullOffer => ({
   title: faker.lorem.lines(),
   type: faker.lorem.word(),
   price: faker.datatype.number(500),
-  city: City,
+  city: makeFakeCity(),
   location: Location,
   isFavorite: faker.datatype.boolean(),
   isPremium: faker.datatype.boolean(),
