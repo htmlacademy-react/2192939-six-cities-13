@@ -111,7 +111,7 @@ export const makeFakeFavorites = (): Offer => ({
   title: faker.lorem.lines(),
   type: faker.lorem.word(),
   price: faker.datatype.number(500),
-  city: City,
+  city: makeFakeCity(),
   location: Location,
   isFavorite: true,
   isPremium: faker.datatype.boolean(),

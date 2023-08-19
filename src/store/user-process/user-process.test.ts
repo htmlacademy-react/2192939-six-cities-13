@@ -1,4 +1,3 @@
-import { AuthData } from './../../types/auth-data';
 import { expect } from 'vitest';
 import { AuthStatus, Status } from '../../settings';
 import { setLoginStatus, userProcess } from './user-process';
