@@ -10,6 +10,7 @@ export default function LogoLeft(): JSX.Element {
           alt="6 cities logo"
           width={81}
           height={41}
+          data-testid='logoLeftIcon'
         />
       </Link>
     </div>

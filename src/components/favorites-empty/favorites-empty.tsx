@@ -29,6 +29,7 @@ export default function FavoritesEmpty(): JSX.Element {
             alt="6 cities logo"
             width={64}
             height={33}
+            data-testid='favoritesLogo'
           />
         </a>
       </footer>

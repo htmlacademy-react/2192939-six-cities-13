@@ -3,13 +3,12 @@ import { DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../.
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { makeFakeFavorites, makeFakeStore } from '../../test-mocks/test-mocks';
 import { createMemoryHistory } from 'history';
-import { FullOffer } from '../../types/data-types';
+import { FullOffer, Offer } from '../../types/data-types';
 import FavoritesPage from '.';
 
 describe('Component: FavoritesPage', () => {
   const mockHistory = createMemoryHistory();
 
-  const favorites = [makeFakeFavorites(), makeFakeFavorites(), makeFakeFavorites()];
   const withHistoryComponent = withHistory(<FavoritesPage />, mockHistory);
   const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
     DATA: {
@@ -17,7 +16,7 @@ describe('Component: FavoritesPage', () => {
       fullOffer: {} as FullOffer,
       reviews: [],
       neighborPlaces: [],
-      favorites: favorites,
+      favorites: [],
       isOffersDataLoading: false,
       isFullOfferDataLoading: true,
       isReviewsDataLoading: true,
@@ -33,18 +32,22 @@ describe('Component: FavoritesPage', () => {
   }));
 
   it('Ожидаю страницу избранного', () => {
-    const favoritesTitleText = 'Saved listing';
+    const favoritesEmptyTitleText = 'Favorites (empty)';
+    const favoritesEmptyHeaderText = 'Nothing yet saved.';
+    const favoritesEmptyText = 'Save properties to narrow down search or plan your future trips.';
 
     render(withStoreComponent);
 
     const waitingRenderTimer = setTimeout(() => {
-      expect(screen.getByText(favoritesTitleText)).toBeInTheDocument();
+      expect(screen.getByText(favoritesEmptyTitleText)).toBeInTheDocument();
+      expect(screen.getByText(favoritesEmptyHeaderText)).toBeInTheDocument();
+      expect(screen.getByText(favoritesEmptyText)).toBeInTheDocument();
       clearTimeout(waitingRenderTimer);
     }, TIME_TO_RENDER_PAGE);
   });
 
   it('Ожидаю количество избранных предложений', () => {
-    const favoritesListQuantity = favorites.length;
+    const favoritesListQuantity = 0;
 
     render(withStoreComponent);
 
@@ -64,5 +67,4 @@ describe('Component: FavoritesPage', () => {
       clearTimeout(waitingRenderTimer);
     }, TIME_TO_RENDER_PAGE);
   });
-
 });
