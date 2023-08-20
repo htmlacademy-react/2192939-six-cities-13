@@ -41,10 +41,10 @@ export default function OfferPage(): JSX.Element {
     };
   }, [dispatch, offerId]);
 
-  const handleButtonClick = (): void => {
+  const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
-      dispatch(fetchOffersAction());
+      await dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
     }
@@ -90,6 +90,7 @@ export default function OfferPage(): JSX.Element {
                       'button'
                     )}
                     type="button"
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={handleButtonClick}
                   >
                     <svg className="offer__bookmark-icon" width={31} height={33}>
