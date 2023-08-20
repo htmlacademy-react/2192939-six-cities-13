@@ -60,6 +60,7 @@ export default function FavoritesPage(): JSX.Element {
             alt="6 cities logo"
             width={64}
             height={33}
+            data-testid='favoritesLogo'
           />
         </Link>
       </footer>

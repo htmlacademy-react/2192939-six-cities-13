@@ -65,7 +65,7 @@ export default function OfferPage(): JSX.Element {
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
                 {fullOffer.images.map((item) => (
-                  <div className="offer__image-wrapper" key={crypto.randomUUID()}>
+                  <div className="offer__image-wrapper" key={item}>
                     <img className="offer__image" src={item} alt="Photo studio" />
                   </div>
                 ))}
@@ -136,7 +136,7 @@ export default function OfferPage(): JSX.Element {
                     {fullOffer.goods.map((item) => (
                       <li
                         className="offer__inside-item"
-                        key={crypto.randomUUID()}
+                        key={item}
                       >
                         {item}
                       </li>
