@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event';
 
 describe('Component: LoginPage', () => {
   it('Проверяем правильность отрисовки', () => {
-    const loginText = 'Email';
-    const passwordText = 'Password';
+    const loginElementTestId = 'loginElement';
+    const passwordElementTestId = 'passwordElement';
     const { withStoreComponent } = withStore(<LoginPage />, {
       USER: {
         authStatus: AuthStatus.Unknown,
@@ -19,11 +19,11 @@ describe('Component: LoginPage', () => {
 
     render(preparedComponent);
 
-    expect(screen.getByPlaceholderText(loginText)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(passwordText)).toBeInTheDocument();
+    expect(screen.getByTestId(loginElementTestId)).toBeInTheDocument();
+    expect(screen.getByTestId(passwordElementTestId)).toBeInTheDocument();
   });
 
-  it('Проверяем правильность отрисовки', async () => {
+  it('Проверяем правильность отработки действий пользователя', async () => {
     const loginElementTestId = 'loginElement';
     const passwordElementTestId = 'passwordElement';
     const expectedLoginValue = 'Lorem@test.com';

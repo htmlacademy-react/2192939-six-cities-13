@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, DEFAULT_CITY, DEFAULT_SORTING, Status } from '../../settings';
+import { AppRoute, DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { makeFakeFullOffer, makeFakeOffer, makeFakeStore } from '../../test-mocks/test-mocks';
 import App from '.';
@@ -14,6 +14,7 @@ describe('Маршрутизация приложения', () => {
   });
 
   it('Ожидаю главную страницу', () => {
+    const expectedText = 'Cities';
     const offers = [makeFakeOffer(), makeFakeOffer()];
     const currentCityName = offers[0].city.name;
     const withHistoryComponent = withHistory(<App />, mockHistory);
@@ -41,33 +42,38 @@ describe('Маршрутизация приложения', () => {
 
     render(withStoreComponent);
 
-    expect(screen.getByText('Cities')).toBeInTheDocument();
+    expect(screen.getByText(expectedText)).toBeInTheDocument();
   });
 
 
   it('Ожидаю страницу авторизации', () => {
+    const loginElementTestId = 'loginElement';
+    const passwordElementTestId = 'passwordElement';
     const { withStoreComponent } = withStore(<App />, makeFakeStore());
     const withHistoryComponent = withHistory(withStoreComponent, mockHistory);
     mockHistory.push(AppRoute.Login);
 
     render(withHistoryComponent);
 
-    setTimeout(() => {
-      expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Email')).toBeInTheDocument();
-    }, 50);
+    const waitingRenderTimer = setTimeout(() => {
+      expect(screen.getByTestId(loginElementTestId)).toBeInTheDocument();
+      expect(screen.getByTestId(passwordElementTestId)).toBeInTheDocument();
+      clearTimeout(waitingRenderTimer);
+    }, TIME_TO_RENDER_PAGE);
   });
 
   it('Ожидаю страницу 404', () => {
+    const expectedText = '404 Not Found';
     const withHistoryComponent = withHistory(<App />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
     mockHistory.push(AppRoute.NoFound);
 
     render(withStoreComponent);
 
-    setTimeout(() => {
-      expect(screen.getByText('404 Not Found')).toBeInTheDocument();
-    }, 50);
+    const waitingRenderTimer = setTimeout(() => {
+      expect(screen.getByText(expectedText)).toBeInTheDocument();
+      clearTimeout(waitingRenderTimer);
+    }, TIME_TO_RENDER_PAGE);
   });
 
 
@@ -98,8 +104,9 @@ describe('Маршрутизация приложения', () => {
 
     render(withStoreComponent);
 
-    setTimeout(() => {
+    const waitingRenderTimer = setTimeout(() => {
       expect(screen.getByText(fullOffer.title)).toBeInTheDocument();
-    }, 50);
+      clearTimeout(waitingRenderTimer);
+    }, TIME_TO_RENDER_PAGE);
   });
 });

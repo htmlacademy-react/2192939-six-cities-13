@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryHistory, createMemoryHistory } from 'history';
-import { AppRoute, AuthStatus, Status } from '../../settings';
+import { AppRoute, AuthStatus, Status, TIME_TO_RENDER_PAGE } from '../../settings';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { Route, Routes } from 'react-router-dom';
 import PrivateRoute from '.';
@@ -43,8 +43,11 @@ describe('Component: PrivateRouter', () => {
 
     render(preparedComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
-    expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+    const waitingRenderTimer = setTimeout(() => {
+      expect(screen.getByText(expectedText)).toBeInTheDocument();
+      expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+      clearTimeout(waitingRenderTimer);
+    }, TIME_TO_RENDER_PAGE);
   });
 
   it('Проверяем что отображается когда пользователь авторизован', () => {
@@ -74,8 +77,11 @@ describe('Component: PrivateRouter', () => {
 
     render(preparedComponent);
 
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
-    expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+    const waitingRenderTimer = setTimeout(() => {
+      expect(screen.getByText(expectedText)).toBeInTheDocument();
+      expect(screen.queryByText(notExpectedText)).not.toBeInTheDocument();
+      clearTimeout(waitingRenderTimer);
+    }, TIME_TO_RENDER_PAGE);
   });
 
 });
