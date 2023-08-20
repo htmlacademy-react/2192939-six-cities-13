@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { MouseEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { DEFAULT_SORTING } from '../../settings';
-import { getCityName } from '../../store/app-data/selectors';
+import { getCurrentCityName } from '../../store/app-data/selectors';
 import { selectCityAction, setSortingType } from '../../store/app-data/app-data';
 
 type CitiesListProps = {
@@ -10,7 +10,7 @@ type CitiesListProps = {
 };
 
 export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
-  const selectedCity = useAppSelector(getCityName);
+  const selectedCity = useAppSelector(getCurrentCityName);
   const dispatch = useAppDispatch();
 
   const handleElementClick = (evt: MouseEvent<HTMLElement>) => {
@@ -28,11 +28,12 @@ export default function CitiesList({ cities }: CitiesListProps): JSX.Element {
         {cities.map((city) => (
           <li className="locations__item" key={city} onClick={handleElementClick}>
             <a
-              className={classNames('locations__item-link', 'tabs__item', {
-                'tabs__item--active': city === selectedCity,
-              })}
+              className={classNames(
+                'locations__item-link',
+                'tabs__item',
+                { 'tabs__item--active': city === selectedCity, })}
             >
-              <span>{city}</span>
+              <span data-testid='cityNameElement'>{city}</span>
             </a>
           </li>
         ))}

@@ -4,7 +4,7 @@ export enum AppRoute {
   Root = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offers',
+  Offer = '/offer',
   NoFound = '/not-found',
 }
 
@@ -66,13 +66,15 @@ export const EMPTY_RATING = 0;
 
 export const MAX_QUANTITY_REVIEWS = 10;
 
-export const URL_MARKER_DEFAULT = '../img/pin.svg';
+export const URL_MARKER_DEFAULT = '/img/pin.svg';
 
-export const URL_MARKER_CURRENT = '../img/pin-active.svg';
+export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 
 export const DEFAULT_CITY = 'Paris';
 
 export const DEFAULT_SORTING: SortingType = 'popular';
+
+export const TIME_TO_RENDER_PAGE = 100;
 
 export const StylesForMapMainPage = {
   width: '100%',
@@ -102,4 +104,15 @@ export const StatusMessage = {
 export enum NameSpace {
   Data = 'DATA',
   User = 'USER',
+}
+
+export const MAP_URL_TEMPLATE = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+
+export const MAP_OPTIONS_ATTRIBUTION = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
 }

@@ -1,12 +1,15 @@
-import { ChangeEventHandler, useState, Fragment, FormEvent } from 'react';
+import { ChangeEventHandler, useState, Fragment, FormEvent, useRef, useEffect } from 'react';
 import {
   EMPTY_RATING,
   MAX_LENGTH_REVIEW_TEXT,
   MIN_LENGTH_REVIEW_TEXT,
   RatingMap,
+  Status,
 } from '../../settings';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { reviewAction } from '../../store/api-actions';
+import { getReviewStatus } from '../../store/app-data/selectors';
+import { setReviewStatus } from '../../store/app-data/app-data';
 
 type ReviewFormProps = {
   offerId: string;
@@ -16,10 +19,20 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const reviewStatus = useAppSelector(getReviewStatus);
 
-  const isReview = rating !== EMPTY_RATING
+  const isValid = rating !== EMPTY_RATING
     && review.length >= MIN_LENGTH_REVIEW_TEXT
     && review.length <= MAX_LENGTH_REVIEW_TEXT;
+
+  useEffect(() => {
+    if (reviewStatus === Status.Success && formRef) {
+      dispatch(setReviewStatus(Status.Idle));
+      setRating(0);
+      setReview('');
+    }
+  }, [dispatch, reviewStatus]);
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target,
@@ -35,22 +48,29 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(reviewAction({
-      offerId: offerId,
-      comment: review,
-      rating: rating,
-    }));
 
-    setRating(0);
-    setReview('');
+    if (isValid) {
+      dispatch(reviewAction({
+        offerId: offerId,
+        comment: review,
+        rating: rating,
+      }));
+    }
   };
 
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleSubmit}
+      ref={formRef}
+      aria-disabled={reviewStatus === Status.Loading}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <div className="reviews__rating-form form__rating">
+      <div className="reviews__rating-form form__rating" aria-disabled={reviewStatus === Status.Loading}>
         {Object.entries(RatingMap)
           .reverse()
           .map(([score, title]) => (
@@ -63,6 +83,7 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
                 type="radio"
                 checked={Number(rating) === Number(score)}
                 onChange={handleInputChange}
+                disabled={reviewStatus === Status.Loading}
               />
               <label
                 htmlFor={`${score}-stars`}
@@ -83,6 +104,7 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={handleTexAreaChange}
         value={review}
+        disabled={reviewStatus === Status.Loading}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -93,7 +115,7 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isReview}
+          disabled={!isValid || reviewStatus === Status.Loading}
         >
           Submit
         </button>

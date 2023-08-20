@@ -1,21 +1,23 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
 import { logoutAction } from '../../store/api-actions';
-import { getUserName } from '../../store/user-process/selectors';
+import { getFavorites } from '../../store/app-data/selectors';
+import { getAuthStatus, getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-type HeaderProps = {
-  authStatus: AuthStatus;
-  favoritesCount: number;
-};
-
-export default function Header({ authStatus, favoritesCount }: HeaderProps): JSX.Element {
+export default function Header(): JSX.Element {
   const userName = useAppSelector(getUserName);
+  const authStatus = useAppSelector(getAuthStatus);
+  const favoritesCount = useAppSelector(getFavorites).length;
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const logoutHandle = () => {
     dispatch(logoutAction());
+    if (authStatus === AuthStatus.NoAuth) {
+      navigate(AppRoute.Login);
+    }
   };
 
   return (
@@ -40,9 +42,9 @@ export default function Header({ authStatus, favoritesCount }: HeaderProps): JSX
                     </Link>
                   </li>
                   <li className="header__nav-item" >
-                    <Link className="header__nav-link" to={AppRoute.Root} onClick={logoutHandle}>
+                    <a className="header__nav-link" onClick={logoutHandle}>
                       <span className="header__signout">Sign out</span>
-                    </Link>
+                    </a>
                   </li>
                 </>
               ) : (

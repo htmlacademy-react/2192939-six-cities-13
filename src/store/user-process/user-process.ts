@@ -1,17 +1,22 @@
-import { AuthStatus, NameSpace } from '../../settings';
+import { AuthStatus, NameSpace, Status } from '../../settings';
 import { checkAuthStatus, loginAction, logoutAction } from '../api-actions';
 import { UserProcess } from '../state';
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const initialState: UserProcess = {
   authStatus: AuthStatus.Unknown,
+  loginStatus: Status.Idle,
   userName: '',
 };
 
 export const userProcess = createSlice({
   name: NameSpace.User,
   initialState,
-  reducers: {},
+  reducers: {
+    setLoginStatus: (state, action: PayloadAction<Status>) => {
+      state.loginStatus = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(checkAuthStatus.fulfilled, (state, action) => {
@@ -33,3 +38,5 @@ export const userProcess = createSlice({
       });
   }
 });
+
+export const { setLoginStatus } = userProcess.actions;

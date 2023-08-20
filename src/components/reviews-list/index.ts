@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import ReviewsList from './reviews-list';
 
-export default ReviewsList;
+export default memo(ReviewsList);

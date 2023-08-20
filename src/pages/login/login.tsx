@@ -2,40 +2,49 @@ import { Helmet } from 'react-helmet-async';
 import { FormEvent, useEffect, useRef } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
-import { useAppDispatch } from '../../hooks';
-import { AppRoute, CITIES, DEFAULT_CITY } from '../../settings';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { AppRoute, AuthStatus, CITIES, DEFAULT_CITY, Status } from '../../settings';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { getRandomCity } from '../../utils/offers';
 import { selectCityAction } from '../../store/app-data/app-data';
+import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
+import { setLoginStatus } from '../../store/user-process/user-process';
+import { redirectToRoute } from '../../store/action';
 
 
 export default function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
   const randomCity = getRandomCity(CITIES);
-
-  const dispatch = useAppDispatch();
+  const loginStatus = useAppSelector(getLoginStatus);
+  const authStatus = useAppSelector(getAuthStatus);
 
   useEffect(() => {
-    let isLoginMounted = true;
-
-    if (isLoginMounted) {
-      dispatch(selectCityAction(randomCity));
+    if (authStatus === AuthStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Root));
     }
+  }, [authStatus, dispatch]);
 
-    return () => {
-      isLoginMounted = false;
-    };
+  useEffect(() => {
+    dispatch(selectCityAction(randomCity));
   });
+
+  useEffect(() => {
+    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+      dispatch(setLoginStatus(Status.Idle));
+      loginRef.current.value = '';
+      passwordRef.current.value = '';
+      dispatch(redirectToRoute(AppRoute.Root));
+    }
+  }, [dispatch, loginStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current && passwordRef.current) {
       if (!regex.test(passwordRef.current.value)) {
-        toast.warn('The password must have at least one letter and one symbol and no spaces');
         return;
       }
 
@@ -74,6 +83,7 @@ export default function LoginPage(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  data-testid='loginElement'
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -85,6 +95,7 @@ export default function LoginPage(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  data-testid='passwordElement'
                 />
               </div>
               <button

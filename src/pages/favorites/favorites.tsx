@@ -2,50 +2,22 @@ import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import { Link } from 'react-router-dom';
 import PlaceList from '../../components/place-list';
-import { AuthStatus, CITIES, PlacesCard } from '../../settings';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIsFavoritesLoading } from '../../store/app-data/selectors';
+import { CITIES, PlacesCard } from '../../settings';
+import { useAppSelector } from '../../hooks';
+import { getFavorites, getIsFavoritesLoading } from '../../store/app-data/selectors';
 import FavoritesEmpty from '../../components/favorites-empty';
-import { fetchFavoritesAction } from '../../store/api-actions';
-import { useEffect } from 'react';
 import Loader from '../../components/loader';
-import { Offers } from '../../types/data-types';
 
-type FavoritesPageProps = {
-  favoriteOffers: Offers;
-  favoritesCount: number;
-  authStatus: AuthStatus;
-}
-
-export default function FavoritesPage({ favoriteOffers, favoritesCount, authStatus }: FavoritesPageProps): JSX.Element {
-  const dispatch = useAppDispatch();
+export default function FavoritesPage(): JSX.Element {
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
-
-  useEffect(() => {
-    let isOfferPageMounted = true;
-
-    if (isOfferPageMounted) {
-      dispatch(fetchFavoritesAction());
-    }
-
-    return () => {
-      isOfferPageMounted = false;
-    };
-  }, [dispatch, favoritesCount]);
+  const favoriteOffers = useAppSelector(getFavorites);
 
   if (isFavoritesLoading) {
-    return (
-      <Loader />
-    );
+    return <Loader />;
   }
 
-  if (!favoritesCount) {
-    return (
-      <FavoritesEmpty
-        favoritesCount={favoritesCount}
-        authStatus={authStatus}
-      />
-    );
+  if (!favoriteOffers.length) {
+    return <FavoritesEmpty />;
   }
 
 
@@ -54,7 +26,7 @@ export default function FavoritesPage({ favoriteOffers, favoritesCount, authStat
       <Helmet>
         <title>6 cities: favorites</title>
       </Helmet>
-      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
+      <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           <section className="favorites">

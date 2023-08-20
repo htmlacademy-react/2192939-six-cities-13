@@ -2,26 +2,13 @@ import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
-  AxiosResponse,
 } from 'axios';
 import { getToken } from './token';
-import { StatusCodes } from 'http-status-codes';
-import { toast } from 'react-toastify';
-import { AppRoute, StatusCode, StatusMessage } from '../settings';
 
 type DetailMessageType = {
   type: string;
   message: string;
 };
-
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.CONFLICT]: true,
-};
-
-const shouldDisplayError = (response: AxiosResponse) =>
-  !!StatusCodeMapping[response.status];
 
 const BASE_URL = 'https://13.design.pages.academy/six-cities';
 const TIMEOUT = 5000;
@@ -44,14 +31,6 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (error: AxiosError<DetailMessageType>) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        // const detailMessage = error.response.data;
-        const detailStatus = error.response.status;
-
-        if (detailStatus === StatusCode[401] && error.config.url === AppRoute.Login) {
-          toast.warn(StatusMessage[401]);
-        }
-      }
 
       throw error;
     }

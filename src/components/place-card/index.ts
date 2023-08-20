@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PlaceCard from './place-card';
 
-export default PlaceCard;
+export default memo(PlaceCard);

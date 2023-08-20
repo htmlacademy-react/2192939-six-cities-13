@@ -1,16 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import Header from '../../components/header';
 import Cities from '../../components/cities';
-import { AuthStatus } from '../../settings';
-import { Offers } from '../../types/data-types';
 
-type MainPageProp = {
-  offers: Offers;
-  favoritesCount: number;
-  authStatus: AuthStatus;
-}
-
-export default function MainPage({ offers, favoritesCount, authStatus }: MainPageProp): JSX.Element {
+export default function MainPage(): JSX.Element {
 
 
   return (
@@ -18,8 +10,8 @@ export default function MainPage({ offers, favoritesCount, authStatus }: MainPag
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
-      <Cities offers={offers} />
+      <Header />
+      <Cities />
     </div>
   );
 }

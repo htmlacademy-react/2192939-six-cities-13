@@ -14,13 +14,9 @@ import Loader from '../../components/loader';
 import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
+import { getAuthStatus } from '../../store/user-process/selectors';
 
-type OfferPageProps = {
-  favoritesCount: number;
-  authStatus: AuthStatus;
-}
-
-export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps): JSX.Element {
+export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
   const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
@@ -28,6 +24,7 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
   const isNearByLoaded = useAppSelector(getIsNearByLoaded);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
+  const authStatus = useAppSelector(getAuthStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -39,7 +36,6 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
       dispatch(fetchReviewsFullOfferAction(offerId));
       dispatch(fetchNeighborPlacesAction(offerId));
     }
-
     return () => {
       isOfferPageMounted = false;
     };
@@ -58,7 +54,7 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
       <Helmet>
         <title>6 cities: offer</title>
       </Helmet>
-      <Header authStatus={authStatus} favoritesCount={favoritesCount} />
+      <Header />
 
       {isFullOfferLoaded || isReviewsLoaded || isNearByLoaded
         ?
@@ -120,10 +116,14 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
                     {capitalizeFirstLetter(fullOffer.type)}
                   </li>
                   <li className="offer__feature offer__feature--bedrooms">
-                    {fullOffer.bedrooms} Bedrooms
+                    {fullOffer.bedrooms > 1
+                      ? `${fullOffer.bedrooms} Bedrooms`
+                      : `${fullOffer.bedrooms} Bedroom`}
                   </li>
                   <li className="offer__feature offer__feature--adults">
-                    Max {fullOffer.maxAdults} adults
+                    Max {fullOffer.maxAdults > 1
+                      ? `${fullOffer.maxAdults} adults`
+                      : `${fullOffer.maxAdults} adult`}
                   </li>
                 </ul>
                 <div className="offer__price">
@@ -160,9 +160,7 @@ export default function OfferPage({ favoritesCount, authStatus }: OfferPageProps
                     <span className="offer__user-name">
                       {fullOffer.host.name}
                     </span>
-                    <span className="offer__user-status">
-                      {fullOffer.host.isPro ? 'Pro' : ''}
-                    </span>
+                    {fullOffer.host.isPro && <span className="offer__user-status">Pro</span>}
                   </div>
                   <div className="offer__description">
                     <p className="offer__text">{fullOffer.description}</p>
