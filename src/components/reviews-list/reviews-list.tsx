@@ -16,7 +16,7 @@ export default function ReviewsList() {
       <ul className="reviews__list">
         {sortReviewByDate(reviews).map((item) => (
           <li className="reviews__item" key={item.id}>
-            <ReviewCard item={item} />
+            <ReviewCard item={item} data-testid='reviewCardTestId' />
           </li>
         ))}
       </ul>
