@@ -82,7 +82,7 @@ describe('Component: PlaceCard', () => {
     }, TIME_TO_RENDER_PAGE);
   });
 
-  it('Ожидаю ожидаю перехода на страницу предложения', () => {
+  it('Ожидаю перехода на страницу предложения', () => {
     const mockHistory = createMemoryHistory();
 
     const mockOffer = makeFakeOffer();

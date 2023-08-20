@@ -84,6 +84,7 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
                 checked={Number(rating) === Number(score)}
                 onChange={handleInputChange}
                 disabled={reviewStatus === Status.Loading}
+                data-testid={`ratingElement${score}`}
               />
               <label
                 htmlFor={`${score}-stars`}
@@ -105,6 +106,7 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
         onChange={handleTexAreaChange}
         value={review}
         disabled={reviewStatus === Status.Loading}
+        data-testid='commentElement'
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
