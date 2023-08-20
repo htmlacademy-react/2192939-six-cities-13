@@ -73,5 +73,5 @@ export default function Map({
     }
   }, [map, offers, selectedPlace, city, fullOffer]);
 
-  return <div style={styles} ref={mapRef} />;
+  return <div style={styles} ref={mapRef} data-testid='mapElement' />;
 }

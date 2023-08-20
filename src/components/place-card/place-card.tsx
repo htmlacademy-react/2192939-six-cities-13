@@ -63,6 +63,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
             width={type === PlacesCard.Favorites ? 150 : 260}
             height={type === PlacesCard.Favorites ? 110 : 200}
             alt="Place image"
+            data-testid='placeCardImageElement'
           />
         </a>
       </div>
