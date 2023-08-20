@@ -11,7 +11,7 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
@@ -44,6 +44,7 @@ export default function OfferPage(): JSX.Element {
   const handleButtonClick = (): void => {
     if (isAuth) {
       dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
     }
