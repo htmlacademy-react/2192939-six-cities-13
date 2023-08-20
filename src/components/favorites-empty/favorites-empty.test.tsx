@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
 import { withHistory, withStore } from '../../test-mocks/test-component';
-import { makeFakeFavorites, makeFakeStore } from '../../test-mocks/test-mocks';
+import { makeFakeStore } from '../../test-mocks/test-mocks';
 import { createMemoryHistory } from 'history';
-import { FullOffer, Offer } from '../../types/data-types';
+import { FullOffer } from '../../types/data-types';
 import FavoritesPage from '.';
 
 describe('Component: FavoritesPage', () => {

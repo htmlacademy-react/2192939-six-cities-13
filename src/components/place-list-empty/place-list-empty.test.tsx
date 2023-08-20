@@ -1,6 +1,6 @@
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
-import { makeFakeOffer, makeFakeStore } from '../../test-mocks/test-mocks';
+import { makeFakeStore } from '../../test-mocks/test-mocks';
 import { TIME_TO_RENDER_PAGE } from '../../settings';
 import PlaceListEmpty from '.';
 
