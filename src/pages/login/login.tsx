@@ -29,7 +29,7 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(selectCityAction(randomCity));
-  });
+  }, []);
 
   useEffect(() => {
     if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
@@ -42,7 +42,6 @@ export default function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
     if (loginRef.current && passwordRef.current) {
       if (!regex.test(passwordRef.current.value)) {
         return;
