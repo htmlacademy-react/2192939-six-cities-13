@@ -84,7 +84,6 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
               'button'
             )}
             type="button"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={handleButtonClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>

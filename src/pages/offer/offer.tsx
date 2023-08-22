@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AppRoute, AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
+import { AppRoute, AuthStatus, PlacesCard, Status, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
@@ -13,8 +13,9 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
 import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
+import { getFullOffer, getFullOfferStatus, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
+import Page404 from '../404';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export default function OfferPage(): JSX.Element {
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
   const authStatus = useAppSelector(getAuthStatus);
+  const statusFullOffer = useAppSelector(getFullOfferStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -40,6 +42,13 @@ export default function OfferPage(): JSX.Element {
       isOfferPageMounted = false;
     };
   }, [dispatch, offerId]);
+
+  if (statusFullOffer === Status.Error) {
+    return (
+      <Page404 />
+    );
+  }
+
 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
@@ -90,7 +99,6 @@ export default function OfferPage(): JSX.Element {
                       'button'
                     )}
                     type="button"
-                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     onClick={handleButtonClick}
                   >
                     <svg className="offer__bookmark-icon" width={31} height={33}>

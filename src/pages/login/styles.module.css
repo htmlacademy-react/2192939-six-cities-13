@@ -1,0 +1,15 @@
+.login-error {
+  position: absolute;
+  left: 2px;
+  top: 40px;
+  color: red;
+  font-size: 13px;
+}
+
+.login-password {
+  position: absolute;
+  left: 2px;
+  bottom: 40px;
+  color: red;
+  font-size: 13px;
+}
