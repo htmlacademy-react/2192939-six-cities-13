@@ -36,6 +36,7 @@ describe('Маршрутизация приложения', () => {
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
+        statusFullOffer: Status.Idle
       }
     }));
     mockHistory.push(AppRoute.Root);
@@ -98,6 +99,7 @@ describe('Маршрутизация приложения', () => {
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
+        statusFullOffer: Status.Idle
       }
     }));
     mockHistory.push(AppRoute.Offer);

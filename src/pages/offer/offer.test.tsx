@@ -29,6 +29,7 @@ describe('Component: OfferPage', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     }
   }));
 

@@ -44,6 +44,7 @@ describe('Component: Header', () => {
           activeCard: null,
           sortingType: DEFAULT_SORTING,
           statusReview: Status.Idle,
+          statusFullOffer: Status.Idle
         }
       }));
 
@@ -101,6 +102,7 @@ describe('Component: Header', () => {
           activeCard: null,
           sortingType: DEFAULT_SORTING,
           statusReview: Status.Idle,
+          statusFullOffer: Status.Idle
         }
       }));
 
@@ -133,6 +135,7 @@ describe('Component: Header', () => {
           activeCard: null,
           sortingType: DEFAULT_SORTING,
           statusReview: Status.Idle,
+          statusFullOffer: Status.Idle
         }
       }));
       mockHistory.push(AppRoute.Login);

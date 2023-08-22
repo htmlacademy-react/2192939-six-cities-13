@@ -35,6 +35,7 @@ describe('Component: Map', () => {
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
+        statusFullOffer: Status.Idle
       }
     }));
 
@@ -75,6 +76,7 @@ describe('Component: Map', () => {
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
+        statusFullOffer: Status.Idle
       }
     }));
 

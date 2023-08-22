@@ -25,6 +25,7 @@ describe('Component: MainPage', () => {
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
+        statusFullOffer: Status.Idle
       },
       USER: {
         authStatus: AuthStatus.Unknown,
