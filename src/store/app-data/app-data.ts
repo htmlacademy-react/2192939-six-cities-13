@@ -29,6 +29,7 @@ const initialState: AppData = {
   activeCard: null,
   sortingType: DEFAULT_SORTING,
   statusReview: Status.Idle,
+  statusFullOffer: Status.Idle,
 };
 
 export const appData = createSlice({
@@ -65,6 +66,15 @@ export const appData = createSlice({
       .addCase(fetchFullOfferAction.fulfilled, (state, action) => {
         state.fullOffer = action.payload;
         state.isFullOfferDataLoading = false;
+        state.statusFullOffer = Status.Success;
+      })
+      .addCase(fetchFullOfferAction.pending, (state) => {
+        state.isFullOfferDataLoading = false;
+        state.statusFullOffer = Status.Loading;
+      })
+      .addCase(fetchFullOfferAction.rejected, (state) => {
+        state.isFullOfferDataLoading = false;
+        state.statusFullOffer = Status.Error;
       })
       .addCase(fetchReviewsFullOfferAction.fulfilled, (state, action) => {
         state.reviews = action.payload;

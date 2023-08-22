@@ -1,15 +1,13 @@
 import { render, screen } from '@testing-library/react';
-import { withStore } from '../../test-mocks/test-component';
-import { DEFAULT_SORTING, Status } from '../../settings';
-import { makeFakeCity } from '../../test-mocks/test-mocks';
-import CitiesList from './cities-list';
+import { withHistory, withStore } from '../../test-mocks/test-component';
+import MainPage from '.';
+import { AuthStatus, DEFAULT_CITY, DEFAULT_SORTING, Status } from '../../settings';
 import { FullOffer } from '../../types/data-types';
 
-describe('Component: CitiesList', () => {
+describe('Component: MainPage', () => {
   it('Проверяем правильность отрисовки', () => {
-    const cityNameTestId = 'cityNameElement';
-    const mockExpectedCityName = [makeFakeCity().name];
-    const { withStoreComponent } = withStore(<CitiesList cities={mockExpectedCityName} />, {
+    const expectedText = 'Cities';
+    const { withStoreComponent } = withStore(<MainPage />, {
       DATA: {
         offers: [],
         fullOffer: {} as FullOffer,
@@ -23,17 +21,22 @@ describe('Component: CitiesList', () => {
         isFavoritesLoading: false,
         isFavoriteAdding: false,
         hasError: false,
-        currentCityName: mockExpectedCityName[0],
+        currentCityName: DEFAULT_CITY,
         activeCard: null,
         sortingType: DEFAULT_SORTING,
         statusReview: Status.Idle,
         statusFullOffer: Status.Idle
+      },
+      USER: {
+        authStatus: AuthStatus.Unknown,
+        loginStatus: Status.Idle,
+        userName: '',
       }
     });
+    const preparedComponent = withHistory(withStoreComponent);
 
-    render(withStoreComponent);
+    render(preparedComponent);
 
-    expect(screen.getByText(mockExpectedCityName[0])).toBeInTheDocument();
-    expect(screen.getAllByTestId(cityNameTestId).length).toBe(mockExpectedCityName.length);
+    expect(screen.getByText(expectedText)).toBeInTheDocument();
   });
 });

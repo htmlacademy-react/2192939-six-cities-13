@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AppRoute, AuthStatus, PlacesCard, StylesForMapOfferPage } from '../../settings';
+import { AppRoute, AuthStatus, PlacesCard, Status, StylesForMapOfferPage } from '../../settings';
 import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RATING_IN_PERCENT } from '../../settings';
@@ -11,10 +11,11 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getFullOffer, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
+import { getFullOffer, getFullOfferStatus, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
+import Page404 from '../404';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ export default function OfferPage(): JSX.Element {
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
   const authStatus = useAppSelector(getAuthStatus);
+  const statusFullOffer = useAppSelector(getFullOfferStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -41,9 +43,17 @@ export default function OfferPage(): JSX.Element {
     };
   }, [dispatch, offerId]);
 
-  const handleButtonClick = (): void => {
+  if (statusFullOffer === Status.Error) {
+    return (
+      <Page404 />
+    );
+  }
+
+
+  const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      await dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
     }
@@ -65,7 +75,7 @@ export default function OfferPage(): JSX.Element {
             <div className="offer__gallery-container container">
               <div className="offer__gallery">
                 {fullOffer.images.map((item) => (
-                  <div className="offer__image-wrapper" key={crypto.randomUUID()}>
+                  <div className="offer__image-wrapper" key={item}>
                     <img className="offer__image" src={item} alt="Photo studio" />
                   </div>
                 ))}
@@ -136,7 +146,7 @@ export default function OfferPage(): JSX.Element {
                     {fullOffer.goods.map((item) => (
                       <li
                         className="offer__inside-item"
-                        key={crypto.randomUUID()}
+                        key={item}
                       >
                         {item}
                       </li>

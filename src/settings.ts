@@ -74,7 +74,7 @@ export const DEFAULT_CITY = 'Paris';
 
 export const DEFAULT_SORTING: SortingType = 'popular';
 
-export const TIME_TO_RENDER_PAGE = 100;
+export const TIME_TO_RENDER_PAGE = 250;
 
 export const StylesForMapMainPage = {
   width: '100%',

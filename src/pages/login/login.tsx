@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { FormEvent, useEffect, useRef } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import LogoLeft from '../../components/logo-left';
 import { loginAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -10,16 +10,20 @@ import { selectCityAction } from '../../store/app-data/app-data';
 import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
 import { redirectToRoute } from '../../store/action';
+import styles from './styles.module.css';
 
 
 export default function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const regex = /^(?=.*\d)(?=.*[a-z])\S*$/i;
+  const regexPassword = /^(?=.*\d)(?=.*[a-z])\S*$/i;
+  const regexLogin = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
   const randomCity = getRandomCity(CITIES);
   const loginStatus = useAppSelector(getLoginStatus);
   const authStatus = useAppSelector(getAuthStatus);
+  const [isCorrectLogin, setIsCorrectLogin] = useState(true);
+  const [isCorrectPassword, setIsCorrectPassword] = useState(true);
 
   useEffect(() => {
     if (authStatus === AuthStatus.Auth) {
@@ -29,7 +33,8 @@ export default function LoginPage(): JSX.Element {
 
   useEffect(() => {
     dispatch(selectCityAction(randomCity));
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
@@ -42,11 +47,20 @@ export default function LoginPage(): JSX.Element {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsCorrectLogin(true);
+    setIsCorrectPassword(true);
 
     if (loginRef.current && passwordRef.current) {
-      if (!regex.test(passwordRef.current.value)) {
+      if (!regexPassword.test(passwordRef.current.value)) {
+        setIsCorrectPassword(false);
         return;
       }
+
+      if (!regexLogin.test(loginRef.current.value)) {
+        setIsCorrectLogin(false);
+        return;
+      }
+
 
       dispatch(selectCityAction(DEFAULT_CITY));
 
@@ -85,6 +99,7 @@ export default function LoginPage(): JSX.Element {
                   required
                   data-testid='loginElement'
                 />
+                {!isCorrectLogin && <p className={styles['login-error']}>Enter a valid email</p>}
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -97,6 +112,7 @@ export default function LoginPage(): JSX.Element {
                   required
                   data-testid='passwordElement'
                 />
+                {!isCorrectPassword && <p className={styles['login-password']}>At least 1 letter and 1 number without spaces</p>}
               </div>
               <button
                 className="login__submit form__submit button"

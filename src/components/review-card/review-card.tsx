@@ -21,6 +21,7 @@ export default function ReviewCard({ item }: ViewCardProps) {
             width={54}
             height={54}
             alt="Reviews avatar"
+            data-testid='reviewCardImageTestId'
           />
         </div>
         <span className="reviews__user-name">{item.user.name}</span>

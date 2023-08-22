@@ -346,20 +346,5 @@ describe('Асинхронные операции', () => {
 
       expect(fetchFavoriteActionFulfilled.payload).toEqual(mockFavorite);
     });
-
   });
-
 });
-
-
-// export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
-//   'data/favoriteStatus',
-//   async ({ offerId, status }, { extra: api }) => {
-//     const { data } = await api.post<FullOffer>(
-//       `${APIRoute.Favorites}/${offerId}/${status}`,
-//       {},
-//     );
-
-//     return data;
-//   }
-// );

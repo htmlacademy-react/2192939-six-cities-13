@@ -1,6 +1,6 @@
 import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace, Status } from '../../settings';
 import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
-import { getActiveCard, getCurrentCityName, getErrorStatus, getFavorites, getFullOffer, getIsFavoriteAdding, getIsFavoritesLoading, getIsFullOfferLoaded, getIsNearByLoaded, getIsOffersDataLoading, getIsReviewsLoaded, getNeighborPlaces, getOffers, getReviewStatus, getReviewsData, getSortingType } from './selectors';
+import { getActiveCard, getCurrentCityName, getErrorStatus, getFavorites, getFullOffer, getIsFavoriteAdding, getIsFavoritesLoading, getIsFullOfferLoaded, getIsNearByLoaded, getIsOffersDataLoading, getIsReviewsLoaded, getNeighborPlaces, getOffers, getReviewStatus, getReviewsData, getSortingType, getFullOfferStatus } from './selectors';
 
 describe('Селекторы AppData', () => {
   const state = {
@@ -21,6 +21,7 @@ describe('Селекторы AppData', () => {
       activeCard: makeFakeOffer(),
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     }
   };
 
@@ -118,5 +119,11 @@ describe('Селекторы AppData', () => {
     const { statusReview } = state[NameSpace.Data];
     const result = getReviewStatus(state);
     expect(result).toBe(statusReview);
+  });
+
+  it('Должен получить статус загрузки предложения', () => {
+    const { statusFullOffer } = state[NameSpace.Data];
+    const result = getFullOfferStatus(state);
+    expect(result).toBe(statusFullOffer);
   });
 });

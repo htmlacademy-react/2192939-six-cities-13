@@ -33,3 +33,5 @@ export const getSortingType = (store: Pick<State, NameSpace.Data>): SortingType 
 export const getActiveCard = (store: Pick<State, NameSpace.Data>): Offer | null => store[NameSpace.Data].activeCard;
 
 export const getReviewStatus = (store: Pick<State, NameSpace.Data>): string => store[NameSpace.Data].statusReview;
+
+export const getFullOfferStatus = (state: Pick<State, NameSpace.Data>): string => state[NameSpace.Data].statusFullOffer;

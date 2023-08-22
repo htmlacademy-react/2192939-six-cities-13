@@ -32,6 +32,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     activeCard: null,
     sortingType: DEFAULT_SORTING,
     statusReview: Status.Idle,
+    statusFullOffer: Status.Idle
   },
   ...initialState ?? {}
 });
@@ -49,7 +50,7 @@ export const makeFakeCity = (): City => ({
 
 export const makeFakeOffer = (defaultCity?: string): Offer => ({
   id: faker.random.alphaNumeric(20),
-  title: faker.lorem.lines(),
+  title: faker.lorem.words(5),
   type: faker.lorem.word(),
   price: faker.datatype.number(500),
   city: {
@@ -119,6 +120,4 @@ export const makeFakeFavorites = (): Offer => ({
   previewImage: faker.image.city(),
 } as Offer);
 
-export const makeFakeUserName = () => ({
-  userName: faker.internet.email()
-});
+export const makeFakeUserName = (): string => faker.internet.email();

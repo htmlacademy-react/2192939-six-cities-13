@@ -23,6 +23,7 @@ describe('AppData Slice', () => {
     activeCard: makeFakeOffer(),
     sortingType: DEFAULT_SORTING,
     statusReview: Status.Idle,
+    statusFullOffer: Status.Idle
   };
 
   const initialState = {
@@ -42,6 +43,7 @@ describe('AppData Slice', () => {
     activeCard: null,
     sortingType: DEFAULT_SORTING,
     statusReview: Status.Idle,
+    statusFullOffer: Status.Idle
   };
 
   it('Должен вернуть начальное состояние при пустом действии', () => {
@@ -63,6 +65,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
     const result = appData.reducer(expectedState, emptyAction);
     expect(result).toEqual(expectedState);
@@ -87,6 +90,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
     const result = appData.reducer(undefined, emptyAction);
     expect(result).toEqual(expectedState);
@@ -134,6 +138,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchOffersAction.pending);
@@ -159,6 +164,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchOffersAction.fulfilled(offers, '', undefined));
@@ -183,13 +189,14 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchOffersAction.rejected);
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть предложение и флаг процесса загрузки false', () => {
+  it('Должен вернуть предложение, флаг процесса загрузки false и статус Success', () => {
     const fullOffer = makeFakeFullOffer();
     const expectedState = {
       offers: [],
@@ -208,13 +215,66 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Success
     };
 
     const result = appData.reducer(initialState, fetchFullOfferAction.fulfilled(fullOffer, '', fullOffer.id));
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть предложение и флаг процесса загрузки false', () => {
+  it('Должен вернуть флаг процесса загрузки false и статус Loading', () => {
+    const fullOffer = makeFakeFullOffer();
+    const expectedState = {
+      offers: [],
+      fullOffer: {},
+      reviews: [],
+      neighborPlaces: [],
+      favorites: [],
+      isOffersDataLoading: false,
+      isFullOfferDataLoading: false,
+      isReviewsDataLoading: true,
+      isNeighborPlacesDataLoading: true,
+      isFavoritesLoading: false,
+      isFavoriteAdding: false,
+      hasError: false,
+      currentCityName: DEFAULT_CITY,
+      activeCard: null,
+      sortingType: DEFAULT_SORTING,
+      statusReview: Status.Idle,
+      statusFullOffer: Status.Loading
+    };
+
+    const result = appData.reducer(initialState, fetchFullOfferAction.pending('', fullOffer.id));
+    expect(result).toEqual(expectedState);
+  });
+
+  it('Должен вернуть флаг процесса загрузки false и статус Error', () => {
+    const fullOffer = makeFakeFullOffer();
+    const expectedState = {
+      offers: [],
+      fullOffer: {},
+      reviews: [],
+      neighborPlaces: [],
+      favorites: [],
+      isOffersDataLoading: false,
+      isFullOfferDataLoading: false,
+      isReviewsDataLoading: true,
+      isNeighborPlacesDataLoading: true,
+      isFavoritesLoading: false,
+      isFavoriteAdding: false,
+      hasError: false,
+      currentCityName: DEFAULT_CITY,
+      activeCard: null,
+      sortingType: DEFAULT_SORTING,
+      statusReview: Status.Idle,
+      statusFullOffer: Status.Error
+    };
+
+    const result = appData.reducer(initialState, fetchFullOfferAction.rejected(null, '', fullOffer.id));
+    expect(result).toEqual(expectedState);
+  });
+
+  it('Должен вернуть предложения поблизости флаг процесса загрузки false', () => {
     const offerId = makeFakeOffer().id;
     const neighborPlaces = [makeFakeOffer()];
     const expectedState = {
@@ -234,6 +294,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchNeighborPlacesAction.fulfilled(neighborPlaces, '', offerId));
@@ -260,6 +321,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchReviewsFullOfferAction.fulfilled(reviews, '', offerId));
@@ -292,6 +354,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
 
@@ -332,6 +395,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Success,
+      statusFullOffer: Status.Idle
     };
 
 
@@ -383,6 +447,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, favoriteStatusAction.fulfilled(fullOffer, '', status));
@@ -398,7 +463,7 @@ describe('AppData Slice', () => {
     };
     const initState = {
       offers: [],
-      fullOffer: {},
+      fullOffer: {} as FullOffer,
       reviews: [],
       neighborPlaces: [],
       favorites: [fullOffer],
@@ -413,6 +478,7 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const expectedState = {
@@ -432,9 +498,11 @@ describe('AppData Slice', () => {
       activeCard: null,
       sortingType: DEFAULT_SORTING,
       statusReview: Status.Idle,
+      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initState, favoriteStatusAction.fulfilled(fullOffer, '', status));
+
     expect(result).toEqual(expectedState);
   });
 

@@ -14,10 +14,18 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "attributes": false
+        }
+      }
+    ]
   },
   overrides: [
     {
-      files: [ '*test*' ],
+      files: ['*test*'],
       rules: { '@typescript-eslint/unbound-method': 'off' }
     },
   ],

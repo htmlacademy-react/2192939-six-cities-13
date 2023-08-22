@@ -63,6 +63,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
             width={type === PlacesCard.Favorites ? 150 : 260}
             height={type === PlacesCard.Favorites ? 110 : 200}
             alt="Place image"
+            data-testid='placeCardImageElement'
           />
         </a>
       </div>
@@ -83,7 +84,6 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
               'button'
             )}
             type="button"
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={handleButtonClick}
           >
             <svg className="place-card__bookmark-icon" width={18} height={19}>
