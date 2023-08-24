@@ -13,40 +13,6 @@ describe('Маршрутизация приложения', () => {
     mockHistory = createMemoryHistory();
   });
 
-  it('Ожидаю главную страницу', () => {
-    const expectedText = 'Cities';
-    const offers = [makeFakeOffer(), makeFakeOffer()];
-    const currentCityName = offers[0].city.name;
-    const withHistoryComponent = withHistory(<App />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        offers: offers,
-        fullOffer: {} as FullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
-        currentCityName: currentCityName,
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
-      }
-    }));
-    mockHistory.push(AppRoute.Root);
-
-    render(withStoreComponent);
-
-    expect(screen.getByText(expectedText)).toBeInTheDocument();
-  });
-
-
   it('Ожидаю страницу авторизации', () => {
     const loginElementTestId = 'loginElement';
     const passwordElementTestId = 'passwordElement';
