@@ -3,7 +3,7 @@ import { CITIES, DEFAULT_CITY, PlacesCard, StylesForMapMainPage } from '../../se
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getOffers, getSortingType, getCurrentCityName } from '../../store/app-data/selectors';
 import Sorting from '../sorting';
@@ -24,11 +24,12 @@ export default function Cities(): JSX.Element {
     dispatch(setSortingType(sortType));
   }, [dispatch]);
 
-
-  if (prevCity !== currentCityName) {
-    scrollRef.current?.scroll(0, 0);
-    setPrevCity(currentCityName);
-  }
+  useEffect(() => {
+    if (prevCity !== currentCityName) {
+      scrollRef.current?.scroll(0, 0);
+      setPrevCity(currentCityName);
+    }
+  }, [currentCityName, prevCity]);
 
   const cityOffers = offers.filter((offer) => offer.city.name === currentCityName);
 
