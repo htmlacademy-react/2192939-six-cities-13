@@ -1,5 +1,5 @@
 import { Review } from '../../types/data-types';
-import { RATING_IN_PERCENT } from '../../settings';
+import { getRoundRating } from '../../utils/offers';
 
 type ViewCardProps = {
   item: Review;
@@ -30,7 +30,7 @@ export default function ReviewCard({ item }: ViewCardProps) {
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
             <span
-              style={{ width: `${Math.round(item.rating) * RATING_IN_PERCENT}%`, }}
+              style={{ width: getRoundRating(item.rating) }}
             />
             <span className="visually-hidden">Rating</span>
           </div>

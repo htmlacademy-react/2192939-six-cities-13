@@ -2,9 +2,8 @@ import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AppRoute, AuthStatus, PlacesCard, Status, StylesForMapOfferPage } from '../../settings';
-import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
+import { capitalizeFirstLetter, getRoundRating, nearByCities } from '../../utils/offers';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RATING_IN_PERCENT } from '../../settings';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
 import Map from '../../components/map';
@@ -111,8 +110,7 @@ export default function OfferPage(): JSX.Element {
                   <div className="offer__stars rating__stars">
                     <span
                       style={{
-                        width: `${Math.round(fullOffer ? fullOffer.rating : 0) *
-                          RATING_IN_PERCENT}%`,
+                        width: getRoundRating(fullOffer ? fullOffer.rating : 0)
                       }}
                     />
                     <span className="visually-hidden">Rating</span>

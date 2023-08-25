@@ -1,6 +1,6 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PlacesCard, AuthStatus } from '../../settings';
-import { capitalizeFirstLetter } from '../../utils/offers';
+import { AppRoute, PlacesCard, AuthStatus } from '../../settings';
+import { capitalizeFirstLetter, getRoundRating } from '../../utils/offers';
 import { Link, useNavigate } from 'react-router-dom';
 import { MouseEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
@@ -101,7 +101,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span
-              style={{ width: `${Math.round(offer.rating) * RATING_IN_PERCENT}%` }}
+              style={{ width: getRoundRating(offer.rating) }}
             />
             <span className="visually-hidden">Rating</span>
           </div>
