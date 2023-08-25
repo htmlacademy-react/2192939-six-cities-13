@@ -2,7 +2,7 @@ import { expect } from 'vitest';
 import { Status } from '../../settings';
 import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
 import { appData, selectCityAction, setActiveCardAction, setReviewStatus, setSortingType, testInitialState } from './app-data';
-import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
+import { favoriteStatusAction, fetchFavoritesAction, fetchOfferPageDataAction, fetchOffersAction, reviewAction } from '../api-actions';
 
 describe('AppData Slice', () => {
   const state = {
@@ -95,66 +95,44 @@ describe('AppData Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть предложение, флаг процесса загрузки false и статус Success', () => {
+  it('Должен вернуть данные страницы предложения и статус Success', () => {
+    const offerPageData = {
+      fullOffer: makeFakeFullOffer(),
+      reviews: [makeFakeReview()],
+      neighborPlaces: [makeFakeOffer()],
+
+    };
+    const expectedState = {
+      ...testInitialState,
+      fullOffer: offerPageData.fullOffer,
+      reviews: offerPageData.reviews,
+      neighborPlaces: offerPageData.neighborPlaces,
+      statusOfferPageData: Status.Success
+    };
+
+    const result = appData.reducer(initialState, fetchOfferPageDataAction.fulfilled(offerPageData, '', offerPageData.fullOffer.id));
+    expect(result).toEqual(expectedState);
+  });
+
+  it('Должен вернуть статус процесса загрузки Loading', () => {
     const fullOffer = makeFakeFullOffer();
     const expectedState = {
       ...testInitialState,
-      fullOffer: fullOffer,
-      isFullOfferDataLoading: false,
-      statusFullOffer: Status.Success
+      statusOfferPageData: Status.Loading
     };
 
-    const result = appData.reducer(initialState, fetchFullOfferAction.fulfilled(fullOffer, '', fullOffer.id));
+    const result = appData.reducer(initialState, fetchOfferPageDataAction.pending('', fullOffer.id));
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть флаг процесса загрузки false и статус Loading', () => {
+  it('Должен вернуть статус процесса загрузки Error', () => {
     const fullOffer = makeFakeFullOffer();
     const expectedState = {
       ...testInitialState,
-      isFullOfferDataLoading: false,
-      statusFullOffer: Status.Loading
+      statusOfferPageData: Status.Error
     };
 
-    const result = appData.reducer(initialState, fetchFullOfferAction.pending('', fullOffer.id));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть флаг процесса загрузки false и статус Error', () => {
-    const fullOffer = makeFakeFullOffer();
-    const expectedState = {
-      ...testInitialState,
-      isFullOfferDataLoading: false,
-      statusFullOffer: Status.Error
-    };
-
-    const result = appData.reducer(initialState, fetchFullOfferAction.rejected(null, '', fullOffer.id));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть предложения поблизости флаг процесса загрузки false', () => {
-    const offerId = makeFakeOffer().id;
-    const neighborPlaces = [makeFakeOffer()];
-    const expectedState = {
-      ...testInitialState,
-      neighborPlaces: neighborPlaces,
-      isNeighborPlacesDataLoading: false,
-    };
-
-    const result = appData.reducer(initialState, fetchNeighborPlacesAction.fulfilled(neighborPlaces, '', offerId));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть предложения поблизости и флаг процесса загрузки false', () => {
-    const offerId = makeFakeOffer().id;
-    const reviews = [makeFakeReview()];
-    const expectedState = {
-      ...testInitialState,
-      reviews: reviews,
-      isReviewsDataLoading: false,
-    };
-
-    const result = appData.reducer(initialState, fetchReviewsFullOfferAction.fulfilled(reviews, '', offerId));
+    const result = appData.reducer(initialState, fetchOfferPageDataAction.rejected(null, '', fullOffer.id));
     expect(result).toEqual(expectedState);
   });
 

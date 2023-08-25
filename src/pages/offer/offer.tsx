@@ -10,22 +10,19 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import { favoriteStatusAction, fetchOfferPageDataAction, fetchOffersAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getFullOffer, getFullOfferStatus, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
+import { getFullOffer, getNeighborPlaces, getOfferPageDataStatus } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import Page404 from '../404';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
-  const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
-  const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
-  const isNearByLoaded = useAppSelector(getIsNearByLoaded);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
   const authStatus = useAppSelector(getAuthStatus);
-  const statusFullOffer = useAppSelector(getFullOfferStatus);
+  const statusOfferPageData = useAppSelector(getOfferPageDataStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -33,16 +30,14 @@ export default function OfferPage(): JSX.Element {
     let isOfferPageMounted = true;
 
     if (offerId && isOfferPageMounted) {
-      dispatch(fetchFullOfferAction(offerId));
-      dispatch(fetchReviewsFullOfferAction(offerId));
-      dispatch(fetchNeighborPlacesAction(offerId));
+      dispatch(fetchOfferPageDataAction(offerId));
     }
     return () => {
       isOfferPageMounted = false;
     };
   }, [dispatch, offerId]);
 
-  if (statusFullOffer === Status.Error) {
+  if (statusOfferPageData === Status.Error) {
     return (
       <Page404 />
     );
@@ -65,10 +60,8 @@ export default function OfferPage(): JSX.Element {
       </Helmet>
       <Header />
 
-      {isFullOfferLoaded || isReviewsLoaded || isNearByLoaded
-        ?
-        <Loader />
-        :
+      {statusOfferPageData === Status.Loading && <Loader />}
+      {statusOfferPageData === Status.Success &&
         <main className="page__main page__main--offer">
           <section className="offer">
             <div className="offer__gallery-container container">

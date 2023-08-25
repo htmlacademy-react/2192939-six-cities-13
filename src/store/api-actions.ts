@@ -6,42 +6,13 @@ import {
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { CombinedType, FavoriteType, ReviewType } from '../types/api-types';
+import { CombinedType, FavoriteType, ReviewType, offerPageDataType } from '../types/api-types';
 import { AuthData } from '../types/auth-data';
 
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, CombinedType>(
   'data/fetchOffers',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
-    return data;
-  }
-);
-
-export const fetchFullOfferAction = createAsyncThunk<FullOffer, string, CombinedType>(
-  'data/fetchFullOffer',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<FullOffer>(
-      `${APIRoute.Offers}/${offerId}`
-    );
-    return data;
-  }
-);
-
-export const fetchReviewsFullOfferAction = createAsyncThunk<Reviews, string, CombinedType>(
-  'data/fetchReviewsFullOffer',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
-
-    return data;
-  }
-);
-
-export const fetchNeighborPlacesAction = createAsyncThunk<Offers, string, CombinedType>(
-  'data/fetchNeighborPlaces',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<Offers>(
-      `${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`
-    );
     return data;
   }
 );
@@ -53,6 +24,16 @@ export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, Combined
       `${APIRoute.Favorites}`,
     );
     return data;
+  }
+);
+
+export const fetchOfferPageDataAction = createAsyncThunk<offerPageDataType, string, CombinedType>(
+  'data/fetchOfferPageDataAction',
+  async (offerId, { extra: api }) => {
+    const { data: fullOffer } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+    const { data: reviews } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
+    const { data: neighborPlaces } = await api.get<Offers>(`${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`);
+    return { fullOffer, reviews, neighborPlaces };
   }
 );
 
@@ -96,6 +77,7 @@ export const reviewAction = createAsyncThunk<Review, ReviewType, CombinedType>(
     return response.data;
   }
 );
+
 
 export const favoriteStatusAction = createAsyncThunk<FullOffer, FavoriteType, CombinedType>(
   'data/favoriteStatus',

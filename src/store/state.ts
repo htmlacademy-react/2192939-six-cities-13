@@ -20,9 +20,6 @@ export type AppData = {
   neighborPlaces: Offers;
   favorites: (Offer | FullOffer)[];
   isOffersDataLoading: boolean;
-  isFullOfferDataLoading: boolean;
-  isReviewsDataLoading: boolean;
-  isNeighborPlacesDataLoading: boolean;
   isFavoritesLoading: boolean;
   isFavoriteAdding: boolean;
   hasError: boolean;
@@ -30,5 +27,5 @@ export type AppData = {
   activeCard: Offer | null;
   sortingType: string;
   statusReview: string;
-  statusFullOffer: string;
+  statusOfferPageData: string;
 };

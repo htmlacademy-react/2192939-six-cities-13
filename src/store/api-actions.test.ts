@@ -7,7 +7,7 @@ import { State } from './state';
 import { AppThunkDispatch, makeFakeOffer } from '../test-mocks/test-mocks';
 import { Action } from '@reduxjs/toolkit';
 import { APIRoute } from '../settings';
-import { checkAuthStatus, favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, loginAction, logoutAction, reviewAction } from './api-actions';
+import { checkAuthStatus, favoriteStatusAction, fetchFavoritesAction, fetchOfferPageDataAction, fetchOffersAction, loginAction, logoutAction, reviewAction } from './api-actions';
 import { AuthData } from '../types/auth-data';
 import { redirectToRoute } from './action';
 import * as tokenStorage from '../services/token';
@@ -83,109 +83,43 @@ describe('Асинхронные операции', () => {
 
   });
 
-  describe('fetchFullOfferAction', () => {
-    const mockFullOffer = makeFakeFullOffer();
-    const mockOfferId = mockFullOffer.id;
+  describe('fetchOfferPageDataAction', () => {
+    const fullOffer = makeFakeFullOffer();
+    const reviews = [makeFakeReview()];
+    const neighborPlaces = [makeFakeOffer()];
+    const mockOfferId = fullOffer.id;
 
-    it('Должен вернуть массив предложений при коде ответа сервера 200', async () => {
-      mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}`).reply(200, mockFullOffer);
+    it('Должен вернуть данные для страницы предложения при коде ответа сервера 200', async () => {
+      mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}`).reply(200, fullOffer);
+      mockAxiosAdapter.onGet(`${APIRoute.Comments}/${mockOfferId}`).reply(200, reviews);
+      mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}${APIRoute.NearBy}`).reply(200, neighborPlaces);
 
-      await store.dispatch(fetchFullOfferAction(mockOfferId));
+      await store.dispatch(fetchOfferPageDataAction(mockOfferId));
 
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchFullOfferActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchFullOfferAction.fulfilled>;
+      const fetchOfferPageDataActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchOfferPageDataAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
-        fetchFullOfferAction.pending.type,
-        fetchFullOfferAction.fulfilled.type
+        fetchOfferPageDataAction.pending.type,
+        fetchOfferPageDataAction.fulfilled.type
       ]);
 
-      expect(fetchFullOfferActionFulfilled.payload).toEqual(mockFullOffer);
+      expect(fetchOfferPageDataActionFulfilled.payload).toEqual({ fullOffer, reviews, neighborPlaces });
     });
 
-    it('Должен вернуть fetchFullOfferAction.pending и fetchFullOfferAction.rejected при коде ответа сервера 400', async () => {
+    it('Должен вернуть fetchOfferPageDataAction.pending и fetchOfferPageDataAction.rejected при коде ответа сервера 400', async () => {
       mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}`).reply(400, []);
-
-      await store.dispatch(fetchFullOfferAction(mockOfferId));
-
-      const actions = extractActionTypes(store.getActions());
-
-      expect(actions).toEqual([
-        fetchFullOfferAction.pending.type,
-        fetchFullOfferAction.rejected.type
-      ]);
-    });
-
-  });
-
-  describe('fetchReviewsFullOfferAction', () => {
-    const mockReviews = makeFakeReview();
-    const mockOfferId = mockReviews.id;
-
-    it('Должен вернуть массив отзывов при коде ответа сервера 200', async () => {
-      mockAxiosAdapter.onGet(`${APIRoute.Comments}/${mockOfferId}`).reply(200, [mockReviews]);
-
-      await store.dispatch(fetchReviewsFullOfferAction(mockOfferId));
-
-      const emittedActions = store.getActions();
-      const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchReviewsFullOfferActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchReviewsFullOfferAction.fulfilled>;
-
-      expect(extractedActionTypes).toEqual([
-        fetchReviewsFullOfferAction.pending.type,
-        fetchReviewsFullOfferAction.fulfilled.type
-      ]);
-
-      expect(fetchReviewsFullOfferActionFulfilled.payload).toEqual([mockReviews]);
-    });
-
-    it('Должен вернуть fetchReviewsFullOfferAction.pending и fetchReviewsFullOfferAction.rejected при коде ответа сервера 400', async () => {
       mockAxiosAdapter.onGet(`${APIRoute.Comments}/${mockOfferId}`).reply(400, []);
-
-      await store.dispatch(fetchReviewsFullOfferAction(mockOfferId));
-
-      const actions = extractActionTypes(store.getActions());
-
-      expect(actions).toEqual([
-        fetchReviewsFullOfferAction.pending.type,
-        fetchReviewsFullOfferAction.rejected.type
-      ]);
-    });
-
-  });
-
-  describe('fetchNeighborPlacesAction', () => {
-    const mockNeighborPlaces = makeFakeOffer();
-    const mockOfferId = mockNeighborPlaces.id;
-
-    it('Должен вернуть массив мест поблизости при коде ответа сервера 200', async () => {
-      mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}${APIRoute.NearBy}`).reply(200, [mockNeighborPlaces]);
-
-      await store.dispatch(fetchNeighborPlacesAction(mockOfferId));
-
-      const emittedActions = store.getActions();
-      const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchNeighborPlacesActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchReviewsFullOfferAction.fulfilled>;
-
-      expect(extractedActionTypes).toEqual([
-        fetchNeighborPlacesAction.pending.type,
-        fetchNeighborPlacesAction.fulfilled.type
-      ]);
-
-      expect(fetchNeighborPlacesActionFulfilled.payload).toEqual([mockNeighborPlaces]);
-    });
-
-    it('Должен вернуть fetchNeighborPlacesAction.pending и fetchNeighborPlacesAction.rejected при коде ответа сервера 400', async () => {
       mockAxiosAdapter.onGet(`${APIRoute.Offers}/${mockOfferId}${APIRoute.NearBy}`).reply(400, []);
 
-      await store.dispatch(fetchNeighborPlacesAction(mockOfferId));
+      await store.dispatch(fetchOfferPageDataAction(mockOfferId));
 
       const actions = extractActionTypes(store.getActions());
 
       expect(actions).toEqual([
-        fetchNeighborPlacesAction.pending.type,
-        fetchNeighborPlacesAction.rejected.type
+        fetchOfferPageDataAction.pending.type,
+        fetchOfferPageDataAction.rejected.type
       ]);
     });
 
@@ -201,7 +135,7 @@ describe('Асинхронные операции', () => {
 
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchFavoritesActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchReviewsFullOfferAction.fulfilled>;
+      const fetchFavoritesActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchFavoritesAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
         fetchFavoritesAction.pending.type,
