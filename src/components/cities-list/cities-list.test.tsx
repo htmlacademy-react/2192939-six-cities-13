@@ -1,9 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { withStore } from '../../test-mocks/test-component';
-import { DEFAULT_SORTING, Status } from '../../settings';
 import { makeFakeCity } from '../../test-mocks/test-mocks';
 import CitiesList from './cities-list';
-import { FullOffer } from '../../types/data-types';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: CitiesList', () => {
   it('Проверяем правильность отрисовки', () => {
@@ -11,23 +10,8 @@ describe('Component: CitiesList', () => {
     const mockExpectedCityName = [makeFakeCity().name];
     const { withStoreComponent } = withStore(<CitiesList cities={mockExpectedCityName} />, {
       DATA: {
-        offers: [],
-        fullOffer: {} as FullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
+        ...testInitialState,
         currentCityName: mockExpectedCityName[0],
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
       }
     });
 

@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
+import { TIME_TO_RENDER_PAGE } from '../../settings';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { makeFakeFullOffer, makeFakeReview, makeFakeStore } from '../../test-mocks/test-mocks';
 import OfferPage from '.';
 import { createMemoryHistory } from 'history';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: OfferPage', () => {
   const mockHistory = createMemoryHistory();
@@ -13,23 +14,9 @@ describe('Component: OfferPage', () => {
   const withHistoryComponent = withHistory(<OfferPage />, mockHistory);
   const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
     DATA: {
-      offers: [],
+      ...testInitialState,
       fullOffer: fullOffer,
       reviews: reviews,
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     }
   }));
 

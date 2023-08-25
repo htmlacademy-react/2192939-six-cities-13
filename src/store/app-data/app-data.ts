@@ -128,3 +128,5 @@ export const {
   setSortingType,
   setReviewStatus,
 } = appData.actions;
+
+export { initialState as testInitialState };

@@ -1,11 +1,12 @@
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
 import { extractActionTypes, makeFakeFullOffer, makeFakeOffer, makeFakeStore } from '../../test-mocks/test-mocks';
-import { APIRoute, AppRoute, DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
+import { APIRoute, AppRoute, TIME_TO_RENDER_PAGE } from '../../settings';
 import PlaceCard from './place-card';
 import { createMemoryHistory } from 'history';
 import userEvent from '@testing-library/user-event';
 import { favoriteStatusAction } from '../../store/api-actions';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: PlaceCard', () => {
   it('Ожидаю выполнения запроса если пользователь нажимает кнопку добавить в избранное', async () => {
@@ -91,23 +92,8 @@ describe('Component: PlaceCard', () => {
     const withHistoryComponent = withHistory(<PlaceCard offer={mockOffer} type='cities' />, mockHistory);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
       DATA: {
-        offers: [],
+        ...testInitialState,
         fullOffer: fullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
-        currentCityName: DEFAULT_CITY,
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
       }
     }));
     mockHistory.push(`${AppRoute.Offer}/${offerId}`);

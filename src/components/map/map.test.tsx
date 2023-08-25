@@ -4,6 +4,7 @@ import { makeFakeCity, makeFakeFullOffer, makeFakeOffer, makeFakeStore } from '.
 import { FullOffer } from '../../types/data-types';
 import { DEFAULT_CITY, DEFAULT_SORTING, Status, StylesForMapMainPage, StylesForMapOfferPage } from '../../settings';
 import Map from '.';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: Map', () => {
   it('Ожидаю отрисовку компонента на главной странице', () => {
@@ -19,23 +20,7 @@ describe('Component: Map', () => {
       />);
     const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
       DATA: {
-        offers: [],
-        fullOffer: {} as FullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
-        currentCityName: DEFAULT_CITY,
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
+        ...testInitialState
       }
     }));
 

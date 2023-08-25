@@ -3,9 +3,9 @@ import LogoLeft from '.';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
 import { makeFakeFavorites, makeFakeStore, makeFakeUserName } from '../../test-mocks/test-mocks';
-import { FullOffer } from '../../types/data-types';
-import { AppRoute, AuthStatus, DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
+import { AppRoute, AuthStatus, Status, TIME_TO_RENDER_PAGE } from '../../settings';
 import Header from '.';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: Header', () => {
   let mockHistory: MemoryHistory;
@@ -28,23 +28,8 @@ describe('Component: Header', () => {
           userName: expectedUserName,
         },
         DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
+          ...testInitialState,
           favorites: favorites,
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
         }
       }));
 
@@ -86,23 +71,7 @@ describe('Component: Header', () => {
           userName: notExpectedUserName,
         },
         DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
-          favorites: [],
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
+          ...testInitialState
         }
       }));
 
@@ -119,23 +88,7 @@ describe('Component: Header', () => {
       const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
       const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
         DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
-          favorites: [],
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
+          ...testInitialState
         }
       }));
       mockHistory.push(AppRoute.Login);
