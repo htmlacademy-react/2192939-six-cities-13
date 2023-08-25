@@ -28,21 +28,6 @@ export const getReviewsData = createSelector(
   (state: AppData) => state.reviews
 );
 
-export const getIsFullOfferLoaded = createSelector(
-  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
-  (state: AppData) => state.isFullOfferDataLoading
-);
-
-export const getIsReviewsLoaded = createSelector(
-  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
-  (state: AppData) => state.isReviewsDataLoading
-);
-
-export const getIsNearByLoaded = createSelector(
-  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
-  (state: AppData) => state.isNeighborPlacesDataLoading
-);
-
 export const getErrorStatus = createSelector(
   (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
   (state: AppData) => state.hasError
@@ -83,7 +68,7 @@ export const getReviewStatus = createSelector(
   (state: AppData) => state.statusReview
 );
 
-export const getFullOfferStatus = createSelector(
+export const getOfferPageDataStatus = createSelector(
   (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
-  (state: AppData) => state.statusFullOffer
+  (state: AppData) => state.statusOfferPageData
 );

@@ -1,5 +1,6 @@
 import { AppDispatch, State } from '../store/state';
 import { AxiosInstance } from 'axios';
+import { FullOffer, Offers, Reviews } from './data-types';
 
 export type ReviewType = {
   comment: string;
@@ -17,3 +18,9 @@ export type CombinedType = {
   state: State;
   extra: AxiosInstance;
 };
+
+export type offerPageDataType = {
+  fullOffer: FullOffer;
+  reviews: Reviews;
+  neighborPlaces: Offers;
+}
