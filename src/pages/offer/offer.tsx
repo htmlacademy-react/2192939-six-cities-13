@@ -159,8 +159,7 @@ export default function OfferPage(): JSX.Element {
                   <div className="offer__host-user user">
                     <div
                       className={
-                        `offer__avatar-wrapper offer__avatar-wrapper
-                        ${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`
+                        `offer__avatar-wrapper offer__avatar-wrapper${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`
                       }
                     >
                       <img
