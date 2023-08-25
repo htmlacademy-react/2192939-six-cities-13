@@ -83,7 +83,9 @@ export const appData = createSlice({
         const isRemoval = action.meta.arg.status === 0;
 
         if (isRemoval) {
-          state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
+          state.favorites = state.favorites.filter(
+            (offer) => offer.id !== action.payload.id
+          );
         } else {
           state.favorites = [...state.favorites, action.payload];
         }

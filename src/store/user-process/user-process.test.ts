@@ -34,7 +34,10 @@ describe('UserProcess Slice', () => {
       userName: '',
     };
     const expectedLoginStatus = Status.Success;
-    const result = userProcess.reducer(initialState, setLoginStatus(Status.Success));
+    const result = userProcess.reducer(
+      initialState,
+      setLoginStatus(Status.Success)
+    );
     expect(result.loginStatus).toBe(expectedLoginStatus);
   });
 
@@ -94,7 +97,10 @@ describe('UserProcess Slice', () => {
       loginStatus: Status.Idle,
       userName: 'Lorem@test.com',
     };
-    const result = userProcess.reducer(initialState, checkAuthStatus.fulfilled('Lorem@test.com', '', undefined));
+    const result = userProcess.reducer(
+      initialState,
+      checkAuthStatus.fulfilled('Lorem@test.com', '', undefined)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -113,7 +119,10 @@ describe('UserProcess Slice', () => {
       login: 'Lorem@test.com',
       password: 'w2'
     };
-    const result = userProcess.reducer(initialState, loginAction.fulfilled('Lorem@test.com', '', authData));
+    const result = userProcess.reducer(
+      initialState,
+      loginAction.fulfilled('Lorem@test.com', '', authData)
+    );
     expect(result).toEqual(expectedState);
   });
 });

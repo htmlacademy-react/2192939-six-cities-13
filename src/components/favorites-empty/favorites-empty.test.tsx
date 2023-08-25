@@ -10,11 +10,13 @@ describe('Component: FavoritesPage', () => {
   const mockHistory = createMemoryHistory();
 
   const withHistoryComponent = withHistory(<FavoritesPage />, mockHistory);
-  const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    DATA: {
-      ...testInitialState
-    }
-  }));
+  const { withStoreComponent } = withStore(
+    withHistoryComponent,
+    makeFakeStore({
+      DATA: {
+        ...testInitialState
+      }
+    }));
 
   it('Ожидаю страницу избранного', () => {
     const favoritesEmptyTitleText = 'Favorites (empty)';

@@ -38,8 +38,14 @@ describe('Component: LoginPage', () => {
     const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
-    await userEvent.type(screen.getByTestId(loginElementTestId), expectedLoginValue);
-    await userEvent.type(screen.getByTestId(passwordElementTestId), expectedPasswordValue);
+    await userEvent.type(
+      screen.getByTestId(loginElementTestId),
+      expectedLoginValue
+    );
+    await userEvent.type(
+      screen.getByTestId(passwordElementTestId),
+      expectedPasswordValue
+    );
 
     expect(screen.getByDisplayValue(expectedLoginValue)).toBeInTheDocument();
     expect(screen.getByDisplayValue(expectedPasswordValue)).toBeInTheDocument();

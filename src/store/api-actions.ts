@@ -32,7 +32,8 @@ export const fetchOfferPageDataAction = createAsyncThunk<offerPageDataType, stri
   async (offerId, { extra: api }) => {
     const { data: fullOffer } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
     const { data: reviews } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
-    const { data: neighborPlaces } = await api.get<Offers>(`${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`);
+    const { data: neighborPlaces } =
+      await api.get<Offers>(`${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`);
     return { fullOffer, reviews, neighborPlaces };
   }
 );
@@ -49,7 +50,8 @@ export const checkAuthStatus = createAsyncThunk<string, undefined, CombinedType>
 export const loginAction = createAsyncThunk<string, AuthData, CombinedType>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token }, } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { data: { token }, } =
+      await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Root));
     return email;

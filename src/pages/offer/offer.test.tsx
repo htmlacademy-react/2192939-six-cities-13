@@ -12,13 +12,15 @@ describe('Component: OfferPage', () => {
   const fullOffer = makeFakeFullOffer();
   const reviews = [makeFakeReview(), makeFakeReview(), makeFakeReview()];
   const withHistoryComponent = withHistory(<OfferPage />, mockHistory);
-  const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    DATA: {
-      ...testInitialState,
-      fullOffer: fullOffer,
-      reviews: reviews,
-    }
-  }));
+  const { withStoreComponent } = withStore(
+    withHistoryComponent,
+    makeFakeStore({
+      DATA: {
+        ...testInitialState,
+        fullOffer: fullOffer,
+        reviews: reviews,
+      }
+    }));
 
   it('Ожидаю фотографии предложения', () => {
     const quantityPhotos = fullOffer.images.length;
@@ -62,7 +64,8 @@ describe('Component: OfferPage', () => {
     render(withStoreComponent);
 
     const waitingRenderTimer = setTimeout(() => {
-      expect(screen.getByText(`${fullOfferReviewsText} ${fullOfferReviewsQuantity}`)).toBeInTheDocument();
+      expect(screen.getByText(`${fullOfferReviewsText} ${fullOfferReviewsQuantity}`))
+        .toBeInTheDocument();
       clearTimeout(waitingRenderTimer);
     }, TIME_TO_RENDER_PAGE);
   });

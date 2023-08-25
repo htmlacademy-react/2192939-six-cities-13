@@ -1,7 +1,27 @@
 import { NameSpace } from '../../settings';
-import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
+import {
+  makeFakeFavorites,
+  makeFakeFullOffer,
+  makeFakeOffer,
+  makeFakeReview
+} from '../../test-mocks/test-mocks';
 import { testInitialState } from './app-data';
-import { getActiveCard, getCurrentCityName, getErrorStatus, getFavorites, getFullOffer, getIsFavoriteAdding, getIsFavoritesLoading, getIsOffersDataLoading, getNeighborPlaces, getOfferPageDataStatus, getOffers, getReviewStatus, getReviewsData, getSortingType } from './selectors';
+import {
+  getActiveCard,
+  getCurrentCityName,
+  getErrorStatus,
+  getFavorites,
+  getFullOffer,
+  getIsFavoriteAdding,
+  getIsFavoritesLoading,
+  getIsOffersDataLoading,
+  getNeighborPlaces,
+  getOfferPageDataStatus,
+  getOffers,
+  getReviewStatus,
+  getReviewsData,
+  getSortingType
+} from './selectors';
 
 describe('Селекторы AppData', () => {
   const state = {

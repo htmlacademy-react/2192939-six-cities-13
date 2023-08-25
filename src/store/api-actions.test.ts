@@ -16,7 +16,8 @@ describe('Асинхронные операции', () => {
   const axios = createAPI();
   const mockAxiosAdapter = new MockAdapter(axios);
   const middleware = [thunk.withExtraArgument(axios)];
-  const mockStoreCreator = configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
+  const mockStoreCreator =
+    configureMockStore<State, Action<string>, AppThunkDispatch>(middleware);
   let store: ReturnType<typeof mockStoreCreator>;
 
   beforeEach(() => {
@@ -24,41 +25,46 @@ describe('Асинхронные операции', () => {
   });
 
   describe('checkAuthStatus', () => {
-    it('Должен отправить checkAuthStatus.pending & checkAuthStatus.fulfilled', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Login).reply(200, []);
+    it(
+      'Должен отправить checkAuthStatus.pending & checkAuthStatus.fulfilled',
+      async () => {
+        mockAxiosAdapter.onGet(APIRoute.Login).reply(200, []);
 
-      await store.dispatch(checkAuthStatus());
+        await store.dispatch(checkAuthStatus());
 
-      const actions = extractActionTypes(store.getActions());
-      expect(actions).toEqual([
-        checkAuthStatus.pending.type,
-        checkAuthStatus.fulfilled.type
-      ]);
-    });
+        const actions = extractActionTypes(store.getActions());
+        expect(actions).toEqual([
+          checkAuthStatus.pending.type,
+          checkAuthStatus.fulfilled.type
+        ]);
+      });
 
-    it('Должен отправить checkAuthStatus.pending & checkAuthStatus.rejected', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Login).reply(400, []);
+    it('Должен отправить checkAuthStatus.pending & checkAuthStatus.rejected',
+      async () => {
+        mockAxiosAdapter.onGet(APIRoute.Login).reply(400, []);
 
-      await store.dispatch(checkAuthStatus());
+        await store.dispatch(checkAuthStatus());
 
-      const actions = extractActionTypes(store.getActions());
-      expect(actions).toEqual([
-        checkAuthStatus.pending.type,
-        checkAuthStatus.rejected.type
-      ]);
-    });
+        const actions = extractActionTypes(store.getActions());
+        expect(actions).toEqual([
+          checkAuthStatus.pending.type,
+          checkAuthStatus.rejected.type
+        ]);
+      });
   });
 
   describe('fetchOffersAction', () => {
     it('Должен вернуть массив предложений при коде ответа сервера 200', async () => {
       const mockOffers = [makeFakeOffer()];
-      mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, mockOffers);
+      mockAxiosAdapter.onGet(APIRoute.Offers)
+        .reply(200, mockOffers);
 
       await store.dispatch(fetchOffersAction());
 
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchOffersActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchOffersAction.fulfilled>;
+      const fetchOffersActionFulfilled =
+        emittedActions.at(1) as ReturnType<typeof fetchOffersAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
         fetchOffersAction.pending.type,
@@ -68,18 +74,20 @@ describe('Асинхронные операции', () => {
       expect(fetchOffersActionFulfilled.payload).toEqual(mockOffers);
     });
 
-    it('Должен вернуть fetchOffersAction.pending и fetchOffersAction.rejected при коде ответа сервера 400', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Offers).reply(400, []);
+    it(
+      'Должен вернуть fetchOffersAction.pending и fetchOffersAction.rejected при коде 400',
+      async () => {
+        mockAxiosAdapter.onGet(APIRoute.Offers).reply(400, []);
 
-      await store.dispatch(fetchOffersAction());
+        await store.dispatch(fetchOffersAction());
 
-      const actions = extractActionTypes(store.getActions());
+        const actions = extractActionTypes(store.getActions());
 
-      expect(actions).toEqual([
-        fetchOffersAction.pending.type,
-        fetchOffersAction.rejected.type
-      ]);
-    });
+        expect(actions).toEqual([
+          fetchOffersAction.pending.type,
+          fetchOffersAction.rejected.type
+        ]);
+      });
 
   });
 
@@ -128,42 +136,47 @@ describe('Асинхронные операции', () => {
   describe('fetchFavoritesAction', () => {
     const mockFavorites = makeFakeFavorites();
 
-    it('Должен вернуть массив избранных предложений при коде ответа сервера 200', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Favorites).reply(200, [mockFavorites]);
+    it('Должен вернуть массив избранных предложений при коде ответа сервера 200',
+      async () => {
+        mockAxiosAdapter.onGet(APIRoute.Favorites)
+          .reply(200, [mockFavorites]);
 
-      await store.dispatch(fetchFavoritesAction());
+        await store.dispatch(fetchFavoritesAction());
 
-      const emittedActions = store.getActions();
-      const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchFavoritesActionFulfilled = emittedActions.at(1) as ReturnType<typeof fetchFavoritesAction.fulfilled>;
+        const emittedActions = store.getActions();
+        const extractedActionTypes = extractActionTypes(emittedActions);
+        const fetchFavoritesActionFulfilled =
+          emittedActions.at(1) as ReturnType<typeof fetchFavoritesAction.fulfilled>;
 
-      expect(extractedActionTypes).toEqual([
-        fetchFavoritesAction.pending.type,
-        fetchFavoritesAction.fulfilled.type
-      ]);
+        expect(extractedActionTypes).toEqual([
+          fetchFavoritesAction.pending.type,
+          fetchFavoritesAction.fulfilled.type
+        ]);
 
-      expect(fetchFavoritesActionFulfilled.payload).toEqual([mockFavorites]);
-    });
+        expect(fetchFavoritesActionFulfilled.payload).toEqual([mockFavorites]);
+      });
 
-    it('Должен вернуть fetchFavoritesAction.pending и fetchFavoritesAction.rejected при коде ответа сервера 400', async () => {
-      mockAxiosAdapter.onGet(APIRoute.Favorites).reply(400, []);
+    it('Должен вернуть fetchFavoritesAction.pending и fetchFavoritesAction.rejected при коде 400',
+      async () => {
+        mockAxiosAdapter.onGet(APIRoute.Favorites).reply(400, []);
 
-      await store.dispatch(fetchFavoritesAction());
+        await store.dispatch(fetchFavoritesAction());
 
-      const actions = extractActionTypes(store.getActions());
+        const actions = extractActionTypes(store.getActions());
 
-      expect(actions).toEqual([
-        fetchFavoritesAction.pending.type,
-        fetchFavoritesAction.rejected.type
-      ]);
-    });
+        expect(actions).toEqual([
+          fetchFavoritesAction.pending.type,
+          fetchFavoritesAction.rejected.type
+        ]);
+      });
   });
 
   describe('loginAction', () => {
     it('Проверяем состояния при коде ответа сервера 200', async () => {
       const fakeUser: AuthData = { login: 'Lorem@test.com', password: 'w2' };
       const fakeServerReplay = { token: 'secret' };
-      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
+      mockAxiosAdapter.onPost(APIRoute.Login)
+        .reply(200, fakeServerReplay);
 
       await store.dispatch(loginAction(fakeUser));
 
@@ -179,7 +192,8 @@ describe('Асинхронные операции', () => {
     it('Проверяем вызов функции SaveToken', async () => {
       const fakeUser: AuthData = { login: 'Lorem@test.com', password: 'w2' };
       const fakeServerReplay = { token: 'secret' };
-      mockAxiosAdapter.onPost(APIRoute.Login).reply(200, fakeServerReplay);
+      mockAxiosAdapter.onPost(APIRoute.Login)
+        .reply(200, fakeServerReplay);
       const mockSaveToken = vi.spyOn(tokenStorage, 'saveToken');
 
       await store.dispatch(loginAction(fakeUser));
@@ -221,12 +235,14 @@ describe('Асинхронные операции', () => {
         rating: mockReview.rating,
         offerId: mockReview.id,
       };
-      mockAxiosAdapter.onPost(`${APIRoute.Comments}/${mockReview.id}`).reply(204, mockReview);
+      mockAxiosAdapter.onPost(`${APIRoute.Comments}/${mockReview.id}`)
+        .reply(204, mockReview);
 
       await store.dispatch(reviewAction(mockData));
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchReviewActionFulfilled = emittedActions.at(1) as ReturnType<typeof reviewAction.fulfilled>;
+      const fetchReviewActionFulfilled =
+        emittedActions.at(1) as ReturnType<typeof reviewAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
         reviewAction.pending.type,
@@ -245,12 +261,15 @@ describe('Асинхронные операции', () => {
         offerId: mockFavorite.id,
         status: 0
       };
-      mockAxiosAdapter.onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`).reply(200, mockFavorite);
+      mockAxiosAdapter
+        .onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`)
+        .reply(200, mockFavorite);
 
       await store.dispatch(favoriteStatusAction(mockData));
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchFavoriteActionFulfilled = emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
+      const fetchFavoriteActionFulfilled =
+        emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
         favoriteStatusAction.pending.type,
@@ -266,12 +285,15 @@ describe('Асинхронные операции', () => {
         offerId: mockFavorite.id,
         status: 1
       };
-      mockAxiosAdapter.onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`).reply(201, mockFavorite);
+      mockAxiosAdapter
+        .onPost(`${APIRoute.Favorites}/${mockData.offerId}/${mockData.status}`)
+        .reply(201, mockFavorite);
 
       await store.dispatch(favoriteStatusAction(mockData));
       const emittedActions = store.getActions();
       const extractedActionTypes = extractActionTypes(emittedActions);
-      const fetchFavoriteActionFulfilled = emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
+      const fetchFavoriteActionFulfilled =
+        emittedActions.at(1) as ReturnType<typeof favoriteStatusAction.fulfilled>;
 
       expect(extractedActionTypes).toEqual([
         favoriteStatusAction.pending.type,

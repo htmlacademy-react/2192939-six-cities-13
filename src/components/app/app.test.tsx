@@ -32,7 +32,10 @@ describe('Маршрутизация приложения', () => {
   it('Ожидаю страницу 404', () => {
     const expectedText = '404 Not Found';
     const withHistoryComponent = withHistory(<App />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore());
+    const { withStoreComponent } = withStore(
+      withHistoryComponent,
+      makeFakeStore()
+    );
     mockHistory.push(AppRoute.NoFound);
 
     render(withStoreComponent);
@@ -47,12 +50,14 @@ describe('Маршрутизация приложения', () => {
   it('Ожидаю страницу предложения', () => {
     const fullOffer = makeFakeFullOffer();
     const withHistoryComponent = withHistory(<App />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        ...testInitialState,
-        fullOffer: fullOffer,
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent,
+      makeFakeStore({
+        DATA: {
+          ...testInitialState,
+          fullOffer: fullOffer,
+        }
+      }));
     mockHistory.push(AppRoute.Offer);
 
     render(withStoreComponent);

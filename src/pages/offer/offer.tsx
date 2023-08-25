@@ -10,9 +10,17 @@ import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { favoriteStatusAction, fetchOfferPageDataAction, fetchOffersAction } from '../../store/api-actions';
+import {
+  favoriteStatusAction,
+  fetchOfferPageDataAction,
+  fetchOffersAction
+} from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getFullOffer, getNeighborPlaces, getOfferPageDataStatus } from '../../store/app-data/selectors';
+import {
+  getFullOffer,
+  getNeighborPlaces,
+  getOfferPageDataStatus
+} from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import Page404 from '../404';
 
@@ -46,7 +54,9 @@ export default function OfferPage(): JSX.Element {
 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      await dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      await dispatch(favoriteStatusAction(
+        { offerId: offerId, status: Number(!fullOffer.isFavorite) }
+      ));
       await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
@@ -148,7 +158,10 @@ export default function OfferPage(): JSX.Element {
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
                     <div
-                      className={`offer__avatar-wrapper offer__avatar-wrapper${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`}
+                      className={
+                        `offer__avatar-wrapper offer__avatar-wrapper
+                        ${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`
+                      }
                     >
                       <img
                         className="offer__avatar user__avatar"
@@ -187,7 +200,10 @@ export default function OfferPage(): JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighborhood
               </h2>
-              <PlaceList offers={nearByCities(neighborPlaces)} type={PlacesCard.NearPlaces} />
+              <PlaceList
+                offers={nearByCities(neighborPlaces)}
+                type={PlacesCard.NearPlaces}
+              />
             </section>
           </div>
         </main>}

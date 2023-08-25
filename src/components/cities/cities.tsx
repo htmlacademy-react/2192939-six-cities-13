@@ -48,7 +48,7 @@ export default function Cities(): JSX.Element {
             <section className="cities__places places" ref={scrollRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cityOffers.length} {cityOffers.length === 1 ? 'place' : 'places'} to stay in {currentCityName}
+                {cityOffers.length} {`place${cityOffers.length === 1 ? '' : 's'}`} to stay in {currentCityName}
               </b>
               <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
               <PlaceList

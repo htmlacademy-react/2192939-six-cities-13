@@ -13,18 +13,21 @@ describe('Component: ReviewsList', () => {
     const expectedReviewsQuantity = mockReviews.length;
     const withHistoryComponent = withHistory(
       <ReviewsList />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        ...testInitialState,
-        reviews: mockReviews,
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent,
+      makeFakeStore({
+        DATA: {
+          ...testInitialState,
+          reviews: mockReviews,
+        }
+      }));
 
     render(withStoreComponent);
 
     const waitingRenderTimer = setTimeout(() => {
       expect(screen.getByTestId(reviewCardTestId)).toBeInTheDocument();
-      expect(screen.getAllByTestId(reviewCardTestId)).toBe(expectedReviewsQuantity);
+      expect(screen.getAllByTestId(reviewCardTestId))
+        .toBe(expectedReviewsQuantity);
       expect(screen.getByText(expectedText)).toBeInTheDocument();
       clearTimeout(waitingRenderTimer);
     }, TIME_TO_RENDER_PAGE);

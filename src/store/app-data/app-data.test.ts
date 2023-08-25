@@ -80,7 +80,9 @@ describe('AppData Slice', () => {
       isOffersDataLoading: false,
     };
 
-    const result = appData.reducer(initialState, fetchOffersAction.fulfilled(offers, '', undefined));
+    const result = appData.reducer(
+      initialState, fetchOffersAction.fulfilled(offers, '', undefined)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -110,7 +112,10 @@ describe('AppData Slice', () => {
       statusOfferPageData: Status.Success
     };
 
-    const result = appData.reducer(initialState, fetchOfferPageDataAction.fulfilled(offerPageData, '', offerPageData.fullOffer.id));
+    const result = appData.reducer(
+      initialState,
+      fetchOfferPageDataAction.fulfilled(offerPageData, '', offerPageData.fullOffer.id)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -121,7 +126,9 @@ describe('AppData Slice', () => {
       statusOfferPageData: Status.Loading
     };
 
-    const result = appData.reducer(initialState, fetchOfferPageDataAction.pending('', fullOffer.id));
+    const result = appData.reducer(
+      initialState, fetchOfferPageDataAction.pending('', fullOffer.id)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -132,7 +139,9 @@ describe('AppData Slice', () => {
       statusOfferPageData: Status.Error
     };
 
-    const result = appData.reducer(initialState, fetchOfferPageDataAction.rejected(null, '', fullOffer.id));
+    const result = appData.reducer(
+      initialState, fetchOfferPageDataAction.rejected(null, '', fullOffer.id)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -152,7 +161,9 @@ describe('AppData Slice', () => {
     };
 
 
-    const result = appData.reducer(initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined));
+    const result = appData.reducer(
+      initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -179,7 +190,9 @@ describe('AppData Slice', () => {
     };
 
 
-    const result = appData.reducer(initialState, reviewAction.fulfilled(review, '', sendReview));
+    const result = appData.reducer(
+      initialState, reviewAction.fulfilled(review, '', sendReview)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -216,7 +229,9 @@ describe('AppData Slice', () => {
       favorites: [fullOffer],
     };
 
-    const result = appData.reducer(initialState, favoriteStatusAction.fulfilled(fullOffer, '', status));
+    const result = appData.reducer(
+      initialState, favoriteStatusAction.fulfilled(fullOffer, '', status)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -237,7 +252,9 @@ describe('AppData Slice', () => {
       fullOffer: fullOffer,
     };
 
-    const result = appData.reducer(initState, favoriteStatusAction.fulfilled(fullOffer, '', status));
+    const result = appData.reducer(
+      initState, favoriteStatusAction.fulfilled(fullOffer, '', status)
+    );
 
     expect(result).toEqual(expectedState);
   });

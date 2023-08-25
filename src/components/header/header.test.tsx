@@ -21,17 +21,20 @@ describe('Component: Header', () => {
       const notExpectedText = 'Sign in';
       const favorites = [makeFakeFavorites(), makeFakeFavorites()];
       const withHistoryComponent = withHistory(<Header />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        USER: {
-          authStatus: AuthStatus.Auth,
-          loginStatus: Status.Idle,
-          userName: expectedUserName,
-        },
-        DATA: {
-          ...testInitialState,
-          favorites: favorites,
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent,
+        makeFakeStore(
+          {
+            USER: {
+              authStatus: AuthStatus.Auth,
+              loginStatus: Status.Idle,
+              userName: expectedUserName,
+            },
+            DATA: {
+              ...testInitialState,
+              favorites: favorites,
+            }
+          }));
 
 
       render(withStoreComponent);
@@ -45,7 +48,8 @@ describe('Component: Header', () => {
     it('Ожидаю перехода на LoginAction когда юзер выходит из приложения', () => {
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({}));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({}));
       mockHistory.push(AppRoute.Login);
 
       render(withStoreComponent);
@@ -64,16 +68,17 @@ describe('Component: Header', () => {
       const notExpectedText = 'Sign out';
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<Header />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        USER: {
-          authStatus: AuthStatus.NoAuth,
-          loginStatus: Status.Idle,
-          userName: notExpectedUserName,
-        },
-        DATA: {
-          ...testInitialState
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({
+          USER: {
+            authStatus: AuthStatus.NoAuth,
+            loginStatus: Status.Idle,
+            userName: notExpectedUserName,
+          },
+          DATA: {
+            ...testInitialState
+          }
+        }));
 
 
       render(withStoreComponent);
@@ -86,11 +91,12 @@ describe('Component: Header', () => {
     it('Ожидаю клик по логотипу', () => {
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        DATA: {
-          ...testInitialState
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({
+          DATA: {
+            ...testInitialState
+          }
+        }));
       mockHistory.push(AppRoute.Login);
 
       render(withStoreComponent);

@@ -33,7 +33,9 @@ export default function FavoritesPage(): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
               {CITIES.map((city) => {
-                const cityFavoriteOffers = favoriteOffers.filter((offer) => offer.city.name === city);
+                const cityFavoriteOffers = favoriteOffers.filter(
+                  (offer) => offer.city.name === city
+                );
                 return (
                   cityFavoriteOffers.length ?
                     <li className="favorites__locations-items" key={city} >

@@ -9,7 +9,11 @@ type SortingProps = {
 }
 
 export default function Sorting({ onChangeSorting, typeSorting }: SortingProps): JSX.Element {
-  const [changeSorting, handleChangeSorting, handleTypeSortingClick] = useSorting({ onChangeSorting });
+  const [
+    changeSorting,
+    handleChangeSorting,
+    handleTypeSortingClick
+  ] = useSorting({ onChangeSorting });
 
   return (
     <div className="places__sorting">

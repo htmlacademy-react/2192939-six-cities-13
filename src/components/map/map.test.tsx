@@ -1,8 +1,12 @@
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
-import { makeFakeCity, makeFakeFullOffer, makeFakeOffer, makeFakeStore } from '../../test-mocks/test-mocks';
-import { FullOffer } from '../../types/data-types';
-import { DEFAULT_CITY, DEFAULT_SORTING, Status, StylesForMapMainPage, StylesForMapOfferPage } from '../../settings';
+import {
+  makeFakeCity,
+  makeFakeFullOffer,
+  makeFakeOffer,
+  makeFakeStore
+} from '../../test-mocks/test-mocks';
+import { StylesForMapMainPage, StylesForMapOfferPage } from '../../settings';
 import Map from '.';
 import { testInitialState } from '../../store/app-data/app-data';
 
@@ -18,11 +22,12 @@ describe('Component: Map', () => {
         offers={mockOffers}
         styles={mockStyles}
       />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        ...testInitialState
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent, makeFakeStore({
+        DATA: {
+          ...testInitialState
+        }
+      }));
 
 
     render(withStoreComponent);
@@ -43,27 +48,12 @@ describe('Component: Map', () => {
         styles={mockStyles}
         fullOffer={mockFullOffer}
       />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        offers: [],
-        fullOffer: {} as FullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
-        currentCityName: DEFAULT_CITY,
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent, makeFakeStore({
+        DATA: {
+          ...testInitialState
+        }
+      }));
 
 
     render(withStoreComponent);

@@ -18,7 +18,8 @@ describe('Component: ErrorScreen', () => {
   });
 
   it('Проверяем действия пользователя', async () => {
-    const { withStoreComponent, mockStore, mockAxiosAdapter } = withStore(<ErrorScreen />, {});
+    const { withStoreComponent, mockStore, mockAxiosAdapter } =
+      withStore(<ErrorScreen />, {});
     mockAxiosAdapter.onGet(APIRoute.Offers).reply(200, []);
 
     render(withStoreComponent);

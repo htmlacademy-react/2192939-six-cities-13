@@ -43,7 +43,8 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      await dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!isFavorite) }));
+      await dispatch(favoriteStatusAction(
+        { offerId: offer.id, status: Number(!isFavorite) }));
       setIsFavorite(!isFavorite);
     } else {
       navigation(AppRoute.Login);

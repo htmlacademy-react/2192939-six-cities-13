@@ -8,16 +8,19 @@ describe('Component: CitiesList', () => {
   it('Проверяем правильность отрисовки', () => {
     const cityNameTestId = 'cityNameElement';
     const mockExpectedCityName = [makeFakeCity().name];
-    const { withStoreComponent } = withStore(<CitiesList cities={mockExpectedCityName} />, {
-      DATA: {
-        ...testInitialState,
-        currentCityName: mockExpectedCityName[0],
-      }
-    });
+    const { withStoreComponent } = withStore(
+      <CitiesList cities={mockExpectedCityName} />,
+      {
+        DATA: {
+          ...testInitialState,
+          currentCityName: mockExpectedCityName[0],
+        }
+      });
 
     render(withStoreComponent);
 
     expect(screen.getByText(mockExpectedCityName[0])).toBeInTheDocument();
-    expect(screen.getAllByTestId(cityNameTestId).length).toBe(mockExpectedCityName.length);
+    expect(screen.getAllByTestId(cityNameTestId).length)
+      .toBe(mockExpectedCityName.length);
   });
 });

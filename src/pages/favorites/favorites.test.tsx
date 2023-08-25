@@ -11,11 +11,13 @@ describe('Component: FavoritesPage', () => {
 
   const favorites = [makeFakeFavorites(), makeFakeFavorites(), makeFakeFavorites()];
   const withHistoryComponent = withHistory(<FavoritesPage />, mockHistory);
-  const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    DATA: {
-      ...testInitialState,
-    }
-  }));
+  const { withStoreComponent } = withStore(
+    withHistoryComponent,
+    makeFakeStore({
+      DATA: {
+        ...testInitialState,
+      }
+    }));
 
   it('Ожидаю страницу избранного', () => {
     const favoritesTitleText = 'Saved listing';

@@ -22,11 +22,12 @@ describe('Component: LogoLeft', () => {
     const mockHistory: MemoryHistory = createMemoryHistory();
     const expectedText = 'Cities';
     const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        ...testInitialState
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent, makeFakeStore({
+        DATA: {
+          ...testInitialState
+        }
+      }));
     mockHistory.push(AppRoute.Root);
 
     render(withStoreComponent);
