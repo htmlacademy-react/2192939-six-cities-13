@@ -7,7 +7,7 @@ type ViewCardProps = {
 
 export default function ReviewCard({ item }: ViewCardProps) {
   const date = new Date(item.date);
-  const formatter = new Intl.DateTimeFormat('us', {
+  const formatter = new Intl.DateTimeFormat('en', {
     month: 'long',
     year: 'numeric',
   });
