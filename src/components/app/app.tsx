@@ -3,7 +3,7 @@ import MainPage from '../../pages/main';
 import LoginPage from '../../pages/login';
 import FavoritesPage from '../../pages/favorites';
 import OfferPage from '../../pages/offer';
-import Page404 from '../../pages/404';
+import Page404 from '../../pages/page404';
 import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
 import { HelmetProvider } from 'react-helmet-async';

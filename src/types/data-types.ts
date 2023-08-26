@@ -50,18 +50,6 @@ export type Review = {
 
 export type Reviews = Review[];
 
-export type StylesForMap = {
-  width: string;
-  height: string;
-  margin?: string;
-};
-
-export type TypeCard = {
-  Cities: 'cities';
-  NearPlaces: 'near-places';
-  Favorites: 'favorites';
-};
-
 export type SortingType =
   | 'popular'
   | 'priceToHigh'

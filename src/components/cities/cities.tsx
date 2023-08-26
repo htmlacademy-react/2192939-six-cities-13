@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { CITIES, DEFAULT_CITY, PlacesCard, StylesForMapMainPage } from '../../settings';
+import { CITIES, DEFAULT_CITY, PlacesCard } from '../../settings';
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
@@ -11,6 +11,7 @@ import PlaceList from '../place-list';
 import { getSortedOffersBy } from '../../utils/offers';
 import { setSortingType } from '../../store/app-data/app-data';
 import { SortingType } from '../../types/data-types';
+import { fetchOffersAction } from '../../store/api-actions';
 
 export default function Cities(): JSX.Element {
   const [prevCity, setPrevCity] = useState(DEFAULT_CITY);
@@ -19,6 +20,10 @@ export default function Cities(): JSX.Element {
   const offers = useAppSelector(getOffers);
   const dispatch = useAppDispatch();
   const typeSorting = useAppSelector(getSortingType);
+
+  useEffect(() => {
+    dispatch(fetchOffersAction());
+  }, [dispatch]);
 
   const handleChangeSorting = useCallback((sortType: SortingType) => {
     dispatch(setSortingType(sortType));
@@ -30,6 +35,7 @@ export default function Cities(): JSX.Element {
       setPrevCity(currentCityName);
     }
   }, [currentCityName, prevCity]);
+
 
   const cityOffers = offers.filter((offer) => offer.city.name === currentCityName);
 
@@ -58,9 +64,7 @@ export default function Cities(): JSX.Element {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city={cityOffers[0].city} offers={cityOffers}
-                  styles={StylesForMapMainPage}
-                />
+                <Map city={cityOffers[0].city} offers={cityOffers} />
               </section>
             </div>
           </div>}

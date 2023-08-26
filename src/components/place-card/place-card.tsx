@@ -24,8 +24,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
     if (offer.isFavorite !== isFavorite) {
       setIsFavorite(offer.isFavorite);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offer.isFavorite]);
+  }, [offer]);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();

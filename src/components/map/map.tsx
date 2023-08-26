@@ -1,4 +1,4 @@
-import { City, FullOffer, Offers, StylesForMap } from '../../types/data-types';
+import { City, FullOffer, Offers } from '../../types/data-types';
 import { useEffect, useRef } from 'react';
 import { Icon, Marker, layerGroup } from 'leaflet';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from '../../settings';
@@ -6,12 +6,12 @@ import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
 import { useAppSelector } from '../../hooks';
 import { getActiveCard } from '../../store/app-data/selectors';
+import mapStyles from './map.module.css';
 
 type MapProps = {
   city: City;
   offers: Offers;
-  styles: StylesForMap;
-  fullOffer?: FullOffer | null;
+  fullOffer?: FullOffer;
 };
 
 function setIcon(urlMarker: string) {
@@ -26,14 +26,10 @@ const defaultCustomIcon = setIcon(URL_MARKER_DEFAULT);
 
 const currentCustomIcon = setIcon(URL_MARKER_CURRENT);
 
-export default function Map({
-  city,
-  offers,
-  styles,
-  fullOffer = null,
-}: MapProps): JSX.Element {
+export default function Map({ city, offers, fullOffer, }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
+  const isMainPage = !fullOffer;
 
   const selectedPlace = useAppSelector(getActiveCard);
 
@@ -73,5 +69,10 @@ export default function Map({
     }
   }, [map, offers, selectedPlace, city, fullOffer]);
 
-  return <div style={styles} ref={mapRef} data-testid='mapElement' />;
+  return (
+    <div
+      className={`${mapStyles.map__common} ${isMainPage ? mapStyles.map__main : mapStyles.map__offer}`}
+      ref={mapRef}
+      data-testid='mapElement'
+    />);
 }
