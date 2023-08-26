@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AppRoute, AuthStatus } from '../../settings';
-import { logoutAction } from '../../store/api-actions';
+import { fetchOffersAction, logoutAction } from '../../store/api-actions';
 import { getFavorites } from '../../store/app-data/selectors';
 import { getAuthStatus, getUserName } from '../../store/user-process/selectors';
 import LogoLeft from '../logo-left';
@@ -13,8 +13,9 @@ export default function Header(): JSX.Element {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const logoutHandle = () => {
+  const logoutHandle = (): void => {
     dispatch(logoutAction());
+    dispatch(fetchOffersAction());
     if (authStatus === AuthStatus.NoAuth) {
       navigate(AppRoute.Login);
     }

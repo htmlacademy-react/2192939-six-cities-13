@@ -65,12 +65,11 @@ export default function ReviewForm({ offerId }: ReviewFormProps): JSX.Element {
       method="post"
       onSubmit={handleSubmit}
       ref={formRef}
-      aria-disabled={reviewStatus === Status.Loading}
     >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
-      <div className="reviews__rating-form form__rating" aria-disabled={reviewStatus === Status.Loading}>
+      <div className="reviews__rating-form form__rating" >
         {Object.entries(RatingMap)
           .reverse()
           .map(([score, title]) => (

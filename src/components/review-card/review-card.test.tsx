@@ -18,8 +18,9 @@ describe('Component: ReviewCard', () => {
     const expectedDate = formatter.format(date);
     const withHistoryComponent = withHistory(
       <ReviewCard item={mockReview} />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent,
+      makeFakeStore({}));
 
     render(withStoreComponent);
 

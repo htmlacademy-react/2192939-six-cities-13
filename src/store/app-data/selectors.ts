@@ -1,37 +1,74 @@
-import { State } from './../state';
+import { AppData, State } from './../state';
 import { NameSpace } from '../../settings';
-import { FullOffer, Offer, Offers, Reviews, SortingType } from '../../types/data-types';
+import { SortingType } from '../../types/data-types';
+import { createSelector } from '@reduxjs/toolkit';
 
-export const getOffers = (state: Pick<State, NameSpace.Data>): Offers => state[NameSpace.Data].offers;
+export const getOffers = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.offers
+);
 
-export const getIsOffersDataLoading = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isOffersDataLoading;
+export const getIsOffersDataLoading = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.isOffersDataLoading
+);
 
-export const getFullOffer = (state: Pick<State, NameSpace.Data>): FullOffer => state[NameSpace.Data].fullOffer;
+export const getFullOffer = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.fullOffer
+);
 
-export const getNeighborPlaces = (state: Pick<State, NameSpace.Data>): Offers => state[NameSpace.Data].neighborPlaces;
+export const getNeighborPlaces = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.neighborPlaces
+);
 
-export const getReviewsData = (state: Pick<State, NameSpace.Data>): Reviews => state[NameSpace.Data].reviews;
+export const getReviewsData = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.reviews
+);
 
-export const getIsFullOfferLoaded = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isFullOfferDataLoading;
+export const getErrorStatus = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.hasError
+);
 
-export const getIsReviewsLoaded = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isReviewsDataLoading;
+export const getFavorites = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.favorites
+);
 
-export const getIsNearByLoaded = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isNeighborPlacesDataLoading;
+export const getIsFavoritesLoading = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.isFavoritesLoading
+);
 
-export const getErrorStatus = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].hasError;
+export const getIsFavoriteAdding = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.isFavoriteAdding
+);
 
-export const getFavorites = (state: Pick<State, NameSpace.Data>): (Offer)[] => state[NameSpace.Data].favorites;
+export const getCurrentCityName = createSelector(
+  (store: Pick<State, NameSpace.Data>) => store[NameSpace.Data],
+  (state: AppData) => state.currentCityName
+);
 
-export const getIsFavoritesLoading = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isFavoritesLoading;
+export const getSortingType = createSelector(
+  (store: Pick<State, NameSpace.Data>) => store[NameSpace.Data],
+  (state: AppData) => state.sortingType as SortingType
+);
 
-export const getIsFavoriteAdding = (state: Pick<State, NameSpace.Data>): boolean => state[NameSpace.Data].isFavoriteAdding;
+export const getActiveCard = createSelector(
+  (store: Pick<State, NameSpace.Data>) => store[NameSpace.Data],
+  (state: AppData) => state.activeCard
+);
 
-export const getCurrentCityName = (store: Pick<State, NameSpace.Data>): string => store[NameSpace.Data].currentCityName;
+export const getReviewStatus = createSelector(
+  (store: Pick<State, NameSpace.Data>) => store[NameSpace.Data],
+  (state: AppData) => state.statusReview
+);
 
-export const getSortingType = (store: Pick<State, NameSpace.Data>): SortingType => store[NameSpace.Data].sortingType as SortingType;
-
-export const getActiveCard = (store: Pick<State, NameSpace.Data>): Offer | null => store[NameSpace.Data].activeCard;
-
-export const getReviewStatus = (store: Pick<State, NameSpace.Data>): string => store[NameSpace.Data].statusReview;
-
-export const getFullOfferStatus = (state: Pick<State, NameSpace.Data>): string => state[NameSpace.Data].statusFullOffer;
+export const getOfferPageDataStatus = createSelector(
+  (state: Pick<State, NameSpace.Data>) => state[NameSpace.Data],
+  (state: AppData) => state.statusOfferPageData
+);

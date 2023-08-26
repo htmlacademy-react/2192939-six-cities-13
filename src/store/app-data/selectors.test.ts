@@ -1,27 +1,38 @@
-import { DEFAULT_CITY, DEFAULT_SORTING, NameSpace, Status } from '../../settings';
-import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
-import { getActiveCard, getCurrentCityName, getErrorStatus, getFavorites, getFullOffer, getIsFavoriteAdding, getIsFavoritesLoading, getIsFullOfferLoaded, getIsNearByLoaded, getIsOffersDataLoading, getIsReviewsLoaded, getNeighborPlaces, getOffers, getReviewStatus, getReviewsData, getSortingType, getFullOfferStatus } from './selectors';
+import { NameSpace } from '../../settings';
+import {
+  makeFakeFavorites,
+  makeFakeFullOffer,
+  makeFakeOffer,
+  makeFakeReview
+} from '../../test-mocks/test-mocks';
+import { testInitialState } from './app-data';
+import {
+  getActiveCard,
+  getCurrentCityName,
+  getErrorStatus,
+  getFavorites,
+  getFullOffer,
+  getIsFavoriteAdding,
+  getIsFavoritesLoading,
+  getIsOffersDataLoading,
+  getNeighborPlaces,
+  getOfferPageDataStatus,
+  getOffers,
+  getReviewStatus,
+  getReviewsData,
+  getSortingType
+} from './selectors';
 
 describe('Селекторы AppData', () => {
   const state = {
     [NameSpace.Data]: {
+      ...testInitialState,
       offers: [makeFakeOffer()],
       fullOffer: makeFakeFullOffer(),
       reviews: [makeFakeReview()],
       neighborPlaces: [makeFakeOffer()],
       favorites: [makeFakeFavorites()],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
       activeCard: makeFakeOffer(),
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     }
   };
 
@@ -62,21 +73,9 @@ describe('Селекторы AppData', () => {
   });
 
   it('Должен получить статус загрузки предложения', () => {
-    const { isFullOfferDataLoading } = state[NameSpace.Data];
-    const result = getIsFullOfferLoaded(state);
-    expect(result).toBe(isFullOfferDataLoading);
-  });
-
-  it('Должен получить статус загрузки списка отзывов', () => {
-    const { isReviewsDataLoading } = state[NameSpace.Data];
-    const result = getIsReviewsLoaded(state);
-    expect(result).toBe(isReviewsDataLoading);
-  });
-
-  it('Должен получить статус загрузки списка предложений поблизости', () => {
-    const { isNeighborPlacesDataLoading } = state[NameSpace.Data];
-    const result = getIsNearByLoaded(state);
-    expect(result).toBe(isNeighborPlacesDataLoading);
+    const { statusOfferPageData } = state[NameSpace.Data];
+    const result = getOfferPageDataStatus(state);
+    expect(result).toBe(statusOfferPageData);
   });
 
   it('Должен получить статус загрузки списка избранных предложений', () => {
@@ -119,11 +118,5 @@ describe('Селекторы AppData', () => {
     const { statusReview } = state[NameSpace.Data];
     const result = getReviewStatus(state);
     expect(result).toBe(statusReview);
-  });
-
-  it('Должен получить статус загрузки предложения', () => {
-    const { statusFullOffer } = state[NameSpace.Data];
-    const result = getFullOfferStatus(state);
-    expect(result).toBe(statusFullOffer);
   });
 });

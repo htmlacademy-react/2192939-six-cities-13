@@ -3,9 +3,9 @@ import LogoLeft from '.';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
 import { makeFakeFavorites, makeFakeStore, makeFakeUserName } from '../../test-mocks/test-mocks';
-import { FullOffer } from '../../types/data-types';
-import { AppRoute, AuthStatus, DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
+import { AppRoute, AuthStatus, Status, TIME_TO_RENDER_PAGE } from '../../settings';
 import Header from '.';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: Header', () => {
   let mockHistory: MemoryHistory;
@@ -21,32 +21,20 @@ describe('Component: Header', () => {
       const notExpectedText = 'Sign in';
       const favorites = [makeFakeFavorites(), makeFakeFavorites()];
       const withHistoryComponent = withHistory(<Header />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        USER: {
-          authStatus: AuthStatus.Auth,
-          loginStatus: Status.Idle,
-          userName: expectedUserName,
-        },
-        DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
-          favorites: favorites,
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent,
+        makeFakeStore(
+          {
+            USER: {
+              authStatus: AuthStatus.Auth,
+              loginStatus: Status.Idle,
+              userName: expectedUserName,
+            },
+            DATA: {
+              ...testInitialState,
+              favorites: favorites,
+            }
+          }));
 
 
       render(withStoreComponent);
@@ -60,7 +48,8 @@ describe('Component: Header', () => {
     it('Ожидаю перехода на LoginAction когда юзер выходит из приложения', () => {
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({}));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({}));
       mockHistory.push(AppRoute.Login);
 
       render(withStoreComponent);
@@ -79,32 +68,17 @@ describe('Component: Header', () => {
       const notExpectedText = 'Sign out';
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<Header />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        USER: {
-          authStatus: AuthStatus.NoAuth,
-          loginStatus: Status.Idle,
-          userName: notExpectedUserName,
-        },
-        DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
-          favorites: [],
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({
+          USER: {
+            authStatus: AuthStatus.NoAuth,
+            loginStatus: Status.Idle,
+            userName: notExpectedUserName,
+          },
+          DATA: {
+            ...testInitialState
+          }
+        }));
 
 
       render(withStoreComponent);
@@ -117,27 +91,12 @@ describe('Component: Header', () => {
     it('Ожидаю клик по логотипу', () => {
       const expectedText = 'Sign in';
       const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-      const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-        DATA: {
-          offers: [],
-          fullOffer: {} as FullOffer,
-          reviews: [],
-          neighborPlaces: [],
-          favorites: [],
-          isOffersDataLoading: false,
-          isFullOfferDataLoading: true,
-          isReviewsDataLoading: true,
-          isNeighborPlacesDataLoading: true,
-          isFavoritesLoading: false,
-          isFavoriteAdding: false,
-          hasError: false,
-          currentCityName: DEFAULT_CITY,
-          activeCard: null,
-          sortingType: DEFAULT_SORTING,
-          statusReview: Status.Idle,
-          statusFullOffer: Status.Idle
-        }
-      }));
+      const { withStoreComponent } = withStore(
+        withHistoryComponent, makeFakeStore({
+          DATA: {
+            ...testInitialState
+          }
+        }));
       mockHistory.push(AppRoute.Login);
 
       render(withStoreComponent);

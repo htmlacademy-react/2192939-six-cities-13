@@ -112,7 +112,10 @@ export default function LoginPage(): JSX.Element {
                   required
                   data-testid='passwordElement'
                 />
-                {!isCorrectPassword && <p className={styles['login-password']}>At least 1 letter and 1 number without spaces</p>}
+                {!isCorrectPassword &&
+                  <p className={styles['login-password']}>
+                    At least 1 letter and 1 number without spaces
+                  </p>}
               </div>
               <button
                 className="login__submit form__submit button"

@@ -6,9 +6,10 @@ import {
 } from './action';
 import { UserData } from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { A, C, F, I, R, U, V } from '../types/api-types';
+import { CombinedType, FavoriteType, ReviewType, offerPageDataType } from '../types/api-types';
+import { AuthData } from '../types/auth-data';
 
-export const fetchOffersAction = createAsyncThunk<Offers, U, C>(
+export const fetchOffersAction = createAsyncThunk<Offers, undefined, CombinedType>(
   'data/fetchOffers',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(APIRoute.Offers);
@@ -16,36 +17,7 @@ export const fetchOffersAction = createAsyncThunk<Offers, U, C>(
   }
 );
 
-export const fetchFullOfferAction = createAsyncThunk<FullOffer, I, C>(
-  'data/fetchFullOffer',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<FullOffer>(
-      `${APIRoute.Offers}/${offerId}`
-    );
-    return data;
-  }
-);
-
-export const fetchReviewsFullOfferAction = createAsyncThunk<Reviews, I, C>(
-  'data/fetchReviewsFullOffer',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
-
-    return data;
-  }
-);
-
-export const fetchNeighborPlacesAction = createAsyncThunk<Offers, I, C>(
-  'data/fetchNeighborPlaces',
-  async (offerId, { extra: api }) => {
-    const { data } = await api.get<Offers>(
-      `${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`
-    );
-    return data;
-  }
-);
-
-export const fetchFavoritesAction = createAsyncThunk<Offers, U, C>(
+export const fetchFavoritesAction = createAsyncThunk<Offers, undefined, CombinedType>(
   'data/fetchFavoritesAction',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<Offers>(
@@ -55,8 +27,19 @@ export const fetchFavoritesAction = createAsyncThunk<Offers, U, C>(
   }
 );
 
+export const fetchOfferPageDataAction = createAsyncThunk<offerPageDataType, string, CombinedType>(
+  'data/fetchOfferPageDataAction',
+  async (offerId, { extra: api }) => {
+    const { data: fullOffer } = await api.get<FullOffer>(`${APIRoute.Offers}/${offerId}`);
+    const { data: reviews } = await api.get<Reviews>(`${APIRoute.Comments}/${offerId}`);
+    const { data: neighborPlaces } =
+      await api.get<Offers>(`${APIRoute.Offers}/${offerId}${APIRoute.NearBy}`);
+    return { fullOffer, reviews, neighborPlaces };
+  }
+);
 
-export const checkAuthStatus = createAsyncThunk<string, U, C>(
+
+export const checkAuthStatus = createAsyncThunk<string, undefined, CombinedType>(
   'user/checkAuthStatus',
   async (_arg, { extra: api }) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
@@ -64,17 +47,18 @@ export const checkAuthStatus = createAsyncThunk<string, U, C>(
   }
 );
 
-export const loginAction = createAsyncThunk<string, A, C>(
+export const loginAction = createAsyncThunk<string, AuthData, CombinedType>(
   'user/login',
   async ({ login: email, password }, { dispatch, extra: api }) => {
-    const { data: { token }, } = await api.post<UserData>(APIRoute.Login, { email, password });
+    const { data: { token }, } =
+      await api.post<UserData>(APIRoute.Login, { email, password });
     saveToken(token);
     dispatch(redirectToRoute(AppRoute.Root));
     return email;
   }
 );
 
-export const logoutAction = createAsyncThunk<V, U, C>(
+export const logoutAction = createAsyncThunk<void, undefined, CombinedType>(
   'user/logout',
   async (_arg, { extra: api }) => {
     await api.delete(APIRoute.Logout);
@@ -82,7 +66,7 @@ export const logoutAction = createAsyncThunk<V, U, C>(
   }
 );
 
-export const reviewAction = createAsyncThunk<Review, R, C>(
+export const reviewAction = createAsyncThunk<Review, ReviewType, CombinedType>(
   'user/review',
   async ({ comment, rating, offerId }, { extra: api }) => {
     const response = await api.post<Review>(
@@ -96,7 +80,8 @@ export const reviewAction = createAsyncThunk<Review, R, C>(
   }
 );
 
-export const favoriteStatusAction = createAsyncThunk<FullOffer, F, C>(
+
+export const favoriteStatusAction = createAsyncThunk<FullOffer, FavoriteType, CombinedType>(
   'data/favoriteStatus',
   async ({ offerId, status }, { extra: api }) => {
     const { data } = await api.post<FullOffer>(

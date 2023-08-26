@@ -1,28 +1,26 @@
 import { AppDispatch, State } from '../store/state';
 import { AxiosInstance } from 'axios';
-import { AuthData } from './auth-data';
+import { FullOffer, Offers, Reviews } from './data-types';
 
-export type U = undefined;
-
-export type A = AuthData;
-
-export type R = {
+export type ReviewType = {
   comment: string;
   rating: number;
   offerId: string;
 };
 
-export type F = {
+export type FavoriteType = {
   offerId: string;
   status: number;
 }
 
-export type V = void;
-
-export type I = string;
-
-export type C = {
+export type CombinedType = {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 };
+
+export type offerPageDataType = {
+  fullOffer: FullOffer;
+  reviews: Reviews;
+  neighborPlaces: Offers;
+}

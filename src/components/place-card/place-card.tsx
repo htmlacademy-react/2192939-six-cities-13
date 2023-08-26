@@ -1,11 +1,11 @@
 import { Offer } from '../../types/data-types';
-import { AppRoute, RATING_IN_PERCENT, PlacesCard, AuthStatus } from '../../settings';
-import { capitalizeFirstLetter } from '../../utils/offers';
+import { AppRoute, PlacesCard, AuthStatus } from '../../settings';
+import { capitalizeFirstLetter, getRoundRating } from '../../utils/offers';
 import { Link, useNavigate } from 'react-router-dom';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector, } from '../../hooks';
-import { favoriteStatusAction, fetchOffersAction, } from '../../store/api-actions';
+import { favoriteStatusAction } from '../../store/api-actions';
 import { setActiveCardAction } from '../../store/app-data/app-data';
 import { getAuthStatus } from '../../store/user-process/selectors';
 type PlaceCardProps = {
@@ -19,6 +19,13 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
   const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
+
+  useEffect(() => {
+    if (offer.isFavorite !== isFavorite) {
+      setIsFavorite(offer.isFavorite);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [offer.isFavorite]);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -36,9 +43,9 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      await dispatch(favoriteStatusAction({ offerId: offer.id, status: Number(!isFavorite) }));
+      await dispatch(favoriteStatusAction(
+        { offerId: offer.id, status: Number(!isFavorite) }));
       setIsFavorite(!isFavorite);
-      await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
     }
@@ -95,7 +102,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span
-              style={{ width: `${Math.round(offer.rating) * RATING_IN_PERCENT}%` }}
+              style={{ width: getRoundRating(offer.rating) }}
             />
             <span className="visually-hidden">Rating</span>
           </div>

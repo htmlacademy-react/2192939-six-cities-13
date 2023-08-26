@@ -12,14 +12,16 @@ describe('Component: PlaceList', () => {
     const expectedQuantityPlaceCard = mockOffers.length;
     const withHistoryComponent = withHistory(
       <PlaceList offers={mockOffers} type='cities' />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent, makeFakeStore({
+      }));
 
     render(withStoreComponent);
 
     const waitingRenderTimer = setTimeout(() => {
       expect(screen.getByTestId(placeCardTestId)).toBeInTheDocument();
-      expect(screen.getAllByTestId(placeCardTestId)).toBe(expectedQuantityPlaceCard);
+      expect(screen.getAllByTestId(placeCardTestId))
+        .toBe(expectedQuantityPlaceCard);
       expect(screen.getByText(expectedText)).toBeInTheDocument();
       clearTimeout(waitingRenderTimer);
     }, TIME_TO_RENDER_PAGE);

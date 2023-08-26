@@ -2,31 +2,35 @@ import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
 import { AppRoute, AuthStatus, PlacesCard, Status, StylesForMapOfferPage } from '../../settings';
-import { capitalizeFirstLetter, nearByCities } from '../../utils/offers';
+import { capitalizeFirstLetter, getRoundRating, nearByCities } from '../../utils/offers';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RATING_IN_PERCENT } from '../../settings';
 import ReviewsList from '../../components/reviews-list';
 import classNames from 'classnames';
 import Map from '../../components/map';
 import PlaceList from '../../components/place-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../../components/loader';
-import { favoriteStatusAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction } from '../../store/api-actions';
+import {
+  favoriteStatusAction,
+  fetchOfferPageDataAction,
+  fetchOffersAction
+} from '../../store/api-actions';
 import { useEffect } from 'react';
-import { getFullOffer, getFullOfferStatus, getIsFullOfferLoaded, getIsNearByLoaded, getIsReviewsLoaded, getNeighborPlaces } from '../../store/app-data/selectors';
+import {
+  getFullOffer,
+  getNeighborPlaces,
+  getOfferPageDataStatus
+} from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import Page404 from '../404';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id as string;
-  const isFullOfferLoaded = useAppSelector(getIsFullOfferLoaded);
-  const isReviewsLoaded = useAppSelector(getIsReviewsLoaded);
-  const isNearByLoaded = useAppSelector(getIsNearByLoaded);
   const fullOffer = useAppSelector(getFullOffer);
   const neighborPlaces = useAppSelector(getNeighborPlaces);
   const authStatus = useAppSelector(getAuthStatus);
-  const statusFullOffer = useAppSelector(getFullOfferStatus);
+  const statusOfferPageData = useAppSelector(getOfferPageDataStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
 
@@ -34,16 +38,14 @@ export default function OfferPage(): JSX.Element {
     let isOfferPageMounted = true;
 
     if (offerId && isOfferPageMounted) {
-      dispatch(fetchFullOfferAction(offerId));
-      dispatch(fetchReviewsFullOfferAction(offerId));
-      dispatch(fetchNeighborPlacesAction(offerId));
+      dispatch(fetchOfferPageDataAction(offerId));
     }
     return () => {
       isOfferPageMounted = false;
     };
   }, [dispatch, offerId]);
 
-  if (statusFullOffer === Status.Error) {
+  if (statusOfferPageData === Status.Error) {
     return (
       <Page404 />
     );
@@ -52,7 +54,9 @@ export default function OfferPage(): JSX.Element {
 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
-      await dispatch(favoriteStatusAction({ offerId: offerId, status: Number(!fullOffer.isFavorite) }));
+      await dispatch(favoriteStatusAction(
+        { offerId: offerId, status: Number(!fullOffer.isFavorite) }
+      ));
       await dispatch(fetchOffersAction());
     } else {
       navigation(AppRoute.Login);
@@ -66,10 +70,8 @@ export default function OfferPage(): JSX.Element {
       </Helmet>
       <Header />
 
-      {isFullOfferLoaded || isReviewsLoaded || isNearByLoaded
-        ?
-        <Loader />
-        :
+      {statusOfferPageData === Status.Loading && <Loader />}
+      {statusOfferPageData === Status.Success &&
         <main className="page__main page__main--offer">
           <section className="offer">
             <div className="offer__gallery-container container">
@@ -111,8 +113,7 @@ export default function OfferPage(): JSX.Element {
                   <div className="offer__stars rating__stars">
                     <span
                       style={{
-                        width: `${Math.round(fullOffer ? fullOffer.rating : 0) *
-                          RATING_IN_PERCENT}%`,
+                        width: getRoundRating(fullOffer ? fullOffer.rating : 0)
                       }}
                     />
                     <span className="visually-hidden">Rating</span>
@@ -157,7 +158,9 @@ export default function OfferPage(): JSX.Element {
                   <h2 className="offer__host-title">Meet the host</h2>
                   <div className="offer__host-user user">
                     <div
-                      className={`offer__avatar-wrapper offer__avatar-wrapper${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`}
+                      className={
+                        `offer__avatar-wrapper offer__avatar-wrapper${fullOffer.host.isPro ? '--pro' : ''} user__avatar-wrapper`
+                      }
                     >
                       <img
                         className="offer__avatar user__avatar"
@@ -196,7 +199,10 @@ export default function OfferPage(): JSX.Element {
               <h2 className="near-places__title">
                 Other places in the neighborhood
               </h2>
-              <PlaceList offers={nearByCities(neighborPlaces)} type={PlacesCard.NearPlaces} />
+              <PlaceList
+                offers={nearByCities(neighborPlaces)}
+                type={PlacesCard.NearPlaces}
+              />
             </section>
           </div>
         </main>}

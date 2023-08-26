@@ -1,71 +1,28 @@
 import { expect } from 'vitest';
-import { DEFAULT_CITY, DEFAULT_SORTING, Status } from '../../settings';
+import { Status } from '../../settings';
 import { makeFakeFavorites, makeFakeFullOffer, makeFakeOffer, makeFakeReview } from '../../test-mocks/test-mocks';
-import { FullOffer } from '../../types/data-types';
-import { appData, selectCityAction, setActiveCardAction, setReviewStatus, setSortingType } from './app-data';
-import { favoriteStatusAction, fetchFavoritesAction, fetchFullOfferAction, fetchNeighborPlacesAction, fetchOffersAction, fetchReviewsFullOfferAction, reviewAction } from '../api-actions';
+import { appData, selectCityAction, setActiveCardAction, setReviewStatus, setSortingType, testInitialState } from './app-data';
+import { favoriteStatusAction, fetchFavoritesAction, fetchOfferPageDataAction, fetchOffersAction, reviewAction } from '../api-actions';
 
 describe('AppData Slice', () => {
   const state = {
+    ...testInitialState,
     offers: [makeFakeOffer()],
     fullOffer: makeFakeFullOffer(),
     reviews: [makeFakeReview()],
     neighborPlaces: [makeFakeOffer()],
     favorites: [makeFakeFavorites()],
-    isOffersDataLoading: false,
-    isFullOfferDataLoading: true,
-    isReviewsDataLoading: true,
-    isNeighborPlacesDataLoading: true,
-    isFavoritesLoading: false,
-    isFavoriteAdding: false,
-    hasError: false,
-    currentCityName: DEFAULT_CITY,
     activeCard: makeFakeOffer(),
-    sortingType: DEFAULT_SORTING,
-    statusReview: Status.Idle,
-    statusFullOffer: Status.Idle
   };
 
   const initialState = {
-    offers: [],
-    fullOffer: {} as FullOffer,
-    reviews: [],
-    neighborPlaces: [],
-    favorites: [],
-    isOffersDataLoading: false,
-    isFullOfferDataLoading: true,
-    isReviewsDataLoading: true,
-    isNeighborPlacesDataLoading: true,
-    isFavoritesLoading: false,
-    isFavoriteAdding: false,
-    hasError: false,
-    currentCityName: DEFAULT_CITY,
-    activeCard: null,
-    sortingType: DEFAULT_SORTING,
-    statusReview: Status.Idle,
-    statusFullOffer: Status.Idle
+    ...testInitialState
   };
 
   it('Должен вернуть начальное состояние при пустом действии', () => {
     const emptyAction = { type: '' };
     const expectedState = {
-      offers: [],
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
+      ...testInitialState
     };
     const result = appData.reducer(expectedState, emptyAction);
     expect(result).toEqual(expectedState);
@@ -74,23 +31,7 @@ describe('AppData Slice', () => {
   it('Должен вернуть дефолтное начальное состояние при неизвестном состоянии', () => {
     const emptyAction = { type: '' };
     const expectedState = {
-      offers: [],
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
+      ...testInitialState
     };
     const result = appData.reducer(undefined, emptyAction);
     expect(result).toEqual(expectedState);
@@ -122,23 +63,9 @@ describe('AppData Slice', () => {
 
   it('Должен вернуть флаг процесса загрузки true и ошибки false', () => {
     const expectedState = {
-      offers: [],
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
+      ...testInitialState,
       isOffersDataLoading: true,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
       hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchOffersAction.pending);
@@ -148,183 +75,73 @@ describe('AppData Slice', () => {
   it('Должен вернуть флаг успешной загрузки false и offers', () => {
     const offers = [makeFakeOffer()];
     const expectedState = {
+      ...testInitialState,
       offers: offers,
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
       isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
-    const result = appData.reducer(initialState, fetchOffersAction.fulfilled(offers, '', undefined));
+    const result = appData.reducer(
+      initialState, fetchOffersAction.fulfilled(offers, '', undefined)
+    );
     expect(result).toEqual(expectedState);
   });
 
   it('Должен вернуть флаг ошибки загрузки предложений false и ошибки true', () => {
     const expectedState = {
-      offers: [],
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
+      ...testInitialState,
       isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
       hasError: true,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
     const result = appData.reducer(initialState, fetchOffersAction.rejected);
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть предложение, флаг процесса загрузки false и статус Success', () => {
+  it('Должен вернуть данные страницы предложения и статус Success', () => {
+    const offerPageData = {
+      fullOffer: makeFakeFullOffer(),
+      reviews: [makeFakeReview()],
+      neighborPlaces: [makeFakeOffer()],
+
+    };
+    const expectedState = {
+      ...testInitialState,
+      fullOffer: offerPageData.fullOffer,
+      reviews: offerPageData.reviews,
+      neighborPlaces: offerPageData.neighborPlaces,
+      statusOfferPageData: Status.Success
+    };
+
+    const result = appData.reducer(
+      initialState,
+      fetchOfferPageDataAction.fulfilled(offerPageData, '', offerPageData.fullOffer.id)
+    );
+    expect(result).toEqual(expectedState);
+  });
+
+  it('Должен вернуть статус процесса загрузки Loading', () => {
     const fullOffer = makeFakeFullOffer();
     const expectedState = {
-      offers: [],
-      fullOffer: fullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: false,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Success
+      ...testInitialState,
+      statusOfferPageData: Status.Loading
     };
 
-    const result = appData.reducer(initialState, fetchFullOfferAction.fulfilled(fullOffer, '', fullOffer.id));
+    const result = appData.reducer(
+      initialState, fetchOfferPageDataAction.pending('', fullOffer.id)
+    );
     expect(result).toEqual(expectedState);
   });
 
-  it('Должен вернуть флаг процесса загрузки false и статус Loading', () => {
+  it('Должен вернуть статус процесса загрузки Error', () => {
     const fullOffer = makeFakeFullOffer();
     const expectedState = {
-      offers: [],
-      fullOffer: {},
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: false,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Loading
+      ...testInitialState,
+      statusOfferPageData: Status.Error
     };
 
-    const result = appData.reducer(initialState, fetchFullOfferAction.pending('', fullOffer.id));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть флаг процесса загрузки false и статус Error', () => {
-    const fullOffer = makeFakeFullOffer();
-    const expectedState = {
-      offers: [],
-      fullOffer: {},
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: false,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Error
-    };
-
-    const result = appData.reducer(initialState, fetchFullOfferAction.rejected(null, '', fullOffer.id));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть предложения поблизости флаг процесса загрузки false', () => {
-    const offerId = makeFakeOffer().id;
-    const neighborPlaces = [makeFakeOffer()];
-    const expectedState = {
-      offers: [],
-      fullOffer: {},
-      reviews: [],
-      neighborPlaces: neighborPlaces,
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: false,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
-    };
-
-    const result = appData.reducer(initialState, fetchNeighborPlacesAction.fulfilled(neighborPlaces, '', offerId));
-    expect(result).toEqual(expectedState);
-  });
-
-  it('Должен вернуть предложения поблизости и флаг процесса загрузки false', () => {
-    const offerId = makeFakeOffer().id;
-    const reviews = [makeFakeReview()];
-    const expectedState = {
-      offers: [],
-      fullOffer: {},
-      reviews: reviews,
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: false,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
-    };
-
-    const result = appData.reducer(initialState, fetchReviewsFullOfferAction.fulfilled(reviews, '', offerId));
+    const result = appData.reducer(
+      initialState, fetchOfferPageDataAction.rejected(null, '', fullOffer.id)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -338,27 +155,15 @@ describe('AppData Slice', () => {
   it('Должен вернуть флаг процесса загрузки избранных предложений true', () => {
     const favorites = [makeFakeFavorites()];
     const expectedState = {
-      offers: [],
-      fullOffer: {},
-      reviews: [],
-      neighborPlaces: [],
+      ...testInitialState,
       favorites: favorites,
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
       isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
 
-    const result = appData.reducer(initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined));
+    const result = appData.reducer(
+      initialState, fetchFavoritesAction.fulfilled(favorites, '', undefined)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -379,27 +184,15 @@ describe('AppData Slice', () => {
     };
 
     const expectedState = {
-      offers: [],
-      fullOffer: {},
+      ...testInitialState,
       reviews: [review],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
       statusReview: Status.Success,
-      statusFullOffer: Status.Idle
     };
 
 
-    const result = appData.reducer(initialState, reviewAction.fulfilled(review, '', sendReview));
+    const result = appData.reducer(
+      initialState, reviewAction.fulfilled(review, '', sendReview)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -431,26 +224,14 @@ describe('AppData Slice', () => {
       status: 1
     };
     const expectedState = {
-      offers: [],
+      ...testInitialState,
       fullOffer: fullOffer,
-      reviews: [],
-      neighborPlaces: [],
       favorites: [fullOffer],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
-    const result = appData.reducer(initialState, favoriteStatusAction.fulfilled(fullOffer, '', status));
+    const result = appData.reducer(
+      initialState, favoriteStatusAction.fulfilled(fullOffer, '', status)
+    );
     expect(result).toEqual(expectedState);
   });
 
@@ -462,46 +243,18 @@ describe('AppData Slice', () => {
       status: 0
     };
     const initState = {
-      offers: [],
-      fullOffer: {} as FullOffer,
-      reviews: [],
-      neighborPlaces: [],
+      ...testInitialState,
       favorites: [fullOffer],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
     const expectedState = {
-      offers: [],
+      ...testInitialState,
       fullOffer: fullOffer,
-      reviews: [],
-      neighborPlaces: [],
-      favorites: [],
-      isOffersDataLoading: false,
-      isFullOfferDataLoading: true,
-      isReviewsDataLoading: true,
-      isNeighborPlacesDataLoading: true,
-      isFavoritesLoading: false,
-      isFavoriteAdding: false,
-      hasError: false,
-      currentCityName: DEFAULT_CITY,
-      activeCard: null,
-      sortingType: DEFAULT_SORTING,
-      statusReview: Status.Idle,
-      statusFullOffer: Status.Idle
     };
 
-    const result = appData.reducer(initState, favoriteStatusAction.fulfilled(fullOffer, '', status));
+    const result = appData.reducer(
+      initState, favoriteStatusAction.fulfilled(fullOffer, '', status)
+    );
 
     expect(result).toEqual(expectedState);
   });

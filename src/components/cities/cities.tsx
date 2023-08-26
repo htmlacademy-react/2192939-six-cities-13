@@ -3,7 +3,7 @@ import { CITIES, DEFAULT_CITY, PlacesCard, StylesForMapMainPage } from '../../se
 import CitiesList from '../../components/cities-list';
 import Map from '../../components/map';
 import PlaceListEmpty from '../../components/place-list-empty';
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getOffers, getSortingType, getCurrentCityName } from '../../store/app-data/selectors';
 import Sorting from '../sorting';
@@ -24,11 +24,12 @@ export default function Cities(): JSX.Element {
     dispatch(setSortingType(sortType));
   }, [dispatch]);
 
-
-  if (prevCity !== currentCityName) {
-    scrollRef.current?.scroll(0, 0);
-    setPrevCity(currentCityName);
-  }
+  useEffect(() => {
+    if (prevCity !== currentCityName) {
+      scrollRef.current?.scroll(0, 0);
+      setPrevCity(currentCityName);
+    }
+  }, [currentCityName, prevCity]);
 
   const cityOffers = offers.filter((offer) => offer.city.name === currentCityName);
 
@@ -47,7 +48,7 @@ export default function Cities(): JSX.Element {
             <section className="cities__places places" ref={scrollRef}>
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {cityOffers.length} {cityOffers.length === 1 ? 'place' : 'places'} to stay in {currentCityName}
+                {cityOffers.length} {`place${cityOffers.length === 1 ? '' : 's'}`} to stay in {currentCityName}
               </b>
               <Sorting onChangeSorting={handleChangeSorting} typeSorting={typeSorting} />
               <PlaceList

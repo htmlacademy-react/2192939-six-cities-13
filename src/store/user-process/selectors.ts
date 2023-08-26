@@ -1,9 +1,18 @@
-import { Status } from './../../settings';
-import { AuthStatus, NameSpace } from '../../settings';
-import { State } from '../state';
+import { NameSpace } from '../../settings';
+import { State, UserProcess } from '../state';
+import { createSelector } from '@reduxjs/toolkit';
 
-export const getAuthStatus = (state: Pick<State, NameSpace.User>): AuthStatus => state[NameSpace.User].authStatus;
+export const getAuthStatus = createSelector(
+  (state: Pick<State, NameSpace.User>) => state[NameSpace.User],
+  (state: UserProcess) => state.authStatus
+);
 
-export const getUserName = (state: Pick<State, NameSpace.User>): string => state[NameSpace.User].userName;
+export const getUserName = createSelector(
+  (state: Pick<State, NameSpace.User>) => state[NameSpace.User],
+  (state: UserProcess) => state.userName
+);
 
-export const getLoginStatus = (state: Pick<State, NameSpace.User>): Status => state[NameSpace.User].loginStatus;
+export const getLoginStatus = createSelector(
+  (state: Pick<State, NameSpace.User>) => state[NameSpace.User],
+  (state: UserProcess) => state.loginStatus
+);

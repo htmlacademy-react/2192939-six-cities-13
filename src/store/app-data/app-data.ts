@@ -5,10 +5,8 @@ import { AppData } from '../state';
 import {
   favoriteStatusAction,
   fetchFavoritesAction,
-  fetchFullOfferAction,
-  fetchNeighborPlacesAction,
+  fetchOfferPageDataAction,
   fetchOffersAction,
-  fetchReviewsFullOfferAction,
   reviewAction
 } from '../api-actions';
 
@@ -19,9 +17,6 @@ const initialState: AppData = {
   neighborPlaces: [],
   favorites: [],
   isOffersDataLoading: false,
-  isFullOfferDataLoading: true,
-  isReviewsDataLoading: true,
-  isNeighborPlacesDataLoading: true,
   isFavoritesLoading: false,
   isFavoriteAdding: false,
   hasError: false,
@@ -29,7 +24,7 @@ const initialState: AppData = {
   activeCard: null,
   sortingType: DEFAULT_SORTING,
   statusReview: Status.Idle,
-  statusFullOffer: Status.Idle,
+  statusOfferPageData: Status.Idle
 };
 
 export const appData = createSlice({
@@ -63,27 +58,6 @@ export const appData = createSlice({
         state.isOffersDataLoading = false;
         state.hasError = true;
       })
-      .addCase(fetchFullOfferAction.fulfilled, (state, action) => {
-        state.fullOffer = action.payload;
-        state.isFullOfferDataLoading = false;
-        state.statusFullOffer = Status.Success;
-      })
-      .addCase(fetchFullOfferAction.pending, (state) => {
-        state.isFullOfferDataLoading = false;
-        state.statusFullOffer = Status.Loading;
-      })
-      .addCase(fetchFullOfferAction.rejected, (state) => {
-        state.isFullOfferDataLoading = false;
-        state.statusFullOffer = Status.Error;
-      })
-      .addCase(fetchReviewsFullOfferAction.fulfilled, (state, action) => {
-        state.reviews = action.payload;
-        state.isReviewsDataLoading = false;
-      })
-      .addCase(fetchNeighborPlacesAction.fulfilled, (state, action) => {
-        state.neighborPlaces = action.payload;
-        state.isNeighborPlacesDataLoading = false;
-      })
       .addCase(fetchFavoritesAction.pending, (state) => {
         state.isFavoritesLoading = true;
       })
@@ -109,7 +83,9 @@ export const appData = createSlice({
         const isRemoval = action.meta.arg.status === 0;
 
         if (isRemoval) {
-          state.favorites = state.favorites.filter((offer) => offer.id !== action.payload.id);
+          state.favorites = state.favorites.filter(
+            (offer) => offer.id !== action.payload.id
+          );
         } else {
           state.favorites = [...state.favorites, action.payload];
         }
@@ -118,6 +94,18 @@ export const appData = createSlice({
       })
       .addCase(favoriteStatusAction.rejected, (state) => {
         state.isFavoriteAdding = true;
+      })
+      .addCase(fetchOfferPageDataAction.fulfilled, (state, action) => {
+        state.fullOffer = action.payload.fullOffer;
+        state.reviews = action.payload.reviews;
+        state.neighborPlaces = action.payload.neighborPlaces;
+        state.statusOfferPageData = Status.Success;
+      })
+      .addCase(fetchOfferPageDataAction.pending, (state) => {
+        state.statusOfferPageData = Status.Loading;
+      })
+      .addCase(fetchOfferPageDataAction.rejected, (state) => {
+        state.statusOfferPageData = Status.Error;
       });
   }
 });
@@ -128,3 +116,5 @@ export const {
   setSortingType,
   setReviewStatus,
 } = appData.actions;
+
+export { initialState as testInitialState };

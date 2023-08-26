@@ -9,8 +9,9 @@ describe('Component: PlaceList', () => {
     const expectedText = 'No places to stay available';
     const withHistoryComponent = withHistory(
       <PlaceListEmpty />);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent,
+      makeFakeStore({}));
 
     render(withStoreComponent);
 

@@ -1,10 +1,10 @@
 import classNames from 'classnames';
-import { Offers, PlaceCardType } from '../../types/data-types';
+import { FullOffer, Offer, PlaceCardType } from '../../types/data-types';
 import PlaceCard from '../place-card';
 import { PlacesCard } from '../../settings';
 
 type PlaceListProps = {
-  offers: Offers;
+  offers: (Offer | FullOffer)[];
   type: PlaceCardType;
 }
 

@@ -3,8 +3,8 @@ import LogoLeft from '.';
 import { withHistory, withStore } from '../../test-mocks/test-component';
 import { render, screen } from '@testing-library/react';
 import { makeFakeStore } from '../../test-mocks/test-mocks';
-import { FullOffer } from '../../types/data-types';
-import { AppRoute, DEFAULT_CITY, DEFAULT_SORTING, Status, TIME_TO_RENDER_PAGE } from '../../settings';
+import { AppRoute, TIME_TO_RENDER_PAGE } from '../../settings';
+import { testInitialState } from '../../store/app-data/app-data';
 
 describe('Component: LogoLeft', () => {
   it('Ожидаю отрисовку компонента LogoLeft', () => {
@@ -22,27 +22,12 @@ describe('Component: LogoLeft', () => {
     const mockHistory: MemoryHistory = createMemoryHistory();
     const expectedText = 'Cities';
     const withHistoryComponent = withHistory(<LogoLeft />, mockHistory);
-    const { withStoreComponent } = withStore(withHistoryComponent, makeFakeStore({
-      DATA: {
-        offers: [],
-        fullOffer: {} as FullOffer,
-        reviews: [],
-        neighborPlaces: [],
-        favorites: [],
-        isOffersDataLoading: false,
-        isFullOfferDataLoading: true,
-        isReviewsDataLoading: true,
-        isNeighborPlacesDataLoading: true,
-        isFavoritesLoading: false,
-        isFavoriteAdding: false,
-        hasError: false,
-        currentCityName: DEFAULT_CITY,
-        activeCard: null,
-        sortingType: DEFAULT_SORTING,
-        statusReview: Status.Idle,
-        statusFullOffer: Status.Idle
-      }
-    }));
+    const { withStoreComponent } = withStore(
+      withHistoryComponent, makeFakeStore({
+        DATA: {
+          ...testInitialState
+        }
+      }));
     mockHistory.push(AppRoute.Root);
 
     render(withStoreComponent);

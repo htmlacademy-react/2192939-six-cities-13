@@ -13,12 +13,19 @@ describe('Component: ReviewForm', () => {
     const expectedCommentValue = mockReview.comment;
     const ratingElementTestId = `ratingElement${mockReview.rating}`;
     const commentElementTestId = 'commentElement';
-    const { withStoreComponent, mockAxiosAdapter } = withStore(<ReviewForm offerId={offerId} />, makeFakeStore({}));
-    mockAxiosAdapter.onPost(`${APIRoute.Comments}/${offerId}`).reply(201, mockReview);
+    const { withStoreComponent, mockAxiosAdapter } =
+      withStore(<ReviewForm offerId={offerId} />,
+        makeFakeStore({}));
+    mockAxiosAdapter.onPost(`${APIRoute.Comments}/${offerId}`)
+      .reply(201, mockReview);
 
     render(withStoreComponent);
-    await userEvent.type(screen.getByTestId(ratingElementTestId), expectedRatingValue);
-    await userEvent.type(screen.getByTestId(commentElementTestId), expectedCommentValue);
+    await userEvent.type(
+      screen.getByTestId(ratingElementTestId), expectedRatingValue
+    );
+    await userEvent.type(
+      screen.getByTestId(commentElementTestId), expectedCommentValue
+    );
 
     const waitingRenderTimer = setTimeout(() => {
       expect(screen.getAllByDisplayValue(expectedRatingValue)).toBeInTheDocument();
@@ -32,8 +39,8 @@ describe('Component: ReviewForm', () => {
     const commentTextAreaTestId = 'commentElement';
     const expectedButtonText = 'Submit';
     const offerId = makeFakeOffer().id;
-    const { withStoreComponent } = withStore(<ReviewForm offerId={offerId} />, makeFakeStore({
-    }));
+    const { withStoreComponent } = withStore(<ReviewForm offerId={offerId} />,
+      makeFakeStore({}));
 
     render(withStoreComponent);
 

@@ -1,4 +1,4 @@
-import { MAX_QUANTITY_REVIEWS } from '../settings';
+import { MAX_QUANTITY_REVIEWS, RATING_IN_PERCENT } from '../settings';
 import {
   Cities,
   Offers,
@@ -55,4 +55,8 @@ function compare(a: Review, b: Review) {
 
 export function sortReviewByDate(reviews: Reviews): Reviews {
   return reviews.slice().sort(compare).slice(0, MAX_QUANTITY_REVIEWS);
+}
+
+export function getRoundRating(rating: number): string {
+  return `${Math.round(rating) * RATING_IN_PERCENT}%`;
 }
