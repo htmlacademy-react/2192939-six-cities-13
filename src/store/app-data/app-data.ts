@@ -81,6 +81,13 @@ export const appData = createSlice({
       })
       .addCase(favoriteStatusAction.fulfilled, (state, action) => {
         const isRemoval = action.meta.arg.status === 0;
+        const { id, isFavorite } = action.payload;
+        state.offers.forEach((offer) => {
+          if (offer.id === id) {
+            offer.isFavorite = isFavorite;
+          }
+        }
+        );
 
         if (isRemoval) {
           state.favorites = state.favorites.filter(

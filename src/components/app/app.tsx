@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
-import MainPage from '../../pages/main';
-import LoginPage from '../../pages/login';
-import FavoritesPage from '../../pages/favorites';
-import OfferPage from '../../pages/offer';
+import MainPage from '../../pages/main-page';
+import LoginPage from '../../pages/login-page';
+import FavoritesPage from '../../pages/favorites-page';
+import OfferPage from '../../pages/offer-page';
 import Page404 from '../../pages/page404';
 import { AppRoute, AuthStatus } from '../../settings';
 import PrivateRoute from '../private-route';
@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import Loader from '../loader';
 import { getErrorStatus } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
-import ErrorScreen from '../../pages/error';
+import ErrorScreen from '../../pages/error-screen';
 import { useEffect } from 'react';
 import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-actions';
 

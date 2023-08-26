@@ -10,7 +10,7 @@ import { selectCityAction } from '../../store/app-data/app-data';
 import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
 import { redirectToRoute } from '../../store/action';
-import loginStyles from './login.module.css';
+import loginStyles from './login-page.module.css';
 
 
 export default function LoginPage(): JSX.Element {
