@@ -1,4 +1,4 @@
-.login-error {
+.login__error {
   position: absolute;
   left: 2px;
   top: 40px;
@@ -6,7 +6,7 @@
   font-size: 13px;
 }
 
-.login-password {
+.password__error {
   position: absolute;
   left: 2px;
   bottom: 40px;

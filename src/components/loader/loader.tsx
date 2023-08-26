@@ -1,17 +1,9 @@
 import CircleLoader from 'react-spinners/CircleLoader';
-import { CSSProperties } from 'react';
-
-const override: CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-around',
-  height: '100vh',
-};
+import loaderStyles from './loader.module.css';
 
 export default function Loader(): JSX.Element {
   return (
-    <div style={override}>
+    <div className={loaderStyles.loader__container}>
       <CircleLoader
         color={'#4481C3'}
         size={150}

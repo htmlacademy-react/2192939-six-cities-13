@@ -11,10 +11,6 @@ export function capitalizeFirstLetter(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-export function getCityOffers(offers: Offers, currentCityName: string) {
-  return offers.filter((offer) => offer.city.name === currentCityName);
-}
-
 export function getSortedOffersBy(offers: Offers, sortType: SortingType) {
   switch (sortType) {
     case 'priceToHigh':
@@ -28,7 +24,7 @@ export function getSortedOffersBy(offers: Offers, sortType: SortingType) {
   }
 }
 
-export function randomInteger(min: number, max: number): number {
+function randomInteger(min: number, max: number): number {
   const rand = min - 0.5 + Math.random() * (max - min + 1);
   return Math.round(rand);
 }

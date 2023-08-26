@@ -2,7 +2,7 @@ import { Offer } from '../../types/data-types';
 import { AppRoute, PlacesCard, AuthStatus } from '../../settings';
 import { capitalizeFirstLetter, getRoundRating } from '../../utils/offers';
 import { Link, useNavigate } from 'react-router-dom';
-import { MouseEvent, useState, useEffect } from 'react';
+import { MouseEvent } from 'react';
 import classNames from 'classnames';
 import { useAppDispatch, useAppSelector, } from '../../hooks';
 import { favoriteStatusAction } from '../../store/api-actions';
@@ -18,14 +18,6 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
   const authStatus = useAppSelector(getAuthStatus);
   const navigation = useNavigate();
   const isAuth = authStatus === AuthStatus.Auth;
-  const [isFavorite, setIsFavorite] = useState(offer.isFavorite);
-
-  useEffect(() => {
-    if (offer.isFavorite !== isFavorite) {
-      setIsFavorite(offer.isFavorite);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [offer.isFavorite]);
 
   const handleMouseEnter = (evt: MouseEvent<HTMLElement>): void => {
     evt.preventDefault();
@@ -44,8 +36,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
   const handleButtonClick = async (): Promise<void> => {
     if (isAuth) {
       await dispatch(favoriteStatusAction(
-        { offerId: offer.id, status: Number(!isFavorite) }));
-      setIsFavorite(!isFavorite);
+        { offerId: offer.id, status: Number(!offer.isFavorite) }));
     } else {
       navigation(AppRoute.Login);
     }
@@ -87,7 +78,7 @@ export default function PlaceCard({ offer, type }: PlaceCardProps): JSX.Element 
           <button
             className={classNames(
               'place-card__bookmark-button',
-              { 'place-card__bookmark-button--active': isFavorite },
+              { 'place-card__bookmark-button--active': offer.isFavorite },
               'button'
             )}
             type="button"

@@ -10,7 +10,7 @@ import { selectCityAction } from '../../store/app-data/app-data';
 import { getAuthStatus, getLoginStatus } from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
 import { redirectToRoute } from '../../store/action';
-import styles from './styles.module.css';
+import loginStyles from './login-page.module.css';
 
 
 export default function LoginPage(): JSX.Element {
@@ -31,10 +31,9 @@ export default function LoginPage(): JSX.Element {
     }
   }, [authStatus, dispatch]);
 
-  useEffect(() => {
+  const handleButtonClick = () => {
     dispatch(selectCityAction(randomCity));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   useEffect(() => {
     if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
@@ -99,7 +98,7 @@ export default function LoginPage(): JSX.Element {
                   required
                   data-testid='loginElement'
                 />
-                {!isCorrectLogin && <p className={styles['login-error']}>Enter a valid email</p>}
+                {!isCorrectLogin && <p className={loginStyles.login__error}>Enter a valid email</p>}
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -113,7 +112,7 @@ export default function LoginPage(): JSX.Element {
                   data-testid='passwordElement'
                 />
                 {!isCorrectPassword &&
-                  <p className={styles['login-password']}>
+                  <p className={loginStyles.password__error}>
                     At least 1 letter and 1 number without spaces
                   </p>}
               </div>
@@ -127,7 +126,7 @@ export default function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Root}>
+              <Link className="locations__item-link" to={AppRoute.Root} onClick={handleButtonClick}>
                 <span>{randomCity}</span>
               </Link>
             </div>

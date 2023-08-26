@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import ReviewForm from '../../components/review-form';
 import Header from '../../components/header';
-import { AppRoute, AuthStatus, PlacesCard, Status, StylesForMapOfferPage } from '../../settings';
+import { AppRoute, AuthStatus, PlacesCard, Status } from '../../settings';
 import { capitalizeFirstLetter, getRoundRating, nearByCities } from '../../utils/offers';
 import { useNavigate, useParams } from 'react-router-dom';
 import ReviewsList from '../../components/reviews-list';
@@ -22,7 +22,7 @@ import {
   getOfferPageDataStatus
 } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
-import Page404 from '../404';
+import Page404 from '../page404';
 
 export default function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -190,7 +190,7 @@ export default function OfferPage(): JSX.Element {
               <Map
                 city={nearByCities(neighborPlaces)[0].city}
                 offers={nearByCities(neighborPlaces)}
-                styles={StylesForMapOfferPage} fullOffer={fullOffer}
+                fullOffer={fullOffer}
               />
             </section>
           </section>

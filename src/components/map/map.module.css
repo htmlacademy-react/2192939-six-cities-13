@@ -1,0 +1,12 @@
+.map__common {
+  height: 100%;
+}
+
+.map__main {
+  width: 100%;
+}
+
+.map__offer {
+  width: 1144px;
+  margin: 0 auto;
+}

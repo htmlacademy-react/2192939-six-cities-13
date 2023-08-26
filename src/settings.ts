@@ -76,30 +76,11 @@ export const DEFAULT_SORTING: SortingType = 'popular';
 
 export const TIME_TO_RENDER_PAGE = 250;
 
-export const StylesForMapMainPage = {
-  width: '100%',
-  height: '100%',
-};
-
-export const StylesForMapOfferPage = {
-  width: '1144px',
-  height: '100%',
-  margin: '0 auto',
-};
-
 export enum PlacesCard {
   Cities = 'cities',
   NearPlaces = 'near-places',
   Favorites = 'favorites',
 }
-
-export const StatusCode = {
-  401: 401
-};
-
-export const StatusMessage = {
-  401: 'You\'re not authorized'
-};
 
 export enum NameSpace {
   Data = 'DATA',
