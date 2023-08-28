@@ -17,7 +17,7 @@ export default function PlaceList({ offers, type }: PlaceListProps): JSX.Element
     >
       {
         offers.map((offer) => (
-          <PlaceCard key={offer.id} offer={offer} type={type} data-testid='placeCardTestId' />
+          <PlaceCard key={offer.id} offer={offer as Offer} type={type} data-testid='placeCardTestId' />
         ))
       }
     </div >
