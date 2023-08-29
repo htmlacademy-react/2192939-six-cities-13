@@ -13,7 +13,7 @@ import { getErrorStatus } from '../../store/app-data/selectors';
 import { getAuthStatus } from '../../store/user-process/selectors';
 import ErrorScreen from '../../pages/error-screen';
 import { useEffect } from 'react';
-import { fetchFavoritesAction, fetchOffersAction } from '../../store/api-actions';
+import { fetchFavoritesAction } from '../../store/api-actions';
 
 export default function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,7 +21,6 @@ export default function App(): JSX.Element {
   const hasError = useAppSelector(getErrorStatus);
 
   useEffect(() => {
-    dispatch(fetchOffersAction());
     if (authStatus === AuthStatus.Auth) {
       dispatch(fetchFavoritesAction());
     }
